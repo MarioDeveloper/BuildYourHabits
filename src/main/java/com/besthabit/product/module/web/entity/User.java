@@ -39,6 +39,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
     private List<RecurringEvent> recurringEvents;
 
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+    private List<OneTimeEvent> oneTimeEvents;
+
     @Column(name = "image")
     private byte[] image;
 
@@ -176,7 +179,7 @@ public class User {
         rewards.add(theReward);
     }
 
-    public void add(RecurringEvent tempRecurringEvent) {
+    public void addRecuuringEvent(RecurringEvent tempRecurringEvent) {
 
         if(recurringEvents == null) {
             recurringEvents = new ArrayList<RecurringEvent>();
@@ -185,6 +188,18 @@ public class User {
         recurringEvents.add(tempRecurringEvent);
 
         tempRecurringEvent.setUser(this);
+    }
+
+
+    public void addOneTimeEvent(OneTimeEvent tempOneTimeEvent) {
+
+        if(oneTimeEvents == null) {
+            oneTimeEvents = new ArrayList<OneTimeEvent>();
+        }
+
+        oneTimeEvents.add(tempOneTimeEvent);
+
+        tempOneTimeEvent.setUser(this);
     }
 
         @Override

@@ -32,7 +32,7 @@ public class CreateReccuringEventAndRealization {
 
 //            int recurringEventId = 4;
 //            RecurringEvent recurringEvent = session.get(RecurringEvent.class, recurringEventId);
-//
+
             int userId = 1;
             User tempUser = session.get(User.class, userId);
 
@@ -48,7 +48,7 @@ public class CreateReccuringEventAndRealization {
             recurringEvent1.addRealizationRecurringEvent(realizationRecurringEvent);
 
             session.save(recurringEvent1);
-          //  session.save(realizationRecurringEvent);
+
             // commit transaction
             session.getTransaction().commit();
 
