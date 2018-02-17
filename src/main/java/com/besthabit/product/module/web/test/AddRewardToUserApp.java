@@ -1,9 +1,6 @@
 package com.besthabit.product.module.web.test;
 
-import com.besthabit.product.module.web.entity.Level;
-import com.besthabit.product.module.web.entity.RecurringEvent;
-import com.besthabit.product.module.web.entity.Reward;
-import com.besthabit.product.module.web.entity.User;
+import com.besthabit.product.module.web.entity.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -20,6 +17,8 @@ public class AddRewardToUserApp {
                 .addAnnotatedClass(Level.class)
                 .addAnnotatedClass(RecurringEvent.class)
                 .addAnnotatedClass(Reward.class)
+                .addAnnotatedClass(RealizationRecurringEvent.class)
+                .addAnnotatedClass(OneTimeEvent.class)
                 .buildSessionFactory();
 
 
@@ -37,7 +36,7 @@ public class AddRewardToUserApp {
             System.out.println("\nLoaded user: " + tempUser);
             System.out.println("Rewards: " + tempUser.getRewards());
 
-            int rewardId = 2;
+            int rewardId = 3;
             Reward tempReward = session.get(Reward.class, rewardId);
 
             System.out.println("\nLoaded reward: " + tempReward);

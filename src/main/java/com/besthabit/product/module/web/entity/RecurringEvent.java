@@ -24,6 +24,12 @@ public class RecurringEvent {
     @Column(name = "difficulty_level")
     private String difficultyLevel;
 
+    @Column(name = "start_date")
+    private String start_date;
+
+    @Column(name = "finish_date")
+    private String finish_date;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -34,11 +40,13 @@ public class RecurringEvent {
     public RecurringEvent() {
     }
 
-    public RecurringEvent(int frequency, String title, String description, String difficultyLevel, User user) {
+    public RecurringEvent(int frequency, String title, String description, String difficultyLevel, String start_date, String finish_date, User user) {
         this.frequency = frequency;
         this.title = title;
         this.description = description;
         this.difficultyLevel = difficultyLevel;
+        this.start_date = start_date;
+        this.finish_date = finish_date;
         this.user = user;
     }
 
@@ -78,6 +86,22 @@ public class RecurringEvent {
 
     public void setDifficultyLevel(String difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
+    }
+
+    public String getStart_date() {
+        return start_date;
+    }
+
+    public void setStart_date(String start_date) {
+        this.start_date = start_date;
+    }
+
+    public String getFinish_date() {
+        return finish_date;
+    }
+
+    public void setFinish_date(String finish_date) {
+        this.finish_date = finish_date;
     }
 
     public User getUser() {

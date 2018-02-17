@@ -15,14 +15,27 @@ public class RealizationRecurringEvent {
     @JoinColumn(name = "recurring_event_id")
     private RecurringEvent recurringEvent;
 
-    @Column(name = "finish_date")
-    private Date finishDate;
+    @Column(name = "planned_date")
+    private Date planned_date;
+
+    @Column(name = "realization_date")
+    private Date realization_date;
+
+    @Column(name = "experience_point")
+    private Date experience_point;
+
+    @Column(name = "life_point")
+    private Date life_point;
+
 
     public RealizationRecurringEvent() {
     }
 
-    public RealizationRecurringEvent(Date finishDate) {
-        this.finishDate = finishDate;
+    public RealizationRecurringEvent(RecurringEvent recurringEvent, Date planned_date, Date experience_point, Date life_point) {
+        this.recurringEvent = recurringEvent;
+        this.planned_date = planned_date;
+        this.experience_point = experience_point;
+        this.life_point = life_point;
     }
 
     public int getId() {
@@ -33,14 +46,6 @@ public class RealizationRecurringEvent {
         this.id = id;
     }
 
-    public Date getFinishDate() {
-        return finishDate;
-    }
-
-    public void setFinishDate(Date finishDate) {
-        this.finishDate = finishDate;
-    }
-
     public RecurringEvent getRecurringEvent() {
         return recurringEvent;
     }
@@ -49,8 +54,42 @@ public class RealizationRecurringEvent {
         this.recurringEvent = recurringEvent;
     }
 
+    public Date getPlanned_date() {
+        return planned_date;
+    }
+
+    public void setPlanned_date(Date planned_date) {
+        this.planned_date = planned_date;
+    }
+
+    public Date getRealization_date() {
+        return realization_date;
+    }
+
+    public void setRealization_date(Date realization_date) {
+        this.realization_date = realization_date;
+    }
+
+    public Date getExperience_point() {
+        return experience_point;
+    }
+
+    public void setExperience_point(Date experience_point) {
+        this.experience_point = experience_point;
+    }
+
+    public Date getLife_point() {
+        return life_point;
+    }
+
+    public void setLife_point(Date life_point) {
+        this.life_point = life_point;
+    }
+
+
     @Override
     public String toString() {
-        return "RealizationRecurringEvent{" + "id=" + id + ", finishDate=" + finishDate + '}';
+        return "RealizationRecurringEvent{" + "id=" + id + ", recurringEvent=" + recurringEvent + ", planned_date=" + planned_date + ", realization_date=" + realization_date + ", experience_point=" + experience_point + ", life_point=" + life_point + '}';
     }
 }
+

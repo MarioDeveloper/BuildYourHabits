@@ -26,7 +26,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "level_id")
     private Level level;
 
