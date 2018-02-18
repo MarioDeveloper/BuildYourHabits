@@ -27,10 +27,10 @@ public class OneTimeEvent {
     private Date realization_date;
 
     @Column(name = "experience_point")
-    private Date experience_point;
+    private int experience_point;
 
     @Column(name = "life_point")
-    private Date life_point; // default 10 if fail
+    private int life_point; // default 10 if fail
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -39,14 +39,12 @@ public class OneTimeEvent {
     public OneTimeEvent() {
     }
 
-    public OneTimeEvent(String description, String difficultyLevel, Date planned_date, Date realization_date, Date experience_point, Date life_point, User user) {
+    public OneTimeEvent(String description, String difficultyLevel, Date planned_date, int experience_point, int life_point) {
         this.description = description;
         this.difficultyLevel = difficultyLevel;
         this.planned_date = planned_date;
-        this.realization_date = realization_date;
         this.experience_point = experience_point;
         this.life_point = life_point;
-        this.user = user;
     }
 
     public int getId() {
@@ -97,19 +95,19 @@ public class OneTimeEvent {
         this.realization_date = realization_date;
     }
 
-    public Date getExperience_point() {
+    public int getExperience_point() {
         return experience_point;
     }
 
-    public void setExperience_point(Date experience_point) {
+    public void setExperience_point(int experience_point) {
         this.experience_point = experience_point;
     }
 
-    public Date getLife_point() {
+    public int getLife_point() {
         return life_point;
     }
 
-    public void setLife_point(Date life_point) {
+    public void setLife_point(int life_point) {
         this.life_point = life_point;
     }
 

@@ -32,10 +32,12 @@ public class CreateOneTimeEvent {
                 // start a transaction
                 session.beginTransaction();
 
-                int userId = 1;
+                int userId = 4;
                 User tempUser = session.get(User.class, userId);
 
-                OneTimeEvent oneTimeEvent = new OneTimeEvent("Zakupy w Auchan", "Kup jak najwięcej","EASY", new Date(), false, tempUser);
+                OneTimeEvent oneTimeEvent = new OneTimeEvent("Idziemy na basen!", "łatwe", new Date(), 10, -5);
+
+                tempUser.addOneTimeEvent(oneTimeEvent);
 
                 session.save(oneTimeEvent);
 

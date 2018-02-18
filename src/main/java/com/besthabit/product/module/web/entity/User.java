@@ -39,7 +39,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
     private List<RecurringEvent> recurringEvents;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<OneTimeEvent> oneTimeEvents;
 
     @Column(name = "image")
@@ -155,6 +155,14 @@ public class User {
 
     public List<RecurringEvent> getRecurringEvents() {
         return recurringEvents;
+    }
+
+    public List<OneTimeEvent> getOneTimeEvents() {
+        return oneTimeEvents;
+    }
+
+    public void setOneTimeEvents(List<OneTimeEvent> oneTimeEvents) {
+        this.oneTimeEvents = oneTimeEvents;
     }
 
     public void setRecurringEvents(List<RecurringEvent> recurringEvents) {
