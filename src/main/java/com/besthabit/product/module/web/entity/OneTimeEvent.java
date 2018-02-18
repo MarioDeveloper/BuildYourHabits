@@ -1,6 +1,7 @@
 package com.besthabit.product.module.web.entity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -21,10 +22,10 @@ public class OneTimeEvent {
     private String difficultyLevel;
 
     @Column(name = "planned_date")
-    private Date planned_date;
+    private LocalDateTime planned_date;
 
     @Column(name = "realization_date")
-    private Date realization_date;
+    private LocalDateTime realization_date;
 
     @Column(name = "experience_point")
     private int experience_point;
@@ -39,7 +40,7 @@ public class OneTimeEvent {
     public OneTimeEvent() {
     }
 
-    public OneTimeEvent(String description, String difficultyLevel, Date planned_date, int experience_point, int life_point) {
+    public OneTimeEvent(String description, String difficultyLevel, LocalDateTime planned_date, int experience_point, int life_point) {
         this.description = description;
         this.difficultyLevel = difficultyLevel;
         this.planned_date = planned_date;
@@ -79,19 +80,19 @@ public class OneTimeEvent {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public Date getPlanned_date() {
+    public LocalDateTime getPlanned_date() {
         return planned_date;
     }
 
-    public void setPlanned_date(Date planned_date) {
+    public void setPlanned_date(LocalDateTime planned_date) {
         this.planned_date = planned_date;
     }
 
-    public Date getRealization_date() {
+    public LocalDateTime getRealization_date() {
         return realization_date;
     }
 
-    public void setRealization_date(Date realization_date) {
+    public void setRealization_date(LocalDateTime realization_date) {
         this.realization_date = realization_date;
     }
 

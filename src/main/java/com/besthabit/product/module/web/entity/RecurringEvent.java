@@ -1,7 +1,9 @@
 package com.besthabit.product.module.web.entity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -25,10 +27,10 @@ public class RecurringEvent {
     private String difficultyLevel;
 
     @Column(name = "start_date")
-    private String start_date;
+    private LocalDateTime start_date;
 
     @Column(name = "finish_date")
-    private String finish_date;
+    private LocalDateTime finish_date;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -40,14 +42,13 @@ public class RecurringEvent {
     public RecurringEvent() {
     }
 
-    public RecurringEvent(int frequency, String title, String description, String difficultyLevel, String start_date, String finish_date, User user) {
+    public RecurringEvent(int frequency, String title, String description, String difficultyLevel, LocalDateTime start_date, LocalDateTime finish_date) {
         this.frequency = frequency;
         this.title = title;
         this.description = description;
         this.difficultyLevel = difficultyLevel;
         this.start_date = start_date;
         this.finish_date = finish_date;
-        this.user = user;
     }
 
     public int getId() {
@@ -88,19 +89,19 @@ public class RecurringEvent {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public String getStart_date() {
+    public LocalDateTime getStart_date() {
         return start_date;
     }
 
-    public void setStart_date(String start_date) {
+    public void setStart_date(LocalDateTime start_date) {
         this.start_date = start_date;
     }
 
-    public String getFinish_date() {
+    public LocalDateTime getFinish_date() {
         return finish_date;
     }
 
-    public void setFinish_date(String finish_date) {
+    public void setFinish_date(LocalDateTime finish_date) {
         this.finish_date = finish_date;
     }
 
@@ -123,7 +124,7 @@ public class RecurringEvent {
     public void addRealizationRecurringEvent(RealizationRecurringEvent tempRealizationReccuringEvent) {
 
         if(realizationRecurringEvents == null) {
-            realizationRecurringEvents = new ArrayList<RealizationRecurringEvent>();
+            realizationRecurringEvents = new ArrayList<>();
         }
 
         realizationRecurringEvents.add(tempRealizationReccuringEvent);

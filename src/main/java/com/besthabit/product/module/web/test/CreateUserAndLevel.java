@@ -5,9 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.util.Date;
-
-public class CreateReccuringEventAndRealization {
+public class CreateUserAndLevel {
 
     public static void main(String[] args) {
 
@@ -20,34 +18,25 @@ public class CreateReccuringEventAndRealization {
                 .addAnnotatedClass(RecurringEvent.class)
                 .addAnnotatedClass(Reward.class)
                 .addAnnotatedClass(RealizationRecurringEvent.class)
+                .addAnnotatedClass(OneTimeEvent.class)
                 .buildSessionFactory();
-
 
         // create session
         Session session = factory.getCurrentSession();
 
         try {
+
+            Level tempLevel = new Level("firstAttempt");
+
+            User tempUser = new User("Super","Mario","mario@gmail.com","pass",100,100);
+
+            tempUser.setLevel(tempLevel);
+
             // start a transaction
             session.beginTransaction();
 
-//            int recurringEventId = 4;
-//            RecurringEvent recurringEvent = session.get(RecurringEvent.class, recurringEventId);
-
-            int userId = 1;
-            User tempUser = session.get(User.class, userId);
-
-            RecurringEvent recurringEvent1 = new RecurringEvent(2,"cos","cos","cos", tempUser);
-
-            System.out.println("\n\n recurringEvent: " + recurringEvent1);
-
-            System.out.println("\n\n realizationRecurringCourses: " + recurringEvent1.getRealizationRecurringEvents());
-
-
-            RealizationRecurringEvent realizationRecurringEvent = new RealizationRecurringEvent();
-
-            recurringEvent1.addRealizationRecurringEvent(realizationRecurringEvent);
-
-            session.save(recurringEvent1);
+            System.out.println("Saving user: " + tempUser);
+            session.save(tempUser);
 
             // commit transaction
             session.getTransaction().commit();
@@ -60,4 +49,7 @@ public class CreateReccuringEventAndRealization {
 
 
     }
+
 }
+
+

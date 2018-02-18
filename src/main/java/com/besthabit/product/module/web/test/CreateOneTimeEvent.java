@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class CreateOneTimeEvent {
@@ -35,7 +36,7 @@ public class CreateOneTimeEvent {
                 int userId = 4;
                 User tempUser = session.get(User.class, userId);
 
-                OneTimeEvent oneTimeEvent = new OneTimeEvent("Idziemy na basen!", "łatwe", new Date(), 10, -5);
+                OneTimeEvent oneTimeEvent = new OneTimeEvent("Idziemy na basen!", "łatwe", LocalDateTime.now(), 10, -5);
 
                 tempUser.addOneTimeEvent(oneTimeEvent);
 

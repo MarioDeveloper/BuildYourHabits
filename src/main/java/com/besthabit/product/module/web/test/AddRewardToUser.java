@@ -5,7 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class CreateUserAndLevelApp {
+public class AddRewardToUser {
 
     public static void main(String[] args) {
 
@@ -21,21 +21,30 @@ public class CreateUserAndLevelApp {
                 .addAnnotatedClass(OneTimeEvent.class)
                 .buildSessionFactory();
 
+
         // create session
         Session session = factory.getCurrentSession();
 
         try {
 
-            Level tempLevel = new Level("firstAttempt");
-
-            User tempUser = new User("Super","Mario","mario@gmail.com","pass",100,100);
-
-            tempUser.setLevel(tempLevel);
-
             // start a transaction
             session.beginTransaction();
 
-            System.out.println("Saving user: " + tempUser);
+            int userId = 4;
+            User tempUser = session.get(User.class, userId);
+
+            System.out.println("\nLoaded user: " + tempUser);
+            System.out.println("Rewards: " + tempUser.getRewards());
+
+            int rewardId = 1;
+            Reward tempReward = session.get(Reward.class, rewardId);
+
+            System.out.println("\nLoaded reward: " + tempReward);
+
+            tempUser.addReward(tempReward);
+
+            System.out.println("\nSaving the courses...");
+
             session.save(tempUser);
 
             // commit transaction

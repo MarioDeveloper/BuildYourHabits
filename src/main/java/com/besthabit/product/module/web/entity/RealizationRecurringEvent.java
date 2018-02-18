@@ -1,6 +1,7 @@
 package com.besthabit.product.module.web.entity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -11,28 +12,27 @@ public class RealizationRecurringEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "recurring_event_id")
     private RecurringEvent recurringEvent;
 
     @Column(name = "planned_date")
-    private Date planned_date;
+    private LocalDateTime planned_date;
 
     @Column(name = "realization_date")
-    private Date realization_date;
+    private LocalDateTime realization_date;
 
     @Column(name = "experience_point")
-    private Date experience_point;
+    private int experience_point;
 
     @Column(name = "life_point")
-    private Date life_point;
+    private int life_point;
 
 
     public RealizationRecurringEvent() {
     }
 
-    public RealizationRecurringEvent(RecurringEvent recurringEvent, Date planned_date, Date experience_point, Date life_point) {
-        this.recurringEvent = recurringEvent;
+    public RealizationRecurringEvent(LocalDateTime planned_date, int experience_point, int life_point) {
         this.planned_date = planned_date;
         this.experience_point = experience_point;
         this.life_point = life_point;
@@ -54,38 +54,37 @@ public class RealizationRecurringEvent {
         this.recurringEvent = recurringEvent;
     }
 
-    public Date getPlanned_date() {
+    public LocalDateTime getPlanned_date() {
         return planned_date;
     }
 
-    public void setPlanned_date(Date planned_date) {
+    public void setPlanned_date(LocalDateTime planned_date) {
         this.planned_date = planned_date;
     }
 
-    public Date getRealization_date() {
+    public LocalDateTime getRealization_date() {
         return realization_date;
     }
 
-    public void setRealization_date(Date realization_date) {
+    public void setRealization_date(LocalDateTime realization_date) {
         this.realization_date = realization_date;
     }
 
-    public Date getExperience_point() {
+    public int getExperience_point() {
         return experience_point;
     }
 
-    public void setExperience_point(Date experience_point) {
+    public void setExperience_point(int experience_point) {
         this.experience_point = experience_point;
     }
 
-    public Date getLife_point() {
+    public int getLife_point() {
         return life_point;
     }
 
-    public void setLife_point(Date life_point) {
+    public void setLife_point(int life_point) {
         this.life_point = life_point;
     }
-
 
     @Override
     public String toString() {
