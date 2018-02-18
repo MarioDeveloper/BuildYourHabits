@@ -30,13 +30,13 @@ public class AddRewardToUserApp {
             // start a transaction
             session.beginTransaction();
 
-            int userId = 1;
+            int userId = 4;
             User tempUser = session.get(User.class, userId);
 
             System.out.println("\nLoaded user: " + tempUser);
             System.out.println("Rewards: " + tempUser.getRewards());
 
-            int rewardId = 3;
+            int rewardId = 1;
             Reward tempReward = session.get(Reward.class, rewardId);
 
             System.out.println("\nLoaded reward: " + tempReward);
