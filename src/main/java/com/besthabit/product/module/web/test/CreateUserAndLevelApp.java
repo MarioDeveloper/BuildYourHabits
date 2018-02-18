@@ -1,9 +1,6 @@
 package com.besthabit.product.module.web.test;
 
-import com.besthabit.product.module.web.entity.Level;
-import com.besthabit.product.module.web.entity.RecurringEvent;
-import com.besthabit.product.module.web.entity.Reward;
-import com.besthabit.product.module.web.entity.User;
+import com.besthabit.product.module.web.entity.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -20,8 +17,9 @@ public class CreateUserAndLevelApp {
                 .addAnnotatedClass(Level.class)
                 .addAnnotatedClass(RecurringEvent.class)
                 .addAnnotatedClass(Reward.class)
+                .addAnnotatedClass(RealizationRecurringEvent.class)
+                .addAnnotatedClass(OneTimeEvent.class)
                 .buildSessionFactory();
-
 
         // create session
         Session session = factory.getCurrentSession();
@@ -30,7 +28,7 @@ public class CreateUserAndLevelApp {
 
             Level tempLevel = new Level("firstAttempt");
 
-            User tempUser = new User("Mario","Bross","mario@gmail.com","pass",100,100);
+            User tempUser = new User("Super","Mario","mario@gmail.com","pass",100,100);
 
             tempUser.setLevel(tempLevel);
 
