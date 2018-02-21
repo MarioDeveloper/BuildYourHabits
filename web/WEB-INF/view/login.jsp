@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 text">
                                    <h1><strong>Habitica</strong> Login Form</h1>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
 
