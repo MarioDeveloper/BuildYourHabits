@@ -31,7 +31,7 @@
     <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/develop_habit_app?useSSL=false" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/develop_habit_app?useSSL=false&amp;characterEncoding=UTF-8" />
         <property name="user" value="admin" />
         <property name="password" value="Bestadmin.93" />
 
@@ -45,8 +45,10 @@
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="myDataSource" />
+
         <property name="packagesToScan" value="com.everydayhabits.product.module.web.entity" />
         <property name="hibernateProperties">
+
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>

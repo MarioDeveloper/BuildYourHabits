@@ -1,6 +1,10 @@
 package com.everydayhabits.product.module.web.controller;
 
 import com.everydayhabits.product.module.web.DTO.UserDto;
+import com.everydayhabits.product.module.web.entity.User;
+import com.everydayhabits.product.module.web.service.UserService;
+import com.everydayhabits.product.module.web.service.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +16,10 @@ import javax.validation.Valid;
 
 @Controller
 public class UserController {
+
+
+    @Autowired
+    private UserService userService;
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -37,7 +45,8 @@ public class UserController {
     @PostMapping("/processRegistrationForm")
     public String processForm(
             @Valid @ModelAttribute("user") UserDto userDto,
-            BindingResult theBindingResult) {
+            BindingResult theBindingResult) throws Exception {
+
 
         if (theBindingResult.hasErrors()) {
 
@@ -49,7 +58,17 @@ public class UserController {
             return "registration";
         }
         else {
-            return "login";
+            System.out.println("first name: " + userDto.getFirstName());
+            System.out.println("last name: " + userDto.getEmail());
+
+            User registerUser = new User();
+
+            registerUser = userService.registerNewUserAccount(userDto);
+
+            if(registerUser == null) {
+                theBindingResult.rejectValue("email", "error.email","Address email already exists");
+            }
+            return "registration";
         }
     }
 
