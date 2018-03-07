@@ -20,8 +20,8 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -59,10 +59,10 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String password, int life, int experience) {
+    public User(String firstName, String lastName, String username, String password, int life, int experience) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.username = username;
         this.password = password;
         this.life = life;
         this.experience = experience;
@@ -97,12 +97,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -212,6 +212,6 @@ public class User {
 
         @Override
     public String toString() {
-        return "User{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", password='" + password + '\'' + ", level=" + level + ", life=" + life + ", experience=" + experience + ", image=" + Arrays.toString(image) + ", registration_date=" + registration_date + '}';
+        return "User{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + username + '\'' + ", password='" + password + '\'' + ", level=" + level + ", life=" + life + ", experience=" + experience + ", image=" + Arrays.toString(image) + ", registration_date=" + registration_date + '}';
     }
 }

@@ -26,7 +26,7 @@ public class UserDAOImpl implements UserDAO {
 
         currentSession.save(theUser);
 
-        String userEmail = theUser.getEmail();
+        String userEmail = theUser.getUsername();
 
         return getUserByEmail(userEmail);
     }
@@ -39,7 +39,7 @@ public class UserDAOImpl implements UserDAO {
         Query theQuery = null;
 
         // get the customer by primary keyx
-        theQuery = currentSession.createQuery("from User where email=:userEmail");
+        theQuery = currentSession.createQuery("from User where username=:userEmail");
         theQuery.setParameter("userEmail", email);
 
         // execute query and get result list
