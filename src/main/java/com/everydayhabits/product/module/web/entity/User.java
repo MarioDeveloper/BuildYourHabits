@@ -214,4 +214,5 @@ public class User {
     public String toString() {
         return "User{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + username + '\'' + ", password='" + password + '\'' + ", level=" + level + ", life=" + life + ", experience=" + experience + ", image=" + Arrays.toString(image) + ", registration_date=" + registration_date + '}';
     }
+
 }

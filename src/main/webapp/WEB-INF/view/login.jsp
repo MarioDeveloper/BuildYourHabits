@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -18,6 +19,28 @@
 		<link href="${awesome}" rel="stylesheet" />
 		<link href="${fe}" rel="stylesheet" />
 		<link href="${style}" rel="stylesheet" />
+
+		<style>
+			.error {
+				padding: 15px;
+				margin-bottom: 20px;
+				border: 1px solid transparent;
+				border-radius: 4px;
+				color: #a94442;
+				background-color: #f2dede;
+				border-color: #ebccd1;
+			}
+
+			.msg {
+				padding: 15px;
+				margin-bottom: 20px;
+				border: 1px solid transparent;
+				border-radius: 4px;
+				color: #31708f;
+				background-color: #d9edf7;
+				border-color: #bce8f1;
+			}
+		</style>
 	</head>
 
     <body>
@@ -43,20 +66,30 @@
 	                        		<div class="form-top-left">
 	                        			<h3>Login to our site</h3>
 	                            		<p>Enter username and password to log on:</p>
+
+
+										<c:if test="${not empty param.logout}">
+											<div class="msg">Logout successfully</div>
+										</c:if>
+
+										<c:if test="${not empty param.logout}">
+											<div class="error">Invalid username or password</div>
+										</c:if>
+
 	                        		</div>
 	                        		<div class="form-top-right">
 	                        			<i class="fa fa-key"></i>
 	                        		</div>
 	                            </div>
 	                            <div class="form-bottom">
-				                    <form role="form" action="" method="post" class="login-form">
+				                    <form role="form" action="<c:url value='/j_security_check?${_csrf.parameterName}=${_csrf.token} }' />" method="POST" class="login-form">
 				                    	<div class="form-group">
 				                    		<label class="sr-only" for="form-username">Username</label>
-				                        	<input type="text" name="form-username" placeholder="Username..." class="form-username form-control" id="form-username">
+				                        	<input type="text" name='j_username' placeholder="Username..." class="form-username form-control" id="form-username">
 				                        </div>
 				                        <div class="form-group">
 				                        	<label class="sr-only" for="form-password">Password</label>
-				                        	<input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
+				                        	<input type="password" name='j_password' placeholder="Password..." class="form-password form-control" id="form-password">
 				                        </div>
 				                        <button type="submit" class="btn">Log in!</button>
 				                    </form>
@@ -75,6 +108,9 @@
 		                        	<a class="btn btn-link-1 btn-link-1-google-plus" href="#">
 		                        		<i class="fa fa-google-plus"></i> Google Plus
 		                        	</a>
+									<input type="hidden"
+										   name="${_csrf.parameterName}"
+										   value="${_csrf.token}"/>
 	                        </div>
 	                    </div>
 					</div>

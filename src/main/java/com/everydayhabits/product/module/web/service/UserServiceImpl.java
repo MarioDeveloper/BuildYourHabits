@@ -5,8 +5,16 @@ import com.everydayhabits.product.module.web.dao.UserDAO;
 import com.everydayhabits.product.module.web.dao.UserDAOImpl;
 import com.everydayhabits.product.module.web.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -45,4 +53,20 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Transactional
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userDAO.findByEmail(email);
+        if (user == null){
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+
+        List<GrantedAuthority> authority= new ArrayList<GrantedAuthority>();
+
+        authority.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+                user.getPassword(),
+                authority);
+    }
 }
