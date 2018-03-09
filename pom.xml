@@ -5,10 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pl.poteganawykow</groupId>
-    <artifactId>budowanie nawyku</artifactId>
+    <artifactId>budowanienawyku</artifactId>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
+
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -24,96 +32,104 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mysql.connector>5.1.45</mysql.connector>
+        <commons-logging>1.2</commons-logging>
+        <javax.servlet.jsp.jstl>1.2.1</javax.servlet.jsp.jstl>
+        <javax.servlet.api>3.1.0</javax.servlet.api>
+        <javax.servlet>1.2</javax.servlet>
+        <springframework>5.0.2.RELEASE</springframework>
+        <org.hibernate>5.2.10.Final</org.hibernate>
+        <springframework.orm>4.3.1.RELEASE</springframework.orm>
+        <hibernate.validator>6.0.7.Final</hibernate.validator>
+        <springframework.security>5.0.0.RELEASE</springframework.security>
+        <c3p0>0.9.1.2</c3p0>
+        <logback>1.1.2</logback>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.45</version>
+            <version>${mysql.connector}</version>
         </dependency>
 
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
+            <version>${commons-logging}</version>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet.jsp.jstl</groupId>
             <artifactId>javax.servlet.jsp.jstl-api</artifactId>
-            <version>1.2.1</version>
+            <version>${javax.servlet.jsp.jstl}</version>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
+            <version>${javax.servlet.api}</version>
+            <!--<scope>provided</scope>-->
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${javax.servlet}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>5.0.2.RELEASE</version>
+            <version>${springframework}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>5.0.2.RELEASE</version>
+            <version>${springframework}</version>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.2.10.Final</version>
+            <version>${org.hibernate}</version>
         </dependency>
 
         <dependency>
             <groupId>c3p0</groupId>
             <artifactId>c3p0</artifactId>
-            <version>0.9.1.2</version>
+            <version>${c3p0}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>4.3.1.RELEASE</version>
+            <version>${springframework.orm}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>6.0.7.Final</version>
+            <version>${hibernate.validator}</version>
         </dependency>
         <dependency>
              <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-        <version>5.0.0.RELEASE</version>
+            <version>${springframework.security}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>5.0.0.RELEASE</version>
+            <version>${springframework.security}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>5.0.0.RELEASE</version>
+            <version>${springframework.security}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.1.2</version>
+            <version>${logback}</version>
         </dependency>
-
     </dependencies>
-
-
-
 </project>

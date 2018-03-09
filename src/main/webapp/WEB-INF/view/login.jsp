@@ -95,20 +95,14 @@
 				                    </form>
 			                    </div>
 		                    </div>
-		                
-		                	<div class="social-login">
-	                        	<h3>...or login with:</h3>
-	                        	<div class="social-login-buttons">
-		                        	<a class="btn btn-link-1 btn-link-1-facebook" href="#">
-		                        		<i class="fa fa-facebook"></i> Facebook
-		                        	</a>
-		                        	<a class="btn btn-link-1 btn-link-1-twitter" href="#">
-		                        		<i class="fa fa-twitter"></i> Twitter
-		                        	</a>
-		                        	<a class="btn btn-link-1 btn-link-1-google-plus" href="#">
-		                        		<i class="fa fa-google-plus"></i> Google Plus
-		                        	</a>
-									<input type="hidden"
+
+							<!-- Footer -->
+							<footer>
+								<c:url value="/registration" var="registration"/>
+								<a href="${registration}">Registration Form</a>
+							</footer>
+
+							<input type="hidden"
 										   name="${_csrf.parameterName}"
 										   value="${_csrf.token}"/>
 	                        </div>

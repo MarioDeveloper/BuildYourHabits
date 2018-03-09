@@ -1,12 +1,8 @@
 package com.everydayhabits.product.module.web.config;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -19,7 +15,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
 import java.util.Properties;
 
 @EnableWebMvc
@@ -27,7 +22,7 @@ import java.util.Properties;
 @ComponentScan({ "com.everydayhabits.*" })
 @EnableTransactionManagement
 @PropertySource("classpath:persistence-mysql.properties")
-//@Import({ SecurityConfig.class })
+@Import({SecurityConfig.class})
 public class AppConfig implements WebMvcConfigurer {
 
 	@Autowired
@@ -40,29 +35,6 @@ public class AppConfig implements WebMvcConfigurer {
 		prop.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		return prop;
 	}
-
-//	@Bean
-//	public DataSource securityDataSource() {
-//
-//		ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
-//
-//		try {
-//			securityDataSource.setDriverClass(env.getProperty("jdbc.driver"));
-//		} catch (PropertyVetoException exc) {
-//			throw new RuntimeException(exc);
-//		}
-//
-//		securityDataSource.setJdbcUrl("jdbc.url");
-//		securityDataSource.setUser("jdbc.user");
-//		securityDataSource.setPassword("jdbc.password");
-//
-//		securityDataSource.setInitialPoolSize(getRequiredProperty("connection.pool.initialPoolSize"));
-//		securityDataSource.setMinPoolSize(getRequiredProperty("connection.pool.minPoolSize"));
-//		securityDataSource.setMaxPoolSize(getRequiredProperty("connection.pool.maxPoolSize"));
-//		securityDataSource.setMaxIdleTime(getRequiredProperty("connection.pool.maxIdleTime"));
-//
-//		return securityDataSource;
-//	}
 
 	@Bean
 	public DataSource getDataSource() {
@@ -102,13 +74,6 @@ public class AppConfig implements WebMvcConfigurer {
 		return viewResolver;
 	}
 
-	// helper method
-	// read environment property and convert to int
-	private int getIntProperty(String propName) {
-		String propVal = env.getProperty(propName);
-		int intPropVal = Integer.parseInt(propVal);
-		return intPropVal;
-	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

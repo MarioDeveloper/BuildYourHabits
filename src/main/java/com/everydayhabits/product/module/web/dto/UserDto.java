@@ -1,4 +1,4 @@
-package com.everydayhabits.product.module.web.DTO;
+package com.everydayhabits.product.module.web.dto;
 
 import com.everydayhabits.product.module.web.validation.PasswordMatches;
 import com.everydayhabits.product.module.web.validation.ValidEmail;

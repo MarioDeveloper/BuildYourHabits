@@ -1,6 +1,6 @@
 package com.everydayhabits.product.module.web.validation;
 
-import com.everydayhabits.product.module.web.DTO.UserDto;
+import com.everydayhabits.product.module.web.dto.UserDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

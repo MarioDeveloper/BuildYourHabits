@@ -1,14 +1,12 @@
 package com.everydayhabits.product.module.web.service;
 
-import com.everydayhabits.product.module.web.DTO.UserDto;
 import com.everydayhabits.product.module.web.dao.UserDAO;
-import com.everydayhabits.product.module.web.dao.UserDAOImpl;
+import com.everydayhabits.product.module.web.dto.UserDto;
 import com.everydayhabits.product.module.web.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

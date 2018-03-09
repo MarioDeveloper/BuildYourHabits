@@ -1,17 +1,18 @@
 package com.everydayhabits.product.module.web.controller;
 
-import com.everydayhabits.product.module.web.DTO.UserDto;
+import com.everydayhabits.product.module.web.dto.UserDto;
 import com.everydayhabits.product.module.web.entity.User;
 import com.everydayhabits.product.module.web.service.UserService;
-import com.everydayhabits.product.module.web.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
@@ -30,11 +31,11 @@ public class UserController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @GetMapping("/")
-    public String showMainPanel() {
-
-        return "login";
-    }
+//    @GetMapping("/")
+//    public String showMainPanel() {
+//
+//        return "login";
+//    }
 
     @GetMapping("/registration")
     public String showRegistrationForm(Model model) {
@@ -73,6 +74,15 @@ public class UserController {
         }
     }
 
+    @GetMapping("/index")
+    public String root() {
+        return "index";
+    }
+
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login";
+    }
 
     @GetMapping("/account")
     public String showMyAccount() {
