@@ -24,7 +24,13 @@
 	<link href="${style}" rel="stylesheet" />
 
 	<style>
-		.error {color:red}
+		#topdiv {
+			margin-bottom: 0px;
+		}
+
+		#bottomdiv {
+			margin-top: 20px;
+		}
 	</style>
 
 </head>
@@ -41,10 +47,20 @@
 					<h1><strong>Habitica</strong> Registration Form</h1>
 				</div>
 			</div>
-			<div class="row">
+
+			<div class="row" id="">
+				<div class="col-sm-6 col-sm-offset-3 text">
+					<c:if test="${param.success != null}">
+						<div class="alert alert-info">You've successfully registered to our awesome app!</div>
+					</c:if>
+				</div>
+			</div>
+
+
+			<div class="row" id="topdiv">
 				<div class="col-sm-offset-3 col-sm-6">
 
-					<div class="form-box">
+					<div class="form-box" id="bottomdiv">
 						<div class="form-top">
 							<div class="form-top-left">
 								<h3>Sign up now</h3>
@@ -55,31 +71,41 @@
 							</div>
 						</div>
 						<div class="form-bottom">
-							<form:form action="/processRegistrationForm" modelAttribute="user" method="post" enctype="utf8" role="form" class="registration-form">
+							<form:form action="/registration" modelAttribute="user" method="post" enctype="utf8"
+									   role="form" class="registration-form">
 								<div class="form-group">
 									<label class="sr-only" for="form-first-name">First name</label>
-									<form:input path="firstName" type="text" name="form-first-name" placeholder="First name..." class="form-first-name form-control" id="form-first-name"/>
-									<form:errors path="firstName" cssClass="error" />
+									<form:input path="firstName" type="text" name="form-first-name"
+												placeholder="First name..." class="form-first-name form-control"
+												id="form-first-name" required="required"/>
+									<form:errors path="firstName" cssClass="text-danger"/>
 								</div>
 								<div class="form-group">
 									<label class="sr-only" for="form-last-name">Last name</label>
-									<form:input path="lastName" type="text" name="form-last-name" placeholder="Last name..." class="form-last-name form-control"/>
-									<form:errors path="lastName" cssClass="error" />
+									<form:input path="lastName" type="text" name="form-last-name"
+												placeholder="Last name..." class="form-last-name form-control"
+												required="required"/>
+									<form:errors path="lastName" cssClass="text-danger"/>
 								</div>
 								<div class="form-group">
 									<label class="sr-only" for="form-email">Email</label>
-									<form:input path="email" type="text" name="form-email" placeholder="Email..." class="form-email form-control" id="form-email"/>
-									<form:errors path="email" cssClass="error" />
+									<form:input path="email" type="text" name="form-email" placeholder="Email..."
+												class="form-email form-control" id="form-email" required="required"/>
+									<form:errors path="email" cssClass="text-danger"/>
 								</div>
 								<div class="form-group">
 									<label class="sr-only" for="form-last-name">Password</label>
-									<form:input path="password" type="password" name="password" placeholder="Password..." class="form-last-name form-control" id="form-password"/>
-									<form:errors path="password" cssClass="error" />
+									<form:input path="password" type="password" name="password"
+												placeholder="Password..." class="form-last-name form-control"
+												id="form-password" required="required"/>
+									<form:errors path="password" cssClass="text-danger"/>
 								</div>
 								<div class="form-group">
 									<label class="sr-only" for="form-last-name">Confirm password</label>
-									<form:input path="matchingPassword" type="password" name="confirm-password" placeholder="Confirm Password..." class="form-last-name form-control" id="form-confirm-password" />
-									<form:errors path="matchingPassword" cssClass="error" />
+									<form:input path="matchingPassword" type="password" name="confirm-password"
+												placeholder="Confirm Password..." class="form-last-name form-control"
+												id="form-confirm-password" required="required"/>
+									<form:errors path="matchingPassword" cssClass="text-danger"/>
 								</div>
 								<button type="submit" class="btn">Sign me up!</button>
 							</form:form>

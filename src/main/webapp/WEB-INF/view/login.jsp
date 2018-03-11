@@ -21,24 +21,12 @@
 		<link href="${style}" rel="stylesheet" />
 
 		<style>
-			.error {
-				padding: 15px;
-				margin-bottom: 20px;
-				border: 1px solid transparent;
-				border-radius: 4px;
-				color: #a94442;
-				background-color: #f2dede;
-				border-color: #ebccd1;
+			#topdiv {
+				margin-bottom: 0px;
 			}
 
-			.msg {
-				padding: 15px;
-				margin-bottom: 20px;
-				border: 1px solid transparent;
-				border-radius: 4px;
-				color: #31708f;
-				background-color: #d9edf7;
-				border-color: #bce8f1;
+			#bottomdiv {
+				margin-top: 20px;
 			}
 		</style>
 	</head>
@@ -58,22 +46,30 @@
                         </div>
                     </div>
 
-                    <div class="row">
+				<div class="row" id="">
+					<div class="col-sm-6 col-sm-offset-3 text">
+						<c:if test="${param.logout != null}">
+							<div class="alert alert-info">Logout successfully</div>
+						</c:if>
+					</div>
+				</div>
+
+				<div class="row" id="topdiv">
                         <div class="col-sm-offset-4 col-sm-4">
-                        	
-                        	<div class="form-box">
+
+							<div class="form-box" id="bottomdiv">
 	                        	<div class="form-top">
 	                        		<div class="form-top-left">
 	                        			<h3>Login to our site</h3>
 	                            		<p>Enter username and password to log on:</p>
 
 
-										<c:if test="${not empty param.logout}">
-											<div class="msg">Logout successfully</div>
-										</c:if>
+										<%--<c:if test="${param.logout !=null}">--%>
+										<%--<div class="error">Logout successfully</div>--%>
+										<%--</c:if>--%>
 
-										<c:if test="${not empty param.logout}">
-											<div class="error">Invalid username or password</div>
+										<c:if test="${param.error != null}">
+											<div class="alert alert-danger">Invalid username or password</div>
 										</c:if>
 
 	                        		</div>

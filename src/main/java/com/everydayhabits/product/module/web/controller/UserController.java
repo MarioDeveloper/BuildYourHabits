@@ -1,20 +1,12 @@
 package com.everydayhabits.product.module.web.controller;
 
-import com.everydayhabits.product.module.web.dto.UserDto;
-import com.everydayhabits.product.module.web.entity.User;
 import com.everydayhabits.product.module.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.validation.Valid;
 
 @Controller
 public class UserController {
@@ -31,48 +23,12 @@ public class UserController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-//    @GetMapping("/")
-//    public String showMainPanel() {
-//
-//        return "login";
-//    }
+    @GetMapping("/")
+    public String showMainPanel() {
 
-    @GetMapping("/registration")
-    public String showRegistrationForm(Model model) {
-
-        model.addAttribute("user", new UserDto());
-        return "registration";
+        return "login";
     }
 
-    @PostMapping("/processRegistrationForm")
-    public String processForm(
-            @Valid @ModelAttribute("user") UserDto userDto,
-            BindingResult theBindingResult) throws Exception {
-
-
-        if (theBindingResult.hasErrors()) {
-
-            theBindingResult.rejectValue("firstName", "error.firstName", "Field is required");
-            theBindingResult.rejectValue("lastName", "error.lastName", "Field is required");
-//            theBindingResult.rejectValue("email", "error.email", "Wrong email");
-            theBindingResult.rejectValue("password", "error.password", "Passwords are different");
-
-            return "registration";
-        }
-        else {
-            System.out.println("first name: " + userDto.getFirstName());
-            System.out.println("last name: " + userDto.getEmail());
-
-            User registerUser = new User();
-
-            registerUser = userService.registerNewUserAccount(userDto);
-
-            if(registerUser == null) {
-                theBindingResult.rejectValue("email", "error.email","Address email already exists");
-            }
-            return "registration";
-        }
-    }
 
     @GetMapping("/index")
     public String root() {
@@ -93,7 +49,7 @@ public class UserController {
     @GetMapping("/awards")
     public String showAwards() {
 
-        return "awards";
+        return "user-rewards";
     }
 
     @GetMapping("/ranking")
@@ -118,6 +74,12 @@ public class UserController {
     public String showHistory() {
 
         return "history";
+    }
+
+    @GetMapping("/overview")
+    public String showOverview() {
+
+        return "overview";
     }
 
 }

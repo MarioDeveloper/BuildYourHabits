@@ -10,16 +10,17 @@ import javax.validation.constraints.Size;
 @PasswordMatches
 public class UserDto {
 
-    @NotNull
+    //@NotNull
     @NotEmpty
     private String firstName;
 
-    @NotNull
+    //@NotNull
     @NotEmpty
     private String lastName;
 
-    @NotNull
+    //@NotNull
     @Size(min = 1)
+    @NotEmpty
     private String password;
     private String matchingPassword;
 
