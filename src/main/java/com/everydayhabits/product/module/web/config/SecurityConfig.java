@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/resources/**", "/registration**", "/processRegistrationForm").permitAll().anyRequest().authenticated().and().formLogin().defaultSuccessUrl("/overview", true).loginPage("/login").loginProcessingUrl("/j_security_check").failureUrl("/login?error").usernameParameter("j_username").passwordParameter("j_password").permitAll().and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout").permitAll();
+        http.csrf().disable().authorizeRequests().antMatchers("/resources/**", "/registration**", "/processRegistrationForm").permitAll().anyRequest().authenticated().and().formLogin().defaultSuccessUrl("/dashboard", true).loginPage("/login").loginProcessingUrl("/j_security_check").failureUrl("/login?error").usernameParameter("j_username").passwordParameter("j_password").permitAll().and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout").permitAll();
     }
 
     @Bean

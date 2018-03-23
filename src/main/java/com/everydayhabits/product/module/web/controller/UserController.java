@@ -30,9 +30,15 @@ public class UserController {
     }
 
 
-    @GetMapping("/index")
+    @GetMapping("/dashboard")
     public String root() {
-        return "index";
+        return "dashboard";
+    }
+
+
+    @GetMapping("/picker")
+    public String picker() {
+        return "picker";
     }
 
     @GetMapping("/login")
@@ -52,6 +58,12 @@ public class UserController {
         return "user-rewards";
     }
 
+    @GetMapping("/new")
+    public String showNew() {
+
+        return "new";
+    }
+
     @GetMapping("/ranking")
     public String showRanking() {
 
@@ -61,7 +73,7 @@ public class UserController {
     @GetMapping("/oneTimeEvent")
     public String showOneTimeEvent() {
 
-        return "one-time-event";
+        return "oneTimeEvent";
     }
 
     @GetMapping("/reccuringEvent")
@@ -76,10 +88,5 @@ public class UserController {
         return "history";
     }
 
-    @GetMapping("/overview")
-    public String showOverview() {
-
-        return "overview";
-    }
 
 }

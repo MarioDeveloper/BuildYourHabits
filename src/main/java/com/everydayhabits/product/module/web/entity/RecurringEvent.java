@@ -16,6 +16,9 @@ public class RecurringEvent {
     @Column(name = "frequency")
     private int frequency;
 
+    @Column(name = "frequency_unit")
+    private String frequencyUnit;
+
     @Column(name = "title")
     private String title;
 
@@ -41,8 +44,9 @@ public class RecurringEvent {
     public RecurringEvent() {
     }
 
-    public RecurringEvent(int frequency, String title, String description, String difficultyLevel, LocalDateTime start_date, LocalDateTime finish_date) {
+    public RecurringEvent(int frequency, String frequencyUnit, String title, String description, String difficultyLevel, LocalDateTime start_date, LocalDateTime finish_date) {
         this.frequency = frequency;
+        this.frequencyUnit = frequencyUnit;
         this.title = title;
         this.description = description;
         this.difficultyLevel = difficultyLevel;
@@ -64,6 +68,14 @@ public class RecurringEvent {
 
     public void setFrequency(int frequency) {
         this.frequency = frequency;
+    }
+
+    public String getFrequencyUnit() {
+        return frequencyUnit;
+    }
+
+    public void setFrequencyUnit(String frequencyUnit) {
+        this.frequencyUnit = frequencyUnit;
     }
 
     public String getTitle() { return title; }
