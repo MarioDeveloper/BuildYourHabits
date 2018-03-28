@@ -1,7 +1,7 @@
 package com.everydayhabits.product.module.web.entity;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "realization_recurring_event")
@@ -16,25 +16,31 @@ public class RealizationRecurringEvent {
     private RecurringEvent recurringEvent;
 
     @Column(name = "planned_date")
-    private LocalDateTime planned_date;
+//    @Temporal(TemporalType.DATE)
+    private Date plannedDate;
 
     @Column(name = "realization_date")
-    private LocalDateTime realization_date;
+//    @Temporal(TemporalType.DATE)
+    private Date realizationDate;
 
     @Column(name = "experience_point")
-    private int experience_point;
+    private int experience;
 
     @Column(name = "life_point")
-    private int life_point;
+    private int life;
+
+    @Column(name = "is_done")
+    private Boolean isDone;
 
 
     public RealizationRecurringEvent() {
     }
 
-    public RealizationRecurringEvent(LocalDateTime planned_date, int experience_point, int life_point) {
-        this.planned_date = planned_date;
-        this.experience_point = experience_point;
-        this.life_point = life_point;
+    public RealizationRecurringEvent(Date plannedDate, int experience, int life, Boolean isDone) {
+        this.plannedDate = plannedDate;
+        this.experience = experience;
+        this.life = life;
+        this.isDone = isDone;
     }
 
     public int getId() {
@@ -53,41 +59,49 @@ public class RealizationRecurringEvent {
         this.recurringEvent = recurringEvent;
     }
 
-    public LocalDateTime getPlanned_date() {
-        return planned_date;
+    public Date getPlannedDate() {
+        return plannedDate;
     }
 
-    public void setPlanned_date(LocalDateTime planned_date) {
-        this.planned_date = planned_date;
+    public void setPlannedDate(Date plannedDate) {
+        this.plannedDate = plannedDate;
     }
 
-    public LocalDateTime getRealization_date() {
-        return realization_date;
+    public Date getRealizationDate() {
+        return realizationDate;
     }
 
-    public void setRealization_date(LocalDateTime realization_date) {
-        this.realization_date = realization_date;
+    public void setRealizationDate(Date realizationDate) {
+        this.realizationDate = realizationDate;
     }
 
-    public int getExperience_point() {
-        return experience_point;
+    public int getExperience() {
+        return experience;
     }
 
-    public void setExperience_point(int experience_point) {
-        this.experience_point = experience_point;
+    public void setExperience(int experience) {
+        this.experience = experience;
     }
 
-    public int getLife_point() {
-        return life_point;
+    public int getLife() {
+        return life;
     }
 
-    public void setLife_point(int life_point) {
-        this.life_point = life_point;
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
     }
 
     @Override
     public String toString() {
-        return "RealizationRecurringEvent{" + "id=" + id + ", recurringEvent=" + recurringEvent + ", planned_date=" + planned_date + ", realization_date=" + realization_date + ", experience_point=" + experience_point + ", life_point=" + life_point + '}';
+        return "RealizationRecurringEvent{" + "id=" + id + ", recurringEvent=" + recurringEvent + ", plannedDate=" + plannedDate + ", realizationDate=" + realizationDate + ", experience=" + experience + ", life=" + life + '}';
     }
 }
 

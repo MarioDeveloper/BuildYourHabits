@@ -1,10 +1,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page pageEncoding="UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Dashboard">
@@ -136,7 +138,7 @@
                     <a href="${history}"><i class="fa fa-book"></i><span>&nbsp;Historia</span></a>
                 </li>
                 <li class="sub-menu">
-                    <c:url value="/awards" var="rewards"/>
+                    <c:url value="/rewards" var="rewards"/>
                     <a href="${rewards}"><i class="fa fa-briefcase"
                                             aria-hidden="true"></i><span>&nbsp;Nagrody</span></a>
                 </li>
@@ -174,35 +176,38 @@
                         <div class="col-lg-12">
                             <div class="form-panel">
                                 <h4 class="mb">Tworzenie wydarzenia jednorazowego</h4>
-                                <form class="form-horizontal style-form" method="get">
+
+                                <form:form action="createOneTimeEvent" modelAttribute="oneTimeEvent"
+                                           class="form-horizontal style-form" method="POST" accept-charset="UTF-8">
+
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Tytuł</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control">
+                                            <form:input path="title" type="text" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Opis</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control">
+                                            <form:input path="description" type="text" class="form-control"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Poziom trudności</label>
-                                        <select class="form-control" style="width: 100px;margin-left: 152px">
-                                            <option>Łatwy</option>
-                                            <option>Średni</option>
-                                            <option>Trudny</option>
-                                        </select>
+                                        <form:select path="difficultyLevel" class="form-control"
+                                                     style="width: 100px;margin-left: 152px">
+                                            <form:option value="Łatwy"/>
+                                            <form:option value="Średni"/>
+                                            <form:option value="Trudny"/>
+                                        </form:select>
                                     </div>
-
 
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Data wykonania</label>
                                         <div class='input-group date' id='datetimepicker1'
                                              style="width: 200px;margin-left: 152px">
-                                            <input type='text' class="form-control"/>
+                                            <form:input path="plannedDate" type="date" class="form-control"/>
                                             <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -216,11 +221,11 @@
                                         });
                                     </script>
 
-                                    <button type="button" class="btn btn-primary btn-lg btn-block buttonCreateEvent"
-                                            style="width: 300px;">Stwórz wydarzenie
-                                    </button>
+                                    <input type="submit" value="Stwórz wydarzenie"
+                                           class="btn btn-primary btn-lg btn-block buttonCreateEvent"
+                                           style="width: 300px;"/>
 
-                                </form>
+                                </form:form>
                             </div>
                         </div><!-- col-lg-12-->
                     </div><!-- /row -->

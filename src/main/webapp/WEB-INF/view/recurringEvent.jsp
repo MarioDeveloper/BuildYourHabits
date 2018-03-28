@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +11,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Historia</title>
+    <title>Tworzenie wydarzenia cyklicznego</title>
 
     <%--DATE TIME PICKER RESOURCES--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -30,6 +31,15 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker-standalone.css">
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+
+
+    <style>
+        .buttonCreateEvent {
+            position: relative;
+            left: 35%;
+        }
+
+    </style>
 
     <!-- Bootstrap core CSS -->
     <spring:url value="/resources/Theme/assets/css/bootstrap.css" var="bootstrap_core"/>
@@ -107,7 +117,7 @@
                 </li>
 
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="active">
                         <i class="fa fa-th"></i>
                         <span>Zaplanuj wydarzenie</span>
                     </a>
@@ -124,10 +134,10 @@
                 </li>
                 <li class="sub-menu">
                     <c:url value="/history" var="history"/>
-                    <a href="${history}" class="active"><i class="fa fa-book"></i><span>&nbsp;Historia</span></a>
+                    <a href="${history}"><i class="fa fa-book"></i><span>&nbsp;Historia</span></a>
                 </li>
                 <li class="sub-menu">
-                    <c:url value="/rewards" var="rewards"/>
+                    <c:url value="/awards" var="rewards"/>
                     <a href="${rewards}"><i class="fa fa-briefcase"
                                             aria-hidden="true"></i><span>&nbsp;Nagrody</span></a>
                 </li>
@@ -160,90 +170,90 @@
             <div class="row">
                 <div class="col-lg-9 main-chart">
 
-                    <div class="content-panel">
-                        <table class="table table-striped table-advance table-hover">
-                            <h4>Ranking</h4>
-                            <hr>
-                            <thead>
-                            <tr>
-                                <th><i class="fa fa-bullhorn"></i> Company</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Descrition</th>
-                                <th><i class="fa fa-bookmark"></i> Profit</th>
-                                <th><i class=" fa fa-edit"></i> Status</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td><a href="basic_table.html#">Company Ltd</a></td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>12000.00$</td>
-                                <td><span class="label label-info label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="basic_table.html#">
-                                        Dashgum co
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>17900.00$</td>
-                                <td><span class="label label-warning label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="basic_table.html#">
-                                        Another Co
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>14400.00$</td>
-                                <td><span class="label label-success label-mini">Paid</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="basic_table.html#">
-                                        Dashgum ext
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>22000.50$</td>
-                                <td><span class="label label-success label-mini">Paid</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="basic_table.html#">Total Ltd</a></td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>12120.00$</td>
-                                <td><span class="label label-warning label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div><!-- /content-panel -->
+                    <!-- BASIC FORM ELELEMNTS -->
+                    <div class="row mt">
+                        <div class="col-lg-12">
+                            <div class="form-panel">
+                                <h4 class="mb">Tworzenie wydarzenia jednorazowego</h4>
+
+                                <form:form action="createRecurringEvent" modelAttribute="recurringEvent"
+                                           class="form-horizontal style-form" method="POST" accept-charset="UTF-8">
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2 control-label">Tytuł</label>
+                                        <div class="col-sm-10">
+                                            <form:input path="title" type="text" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2 control-label">Opis</label>
+                                        <div class="col-sm-10">
+                                            <form:input path="description" type="text" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2 control-label">Poziom trudności</label>
+                                        <form:select path="difficultyLevel" class="form-control"
+                                                     style="width: 100px;margin-left: 152px">
+                                            <form:option value="Łatwy"/>
+                                            <form:option value="Średni"/>
+                                            <form:option value="Trudny"/>
+                                        </form:select>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2 control-label">Data rozpoczęcia</label>
+                                        <div class='input-group date' id='datetimepicker1'
+                                             style="width: 200px;margin-left: 152px">
+                                            <form:input path="startDate" type="date" class="form-control"/>
+                                            <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2 control-label">Data zakończenia</label>
+                                        <div class='input-group date' id='datetimepicker2'
+                                             style="width: 200px;margin-left: 152px">
+                                            <form:input path="finishDate" type="date" class="form-control"/>
+                                            <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2 control-label">Powtarzaj co</label>
+                                        <form:input path="frequency" type="text" class="form-control"
+                                                    style="width: 50px;display: inline-block;margin-left: 5px"/>
+                                        <form:select path="frequencyUnit" class="form-control"
+                                                style="width: 100px;margin-left: 20px;display: inline-block">
+                                            <form:option value="Minut"/>
+                                            <form:option value="Godzin"/>
+                                            <form:option value="Dni"/>
+                                            <form:option value="Tygodnie"/>
+                                            <form:option value="Miesiące"/>
+                                        </form:select>
+                                    </div>
+
+
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $('#datetimepicker1').datetimepicker({locale: 'pl'});
+                                            $('#datetimepicker2').datetimepicker({locale: 'pl'});
+                                        });
+                                    </script>
+
+                                    <input type="submit" value="Stwórz wydarzenie"
+                                           class="btn btn-primary btn-lg btn-block buttonCreateEvent"
+                                           style="width: 300px;"/>
+                                </form:form>
+                            </div>
+                        </div><!-- col-lg-12-->
+                    </div><!-- /row -->
 
                 </div>
 
@@ -321,6 +331,7 @@
                             </p>
                         </div>
                     </div>
+                    <!-- Fifth Action -->
                     <div class="desc">
                         <div class="thumb">
                             <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
@@ -333,6 +344,7 @@
                             </p>
                         </div>
                     </div>
+                    <!-- Fifth Action -->
                     <div class="desc">
                         <div class="thumb">
                             <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
@@ -342,7 +354,7 @@
                                 <muted>18 Hours Ago</muted>
                                 <br/>
                                 <a href="#">Daniel Pratt</a> purchased a wallet in your
-                                store.eidheefbkfbkfwedwfbewrfberbi<br/>
+                                store.dedwjkfbwjfbergwgwofhwofs<br/>
                             </p>
                         </div>
                     </div>
@@ -355,8 +367,14 @@
 
     <!--main content end-->
     <!--footer start-->
-    <!--main content end-->
-    <!--footer start-->
+    <%--<footer class="site-footer">--%>
+    <%--<div class="text-center">--%>
+    <%--2018 - MarioDeveloper--%>
+
+    <%--</div>--%>
+    <%--</footer>--%>
+
+
     <footer class="site-footer">
         <div class="text-center">
             2018 - MarioDeveloper

@@ -41,17 +41,16 @@ public class CreateRecurringEvent {
             int userId = 4;
             User tempUser = session.get(User.class, userId);
 
-            RecurringEvent recurringEvent = new RecurringEvent(2, "minuty", "Siłownia", "Idziemy do Platinium", "Hard", start_date_and_first_planned_date, tempDate);
+            //  RecurringEvent recurringEvent = new RecurringEvent(2, "minuty", "Siłownia", "Idziemy do Platinium", "Hard", start_date_and_first_planned_date, tempDate);
 
-            RealizationRecurringEvent realizationRecurringEvent = new RealizationRecurringEvent(start_date_and_first_planned_date, 10,-5);
+            //    RealizationRecurringEvent realizationRecurringEvent = new RealizationRecurringEvent(start_date_and_first_planned_date, 10,-5);
 
-            tempUser.addRecuuringEvent(recurringEvent);
+            //  tempUser.addRecuuringEvent(recurringEvent);
 
-            recurringEvent.addRealizationRecurringEvent(realizationRecurringEvent);
+            // recurringEvent.addRealizationRecurringEvent(realizationRecurringEvent);
 
 
-
-            session.save(recurringEvent);
+            // session.save(recurringEvent);
 
 
             // commit transaction

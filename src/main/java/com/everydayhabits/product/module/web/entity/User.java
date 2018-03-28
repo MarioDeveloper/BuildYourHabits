@@ -1,5 +1,8 @@
 package com.everydayhabits.product.module.web.entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,9 +39,11 @@ public class User {
     @Column(name = "experience")
     private int experience;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
     private List<RecurringEvent> recurringEvents;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<OneTimeEvent> oneTimeEvents;
 
@@ -46,6 +51,7 @@ public class User {
     private byte[] image;
 
     @Column(name = "registration_date")
+    @Temporal(TemporalType.DATE)
     private Date registration_date;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
@@ -80,6 +86,14 @@ public class User {
             this.firstName = firstName;
 
     }*/
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;

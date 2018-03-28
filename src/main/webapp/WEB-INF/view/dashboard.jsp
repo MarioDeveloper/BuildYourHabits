@@ -1,11 +1,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Dashboard">
@@ -41,8 +44,8 @@
     <spring:url value="/resources/Theme/assets/css/style-responsive.css" var="style_responsive"/>
     <link href="${style_responsive}" rel="stylesheet"/>
 
-    <spring:url value="/resources/MDB Free/css/mdb.min.css" var="mdb_min"/>
-    <link href="${mdb_min}" rel="stylesheet"/>
+    <%--<spring:url value="/resources/MDB Free/css/mdb.min.css" var="mdb_min"/>--%>
+    <%--<link href="${mdb_min}" rel="stylesheet"/>--%>
 
     <spring:url value="/resources/Theme/assets/css/to-do.css" var="to_do"/>
     <link href="${to_do}" rel="stylesheet"/>
@@ -52,7 +55,6 @@
     <%--<link href="${min_css}" rel="stylesheet" />--%>
 
 
-    <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">--%>
 
     <style>
         .polaroid {
@@ -146,7 +148,7 @@
                     <a href="${history}"><i class="fa fa-book"></i><span>&nbsp;Historia</span></a>
                 </li>
                 <li class="sub-menu">
-                    <c:url value="/awards" var="rewards"/>
+                    <c:url value="/rewards" var="rewards"/>
                     <a href="${rewards}"><i class="fa fa-briefcase"
                                             aria-hidden="true"></i><span>&nbsp;Nagrody</span></a>
                 </li>
@@ -184,10 +186,10 @@
                         <div class="col-md-4 col-sm-4 mb">
 
                             <div class="view overlay polaroid ">
-                                <img src="/resources/images/snake.jpg " class="img-fluid " alt="6">
-                                <a>
-                                    <div class="mask waves-effect waves-light rgba-white-slight"></div>
-                                </a>
+                                <img src="/resources/images/snake.jpg " width="300" height="290">
+                                <%--<a>--%>
+                                <%--<div class="mask waves-effect waves-light rgba-white-slight"></div>--%>
+                                <%--</a>--%>
                             </div>
 
                         </div><!-- /col-md-4-->
@@ -198,8 +200,9 @@
                                 <h4> Punkty życia</h4>
                                 <div class="progress progress-striped active ">
                                     <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1"
-                                         aria-valuemin="0" aria-valuemax="100" style="width: 85%">85
-                                        <span class="sr-only">45% Complete</span>
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         style="width: ${loggedUser.life}%">${loggedUser.life}
+                                        <span class="sr-only">100% Complete</span>
                                     </div>
                                 </div>
 
@@ -207,15 +210,16 @@
                                 <h4> Punkty doświadczenia</h4>
                                 <div class="progress progress-striped active ">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0"
-                                         aria-valuemax="100" style="width: 100%">100
+                                         aria-valuemax="100"
+                                         style="width: ${loggedUser.experience}%">${loggedUser.experience}
                                         <span class="sr-only">45% Complete</span>
                                     </div>
                                 </div>
 
-                                <h4> Aktualny poziom: <b>2</b></h4>
+                                <h4> Aktualny poziom: <b>${loggedUser.level.id}</b></h4>
                                 <div class="alert alert-success text-center" style="width: 150px;">
 
-                                    <h5><b>AMATOR</b></h5></div>
+                                    <h5><b>${loggedUser.level.description}</b></h5></div>
 
 
                             </div><!-- /showback -->
@@ -225,175 +229,206 @@
 
 
                     <!-- COMPLEX TO DO LIST -->
-                    <div class="row mt">
-                        <div class="col-md-12">
-                            <section class="task-panel tasks-widget">
-                                <div class="panel-heading">
-                                    <div class="pull-left"><h5><i class="fa fa-tasks"></i> Lista wydarzeń jednorazowych
-                                    </h5></div>
-                                    <br>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="task-content">
 
-                                        <ul class="task-list">
-                                            <li>
-                                                <div class="task-title">
-                                                    <span class="task-title-sp">Dashgum - Admin Panel Theme</span>
-                                                    <div class="pull-right hidden-phone">
-                                                        <button class="btn btn-success btn-xs"><i
-                                                                class=" fa fa-check"></i></button>
-                                                        <button class="btn btn-primary btn-xs"><i
-                                                                class="fa fa-pencil"></i></button>
-                                                        <button class="btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o "></i></button>
+                    <div class="row">
+
+                        <div class="col-md-12">
+
+                            <div class="content-panel">
+                                <table class="table table-striped table-advance table-hover">
+                                    <h4>Wydarzenia jednorazowe</h4>
+                                    <thead>
+                                    <tr>
+                                        <th><i class="fa fa-bullhorn"></i> Tytuł</th>
+                                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> Termin wykonania
+                                        </th>
+                                        <th><i class="fa fa-bookmark"></i> Opis</th>
+                                        <th><i class=" fa fa-edit"></i> Stopień trudności</th>
+                                        <%--<th></th>--%>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="tempOneTimeEventList" items="${oneTimeEventList}">
+
+                                        <c:url var="performOneTimeEvent" value="/performOneTimeEvent">
+                                            <c:param name="eventId" value="${tempOneTimeEventList.id}"/>
+                                        </c:url>
+
+                                        <c:url var="updateOneTimeEvent" value="/showFormForUpdateOneTimeEvent">
+                                            <c:param name="eventId" value="${tempOneTimeEventList.id}"/>
+                                        </c:url>
+
+                                        <c:url var="deleteOneTimeEven" value="/deleteOneTimeEvent">
+                                            <c:param name="eventId" value="${tempOneTimeEventList.id}"/>
+                                        </c:url>
+
+                                        <c:url var="failOneTimeEvent" value="/failOneTimeEvent">
+                                            <c:param name="eventId" value="${tempOneTimeEventList.id}"/>
+                                        </c:url>
+
+                                        <tr>
+                                            <td>${tempOneTimeEventList.title}</td>
+                                            <td>
+                                                <fmt:formatDate value="${tempOneTimeEventList.plannedDate}"
+                                                                pattern="dd/MM/yy - HH:mm"/>
+                                            </td>
+                                            <td>${tempOneTimeEventList.description}</td>
+                                            <td>${tempOneTimeEventList.difficultyLevel}</td>
+                                            <td>
+
+                                                <a href="${performOneTimeEvent}" class="btn btn-success btn-xs"><i
+                                                        class="fa fa-check"></i></a>
+                                                <a href="${updateOneTimeEvent}" class="btn btn-primary btn-xs"><i
+                                                        class="fa fa-pencil"></i></a>
+
+                                                <button class="btn btn-danger btn-xs" data-toggle="modal"
+                                                        data-target="#modalRemove"><i class="fa fa-trash-o "></i>
+                                                </button>
+                                                    <%--<a href="<spring:url value="${deleteOneTimeEven}" />" class="btn btn-danger btn-xs triggerRemove"><i class="fa fa-trash-o "></i></a>--%>
+                                                    <%--<a href="<spring:url value="" />" class="btn btn-danger btn-xs triggerRemove" data-target="#modalRemove" data-toggle="modal" ><i class="fa fa-trash-o "></i></a>--%>
+
+                                                <div class="modal fade" id="modalRemove" tabindex="-1" role="dialog"
+                                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-hidden="true">&times;
+                                                                </button>
+                                                                <h4 class="modal-title" id="myModalLabel">Wybierz jedną
+                                                                    z akcji</h4>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <a href="${failOneTimeEvent}" type="button"
+                                                                   class="btn btn-primary failBtn">Zadanie
+                                                                    niewykonane</a>
+                                                                <a href="${deleteOneTimeEven}"
+                                                                   class="btn btn-primary removeBtn">Anuluj
+                                                                    wydarzenie</a>
+                                                                <button type="button" class="btn btn-default"
+                                                                        data-dismiss="modal">Wyjdź
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </li>
-                                            <li>
-                                                <div class="task-title">
-                                                    <span class="task-title-sp">Extensive collection of plugins</span>
-                                                    <div class="pull-right hidden-phone">
-                                                        <button class="btn btn-success btn-xs"><i
-                                                                class=" fa fa-check"></i></button>
-                                                        <button class="btn btn-primary btn-xs"><i
-                                                                class="fa fa-pencil"></i></button>
-                                                        <button class="btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o "></i></button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="task-title">
-                                                    <span class="task-title-sp">Free updates always, no extra fees.</span>
-                                                    <%--<span class="badge bg-success">2 Days</span>--%>
-                                                    <div class="pull-right hidden-phone">
-                                                        <button class="btn btn-success btn-xs"><i
-                                                                class=" fa fa-check"></i></button>
-                                                        <button class="btn btn-primary btn-xs"><i
-                                                                class="fa fa-pencil"></i></button>
-                                                        <button class="btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o "></i></button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="task-title">
-                                                    <span class="task-title-sp">More features coming soon</span>
-                                                    <div class="pull-right hidden-phone">
-                                                        <button class="btn btn-success btn-xs"><i
-                                                                class=" fa fa-check"></i></button>
-                                                        <button class="btn btn-primary btn-xs"><i
-                                                                class="fa fa-pencil"></i></button>
-                                                        <button class="btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o "></i></button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="task-title">
-                                                    <span class="task-title-sp">Hey, seriously, you should buy this Dashboard</span>
-                                                    <div class="pull-right">
-                                                        <button class="btn btn-success btn-xs"><i
-                                                                class=" fa fa-check"></i></button>
-                                                        <button class="btn btn-primary btn-xs"><i
-                                                                class="fa fa-pencil"></i></button>
-                                                        <button class="btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o "></i></button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </section>
-                        </div><!-- /col-md-12-->
+
+
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div><!-- /content-panel -->
+
+
+                        </div>
+
+
                     </div><!-- /row -->
 
                     <!-- COMPLEX TO DO LIST -->
-                    <div class="row mt">
-                        <div class="col-md-12">
-                            <section class="task-panel tasks-widget">
-                                <div class="panel-heading">
-                                    <div class="pull-left"><h5><i class="fa fa-tasks"></i> Lista wydarzeń cyklicznych
-                                    </h5></div>
-                                    <br>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="task-content">
 
-                                        <ul class="task-list">
-                                            <li>
-                                                <div class="task-title">
-                                                    <span class="task-title-sp">Dashgum - Admin Panel Theme</span>
-                                                    <div class="pull-right hidden-phone">
-                                                        <button class="btn btn-success btn-xs"><i
-                                                                class=" fa fa-check"></i></button>
-                                                        <button class="btn btn-primary btn-xs"><i
-                                                                class="fa fa-pencil"></i></button>
-                                                        <button class="btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o "></i></button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="task-title">
-                                                    <span class="task-title-sp">Extensive collection of plugins</span>
-                                                    <div class="pull-right hidden-phone">
-                                                        <button class="btn btn-success btn-xs"><i
-                                                                class=" fa fa-check"></i></button>
-                                                        <button class="btn btn-primary btn-xs"><i
-                                                                class="fa fa-pencil"></i></button>
-                                                        <button class="btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o "></i></button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="task-title">
-                                                    <span class="task-title-sp">Free updates always, no extra fees.</span>
-                                                    <%--<span class="badge bg-success">2 Days</span>--%>
-                                                    <div class="pull-right hidden-phone">
-                                                        <button class="btn btn-success btn-xs"><i
-                                                                class=" fa fa-check"></i></button>
-                                                        <button class="btn btn-primary btn-xs"><i
-                                                                class="fa fa-pencil"></i></button>
-                                                        <button class="btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o "></i></button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="task-title">
-                                                    <span class="task-title-sp">More features coming soon</span>
-                                                    <div class="pull-right hidden-phone">
-                                                        <button class="btn btn-success btn-xs"><i
-                                                                class=" fa fa-check"></i></button>
-                                                        <button class="btn btn-primary btn-xs"><i
-                                                                class="fa fa-pencil"></i></button>
-                                                        <button class="btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o "></i></button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="task-title">
-                                                    <span class="task-title-sp">Hey, seriously, you should buy this Dashboard</span>
-                                                    <div class="pull-right">
-                                                        <button class="btn btn-success btn-xs"><i
-                                                                class=" fa fa-check"></i></button>
-                                                        <button class="btn btn-primary btn-xs"><i
-                                                                class="fa fa-pencil"></i></button>
-                                                        <button class="btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o "></i></button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </section>
-                        </div><!-- /col-md-12-->
+                    <div class="row">
+
+                        <div class="col-md-12">
+
+                            <div class="content-panel">
+                                <table class="table table-striped table-advance table-hover">
+                                    <h4>Wydarzenia cykliczne</h4>
+                                    <thead>
+                                    <tr>
+                                        <th><i class="fa fa-bullhorn"></i> Tytuł</th>
+                                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> Zaplanowany
+                                            termin
+                                        </th>
+                                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> Ostatni termin
+                                        </th>
+                                        <th><i class="fa fa-bookmark"></i> Powtarzane</th>
+                                        <th><i class="fa fa-bookmark"></i> Opis</th>
+                                        <th><i class=" fa fa-edit"></i> Stopień trudności</th>
+                                        <%--<th></th>--%>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="tempRealizationRecurringEvent"
+                                               items="${realizationRecurringEventList}">
+
+                                        <c:url var="performRecurringEvent" value="/performRecurringEvent">
+                                            <c:param name="eventId"
+                                                     value="${tempRealizationRecurringEvent.recurringEvent.id}"/>
+                                        </c:url>
+
+                                        <c:url var="updateRecurringEvent" value="/showFormForUpdateRecurringEvent">
+                                            <c:param name="eventId"
+                                                     value="${tempRealizationRecurringEvent.recurringEvent.id}"/>
+                                        </c:url>
+
+                                        <c:url var="failRecurringEvent" value="/failRecurringEvent">
+                                            <c:param name="eventId"
+                                                     value="${tempRealizationRecurringEvent.recurringEvent.id}"/>
+                                        </c:url>
+
+                                        <c:url var="skipRecurringEvent" value="/skipRecurringEvent">
+                                            <c:param name="eventId"
+                                                     value="${tempRealizationRecurringEvent.recurringEvent.id}"/>
+                                        </c:url>
+
+                                        <c:url var="cancelOtherRecurringEvents" value="/cancelOtherRecurringEvents">
+                                            <c:param name="eventId"
+                                                     value="${tempRealizationRecurringEvent.recurringEvent.id}"/>
+                                        </c:url>
+
+
+                                        <tr>
+                                            <td>${tempRealizationRecurringEvent.recurringEvent.title}</td>
+
+                                                <%--<c:forEach var="tempRealizationRecurringEvent" items="${realizationRecurringEventList}">--%>
+                                                <%--<td>--%>
+                                                <%--<fmt:formatDate value="${tempRealizationRecurringEvent.recurringEvent.}" pattern="dd/MM/yy - HH:mm" />--%>
+                                                <%--</td>--%>
+                                                <%--</c:forEach>--%>
+
+                                            <td>
+                                                <fmt:formatDate value="${tempRealizationRecurringEvent.plannedDate}"
+                                                                pattern="dd/MM/yy - HH:mm"/>
+                                            </td>
+
+
+                                            <td>
+                                                <fmt:formatDate
+                                                        value="${tempRealizationRecurringEvent.recurringEvent.finishDate}"
+                                                        pattern="dd/MM/yy - HH:mm"/>
+                                            </td>
+                                            <td>
+                                                Co ${tempRealizationRecurringEvent.recurringEvent.frequency} ${tempRealizationRecurringEvent.recurringEvent.frequencyUnit}
+                                            </td>
+                                            <td>${tempRealizationRecurringEvent.recurringEvent.description}</td>
+                                            <td>${tempRealizationRecurringEvent.recurringEvent.difficultyLevel}</td>
+                                            <td>
+
+                                                <a href="${performRecurringEvent}" class="btn btn-success btn-xs"><i
+                                                        class="fa fa-check"></i></a>
+                                                <a href="${updateRecurringEvent}" class="btn btn-primary btn-xs"><i
+                                                        class="fa fa-pencil"></i></a>
+                                                <a href="${failRecurringEvent}" class="btn btn-danger btn-xs"
+                                                   title="Zadanie niewykonane"><i class="fa fa-trash-o"></i></a>
+                                                <a href="${skipRecurringEvent}" class="btn btn-danger btn-xs"
+                                                   title="Pomiń wydarzenie"><i class="fa fa-trash-o"></i></a>
+                                                <a href="${cancelOtherRecurringEvents}" class="btn btn-danger btn-xs"
+                                                   title="Anuluj pozostałe wydarzenia"><i class="fa fa-trash-o"></i></a>
+
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div><!-- /content-panel -->
+
+
+                        </div>
+
+
                     </div><!-- /row -->
 
                 </div><!-- /col-lg-9 END SECTION MIDDLE -->
@@ -599,6 +634,21 @@
         console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
 </script>
+
+<%--<script type="text/javascript">--%>
+
+<%--$(document).ready(function () {--%>
+
+<%--$(".triggerRemove").click(function(e)  {--%>
+<%--e.preventDefault();--%>
+<%--$("#modalRemove .removeBtn").attr($(this).attr("href"), "href");--%>
+<%--//            $("#modalRemove .removeBtn").attr("href", $(this).attr("href"));--%>
+<%--//            $("#modalRemove .failBtn").attr("href", $(this).attr("href"));--%>
+<%--$("#modalRemove").modal();--%>
+<%--});--%>
+<%--})--%>
+
+<%--</script>--%>
 
 
 </body>

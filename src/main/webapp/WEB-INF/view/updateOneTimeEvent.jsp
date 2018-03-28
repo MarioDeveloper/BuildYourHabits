@@ -1,6 +1,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page pageEncoding="UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +12,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Tworzenie wydarzenia cyklicznego</title>
+    <title>Tworzenie wydarzenia jednorazowego</title>
 
     <%--DATE TIME PICKER RESOURCES--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -116,7 +118,7 @@
                 </li>
 
                 <li class="sub-menu">
-                    <a href="javascript:;" class="active">
+                    <a href="javascript:;">
                         <i class="fa fa-th"></i>
                         <span>Zaplanuj wydarzenie</span>
                     </a>
@@ -136,7 +138,7 @@
                     <a href="${history}"><i class="fa fa-book"></i><span>&nbsp;Historia</span></a>
                 </li>
                 <li class="sub-menu">
-                    <c:url value="/awards" var="rewards"/>
+                    <c:url value="/rewards" var="rewards"/>
                     <a href="${rewards}"><i class="fa fa-briefcase"
                                             aria-hidden="true"></i><span>&nbsp;Nagrody</span></a>
                 </li>
@@ -173,80 +175,59 @@
                     <div class="row mt">
                         <div class="col-lg-12">
                             <div class="form-panel">
-                                <h4 class="mb">Tworzenie wydarzenia jednorazowego</h4>
-                                <form class="form-horizontal style-form" method="get">
+                                <h4 class="mb">Edycja wydarzenia jednorazowego</h4>
+
+                                <form:form action="updateOneTimeEvent" modelAttribute="oneTimeEvent"
+                                           class="form-horizontal style-form" method="POST">
+
+                                    <form:hidden path="id"/>
+
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Tytuł</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control">
+                                            <form:input path="title" type="text" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Opis</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control">
+                                            <form:input path="description" type="text" class="form-control"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Poziom trudności</label>
-                                        <select class="form-control" style="width: 100px;margin-left: 152px">
-                                            <option>Łatwy</option>
-                                            <option>Średni</option>
-                                            <option>Trudny</option>
-                                        </select>
+                                        <form:select path="difficultyLevel" class="form-control"
+                                                     style="width: 100px;margin-left: 152px">
+                                            <form:option value="Łatwy"/>
+                                            <form:option value="Średni"/>
+                                            <form:option value="Trudny"/>
+                                        </form:select>
                                     </div>
 
-
                                     <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2 control-label">Data rozpoczęcia</label>
+                                        <label class="col-sm-2 col-sm-2 control-label">Data wykonania</label>
                                         <div class='input-group date' id='datetimepicker1'
                                              style="width: 200px;margin-left: 152px">
-                                            <input type='text' class="form-control"/>
+                                            <form:input path="plannedDate" type="date" class="form-control"/>
                                             <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                         </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2 control-label">Data zakończenia</label>
-                                        <div class='input-group date' id='datetimepicker2'
-                                             style="width: 200px;margin-left: 152px">
-                                            <input type='text' class="form-control"/>
-                                            <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2 control-label">Powtarzaj co</label>
-                                        <input type="text" class="form-control"
-                                               style="width: 50px;display: inline-block;margin-left: 5px">
-                                        <select class="form-control"
-                                                style="width: 100px;margin-left: 20px;display: inline-block">
-                                            <option>Minuty</option>
-                                            <option>Godziny</option>
-                                            <option>Dni</option>
-                                            <option>Tygodnie</option>
-                                            <option>Miesiące</option>
-                                        </select>
                                     </div>
 
 
                                     <script type="text/javascript">
                                         $(function () {
                                             $('#datetimepicker1').datetimepicker({locale: 'pl'});
-                                            $('#datetimepicker2').datetimepicker({locale: 'pl'});
                                         });
                                     </script>
 
-                                    <button type="button" class="btn btn-primary btn-lg btn-block buttonCreateEvent"
-                                            style="width: 300px;">Stwórz wydarzenie
-                                    </button>
+                                    <input type="submit" value="Zapisz zmiany"
+                                           class="btn btn-primary btn-lg btn-block buttonCreateEvent"
+                                           style="width: 300px;"/>
 
-                                </form>
+                                </form:form>
                             </div>
                         </div><!-- col-lg-12-->
                     </div><!-- /row -->
@@ -327,7 +308,6 @@
                             </p>
                         </div>
                     </div>
-                    <!-- Fifth Action -->
                     <div class="desc">
                         <div class="thumb">
                             <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
@@ -340,7 +320,6 @@
                             </p>
                         </div>
                     </div>
-                    <!-- Fifth Action -->
                     <div class="desc">
                         <div class="thumb">
                             <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
@@ -350,7 +329,7 @@
                                 <muted>18 Hours Ago</muted>
                                 <br/>
                                 <a href="#">Daniel Pratt</a> purchased a wallet in your
-                                store.dedwjkfbwjfbergwgwofhwofs<br/>
+                                store.eidheefbkfbkfwedwfbewrfberbi<br/>
                             </p>
                         </div>
                     </div>
@@ -363,14 +342,8 @@
 
     <!--main content end-->
     <!--footer start-->
-    <%--<footer class="site-footer">--%>
-    <%--<div class="text-center">--%>
-    <%--2018 - MarioDeveloper--%>
-
-    <%--</div>--%>
-    <%--</footer>--%>
-
-
+    <!--main content end-->
+    <!--footer start-->
     <footer class="site-footer">
         <div class="text-center">
             2018 - MarioDeveloper

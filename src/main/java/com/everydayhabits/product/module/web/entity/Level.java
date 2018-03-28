@@ -16,6 +16,14 @@ public class Level {
     public Level() {
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Level(String description) {
         this.description = description;
     }

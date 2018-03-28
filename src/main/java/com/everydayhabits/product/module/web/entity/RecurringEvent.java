@@ -1,8 +1,8 @@
 package com.everydayhabits.product.module.web.entity;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -13,12 +13,6 @@ public class RecurringEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "frequency")
-    private int frequency;
-
-    @Column(name = "frequency_unit")
-    private String frequencyUnit;
-
     @Column(name = "title")
     private String title;
 
@@ -28,11 +22,22 @@ public class RecurringEvent {
     @Column(name = "difficulty_level")
     private String difficultyLevel;
 
-    @Column(name = "start_date")
-    private LocalDateTime start_date;
+    @Column(name = "frequency")
+    private int frequency;
 
+    @Column(name = "frequency_unit")
+    private String frequencyUnit;
+
+    //    @Temporal(TemporalType.DATE)
+    @Column(name = "start_date")
+    private Date startDate;
+
+    //    @Temporal(TemporalType.DATE)
     @Column(name = "finish_date")
-    private LocalDateTime finish_date;
+    private Date finishDate;
+
+    @Column(name = "is_done")
+    private Boolean isDone;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -44,14 +49,15 @@ public class RecurringEvent {
     public RecurringEvent() {
     }
 
-    public RecurringEvent(int frequency, String frequencyUnit, String title, String description, String difficultyLevel, LocalDateTime start_date, LocalDateTime finish_date) {
-        this.frequency = frequency;
-        this.frequencyUnit = frequencyUnit;
+    public RecurringEvent(String title, String description, String difficultyLevel, int frequency, String frequencyUnit, Date startDate, Date finishDate, Boolean isDone) {
         this.title = title;
         this.description = description;
         this.difficultyLevel = difficultyLevel;
-        this.start_date = start_date;
-        this.finish_date = finish_date;
+        this.frequency = frequency;
+        this.frequencyUnit = frequencyUnit;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.isDone = isDone;
     }
 
     public int getId() {
@@ -100,20 +106,20 @@ public class RecurringEvent {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public LocalDateTime getStart_date() {
-        return start_date;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStart_date(LocalDateTime start_date) {
-        this.start_date = start_date;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public LocalDateTime getFinish_date() {
-        return finish_date;
+    public Date getFinishDate() {
+        return finishDate;
     }
 
-    public void setFinish_date(LocalDateTime finish_date) {
-        this.finish_date = finish_date;
+    public void setFinishDate(Date finishDate) {
+        this.finishDate = finishDate;
     }
 
     public User getUser() {
@@ -122,6 +128,14 @@ public class RecurringEvent {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
     }
 
     public List<RealizationRecurringEvent> getRealizationRecurringEvents() {
@@ -135,7 +149,7 @@ public class RecurringEvent {
     public void addRealizationRecurringEvent(RealizationRecurringEvent tempRealizationReccuringEvent) {
 
         if(realizationRecurringEvents == null) {
-            realizationRecurringEvents = new ArrayList<>();
+            realizationRecurringEvents = new ArrayList<RealizationRecurringEvent>();
         }
 
         realizationRecurringEvents.add(tempRealizationReccuringEvent);

@@ -11,7 +11,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 @EnableWebSecurity
 @Configuration
@@ -27,7 +29,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/resources/**", "/registration**", "/processRegistrationForm").permitAll().anyRequest().authenticated().and().formLogin().defaultSuccessUrl("/dashboard", true).loginPage("/login").loginProcessingUrl("/j_security_check").failureUrl("/login?error").usernameParameter("j_username").passwordParameter("j_password").permitAll().and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout").permitAll();
+
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+        http.addFilterBefore(filter, CsrfFilter.class);
+
+        http.csrf().disable();
+        http.authorizeRequests().antMatchers("/resources/**", "/registration**", "/processRegistrationForm").permitAll().anyRequest().authenticated().and().formLogin().defaultSuccessUrl("/dashboard", true).loginPage("/login").loginProcessingUrl("/j_security_check").failureUrl("/login?error").usernameParameter("j_username").passwordParameter("j_password").permitAll().and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout").permitAll();
+
+
     }
 
     @Bean

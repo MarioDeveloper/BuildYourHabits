@@ -1,7 +1,7 @@
 package com.everydayhabits.product.module.web.entity;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "one_time_event")
@@ -21,16 +21,19 @@ public class OneTimeEvent {
     private String difficultyLevel;
 
     @Column(name = "planned_date")
-    private LocalDateTime planned_date;
+    private Date plannedDate;
 
     @Column(name = "realization_date")
-    private LocalDateTime realization_date;
+    private Date realizationDate;
 
     @Column(name = "experience_point")
-    private int experience_point;
+    private int experience;
 
     @Column(name = "life_point")
-    private int life_point; // default 10 if fail
+    private int life;
+
+    @Column(name = "is_done")
+    private Boolean isDone;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -39,12 +42,14 @@ public class OneTimeEvent {
     public OneTimeEvent() {
     }
 
-    public OneTimeEvent(String description, String difficultyLevel, LocalDateTime planned_date, int experience_point, int life_point) {
+    public OneTimeEvent(String title, String description, String difficultyLevel, Date plannedDate, int experience, int life, Boolean isDone) {
+        this.title = title;
         this.description = description;
         this.difficultyLevel = difficultyLevel;
-        this.planned_date = planned_date;
-        this.experience_point = experience_point;
-        this.life_point = life_point;
+        this.plannedDate = plannedDate;
+        this.experience = experience;
+        this.life = life;
+        this.isDone = isDone;
     }
 
     public int getId() {
@@ -79,36 +84,44 @@ public class OneTimeEvent {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public LocalDateTime getPlanned_date() {
-        return planned_date;
+    public Date getPlannedDate() {
+        return plannedDate;
     }
 
-    public void setPlanned_date(LocalDateTime planned_date) {
-        this.planned_date = planned_date;
+    public void setPlannedDate(Date plannedDate) {
+        this.plannedDate = plannedDate;
     }
 
-    public LocalDateTime getRealization_date() {
-        return realization_date;
+    public Date getRealizationDate() {
+        return realizationDate;
     }
 
-    public void setRealization_date(LocalDateTime realization_date) {
-        this.realization_date = realization_date;
+    public void setRealizationDate(Date realizationDate) {
+        this.realizationDate = realizationDate;
     }
 
-    public int getExperience_point() {
-        return experience_point;
+    public int getExperience() {
+        return experience;
     }
 
-    public void setExperience_point(int experience_point) {
-        this.experience_point = experience_point;
+    public void setExperience(int experience) {
+        this.experience = experience;
     }
 
-    public int getLife_point() {
-        return life_point;
+    public int getLife() {
+        return life;
     }
 
-    public void setLife_point(int life_point) {
-        this.life_point = life_point;
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public Boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
     }
 
     public User getUser() {
@@ -119,8 +132,12 @@ public class OneTimeEvent {
         this.user = user;
     }
 
+    public Boolean getDone() {
+        return isDone;
+    }
+
     @Override
     public String toString() {
-        return "OneTimeEvent{" + "id=" + id + ", title='" + title + '\'' + ", description='" + description + '\'' + ", difficultyLevel='" + difficultyLevel + '\'' + ", planned_date=" + planned_date + ", realization_date=" + realization_date + ", experience_point=" + experience_point + ", life_point=" + life_point + ", user=" + user + '}';
+        return "OneTimeEvent{" + "id=" + id + ", title='" + title + '\'' + ", description='" + description + '\'' + ", difficultyLevel='" + difficultyLevel + '\'' + ", planned_date=" + plannedDate + ", realization_date=" + realizationDate + ", experience_point=" + experience + ", life_point=" + life + ", user=" + user + '}';
     }
 }

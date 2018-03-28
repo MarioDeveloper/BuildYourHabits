@@ -124,12 +124,12 @@
                 </li>
                 <li class="sub-menu">
                     <c:url value="/history" var="history"/>
-                    <a href="${history}" class="active"><i class="fa fa-book"></i><span>&nbsp;Historia</span></a>
+                    <a href="${history}"><i class="fa fa-book"></i><span>&nbsp;Historia</span></a>
                 </li>
                 <li class="sub-menu">
                     <c:url value="/rewards" var="rewards"/>
-                    <a href="${rewards}"><i class="fa fa-briefcase"
-                                            aria-hidden="true"></i><span>&nbsp;Nagrody</span></a>
+                    <a href="${rewards}" class="active"><i class="fa fa-briefcase"
+                                                           aria-hidden="true"></i><span>&nbsp;Nagrody</span></a>
                 </li>
                 <%--<hr width="220" align="left">--%>
                 <li class="sub-menu">
