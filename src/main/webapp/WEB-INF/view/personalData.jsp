@@ -1,16 +1,18 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page pageEncoding="UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Historia</title>
+    <title>Tworzenie wydarzenia jednorazowego</title>
 
     <%--DATE TIME PICKER RESOURCES--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -30,6 +32,15 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker-standalone.css">
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+
+
+    <style>
+        .buttonCreateEvent {
+            position: relative;
+            left: 35%;
+        }
+
+    </style>
 
     <!-- Bootstrap core CSS -->
     <spring:url value="/resources/Theme/assets/css/bootstrap.css" var="bootstrap_core"/>
@@ -124,7 +135,7 @@
                 </li>
                 <li class="sub-menu">
                     <c:url value="/history" var="history"/>
-                    <a href="${history}" class="active"><i class="fa fa-book"></i><span>&nbsp;Historia</span></a>
+                    <a href="${history}"><i class="fa fa-book"></i><span>&nbsp;Historia</span></a>
                 </li>
                 <li class="sub-menu">
                     <c:url value="/rewards" var="rewards"/>
@@ -133,13 +144,13 @@
                 </li>
                 <%--<hr width="220" align="left">--%>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="active">
                         <i class="fa fa-cogs"></i>
                         <span>Ustawienia konta</span>
                     </a>
                     <ul class="sub">
-                        <c:url value="/addPhoto" var="addPhoto"/>
-                        <li><a href="${addPhoto}"><b>Dodaj zdjęcie</b></a></li>
+                        <c:url value="/changePersonalData" var="changePersonalData"/>
+                        <li><a href="${changePersonalData}"><b>Edytuj dane osobowe</b></a></li>
                         <c:url value="/changePassword" var="changePassword"/>
                         <li><a href="${changePassword}"><b>Zmień hasło</b></a></li>
                     </ul>
@@ -160,90 +171,64 @@
             <div class="row">
                 <div class="col-lg-9 main-chart">
 
-                    <div class="content-panel">
-                        <table class="table table-striped table-advance table-hover">
-                            <h4>Ranking</h4>
-                            <hr>
-                            <thead>
-                            <tr>
-                                <th><i class="fa fa-bullhorn"></i> Company</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Descrition</th>
-                                <th><i class="fa fa-bookmark"></i> Profit</th>
-                                <th><i class=" fa fa-edit"></i> Status</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td><a href="basic_table.html#">Company Ltd</a></td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>12000.00$</td>
-                                <td><span class="label label-info label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="basic_table.html#">
-                                        Dashgum co
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>17900.00$</td>
-                                <td><span class="label label-warning label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="basic_table.html#">
-                                        Another Co
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>14400.00$</td>
-                                <td><span class="label label-success label-mini">Paid</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="basic_table.html#">
-                                        Dashgum ext
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>22000.50$</td>
-                                <td><span class="label label-success label-mini">Paid</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="basic_table.html#">Total Ltd</a></td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>12120.00$</td>
-                                <td><span class="label label-warning label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div><!-- /content-panel -->
+                    <!-- BASIC FORM ELELEMNTS -->
+                    <div class="row mt">
+                        <div class="col-lg-12">
+                            <div class="form-panel">
+                                <h4 class="mb">Edycja danych osobowych</h4>
+
+                                <form:form action="updatePersonalData" modelAttribute="user"
+                                           class="form-horizontal style-form" method="POST" accept-charset="UTF-8">
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2 control-label">Tytuł</label>
+                                        <div class="col-sm-10">
+                                            <form:input path="title" type="text" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2 control-label">Opis</label>
+                                        <div class="col-sm-10">
+                                            <form:input path="description" type="text" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2 control-label">Poziom trudności</label>
+                                        <form:select path="difficultyLevel" class="form-control"
+                                                     style="width: 100px;margin-left: 152px">
+                                            <form:option value="Łatwy"/>
+                                            <form:option value="Średni"/>
+                                            <form:option value="Trudny"/>
+                                        </form:select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2 control-label">Data wykonania</label>
+                                        <div class='input-group date' id='datetimepicker1'
+                                             style="width: 200px;margin-left: 152px">
+                                            <form:input path="plannedDate" type="date" class="form-control"/>
+                                            <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                        </div>
+                                    </div>
+
+
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $('#datetimepicker1').datetimepicker({locale: 'pl'});
+                                        });
+                                    </script>
+
+                                    <input type="submit" value="Stwórz wydarzenie"
+                                           class="btn btn-primary btn-lg btn-block buttonCreateEvent"
+                                           style="width: 300px;"/>
+
+                                </form:form>
+                            </div>
+                        </div><!-- col-lg-12-->
+                    </div><!-- /row -->
 
                 </div>
 

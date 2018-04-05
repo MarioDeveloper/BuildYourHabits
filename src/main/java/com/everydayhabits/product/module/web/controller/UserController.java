@@ -1,9 +1,6 @@
 package com.everydayhabits.product.module.web.controller;
 
-import com.everydayhabits.product.module.web.entity.OneTimeEvent;
-import com.everydayhabits.product.module.web.entity.RealizationRecurringEvent;
-import com.everydayhabits.product.module.web.entity.RecurringEvent;
-import com.everydayhabits.product.module.web.entity.User;
+import com.everydayhabits.product.module.web.entity.*;
 import com.everydayhabits.product.module.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -47,9 +44,13 @@ public class UserController {
         List<RecurringEvent> recurringEventList = userService.getRecurringEventsByUserId(loggedUser.getId());
         List<RealizationRecurringEvent> realizationRecurringEventList = userService.getRealizationRecurringEventList(recurringEventList);
 
+        List<Notification> notificationList = userService.getNotifications();
+
+        theModel.addAttribute("notificationList", notificationList);
         theModel.addAttribute("oneTimeEventList", oneTimeEventList);
         theModel.addAttribute("realizationRecurringEventList", realizationRecurringEventList);
         theModel.addAttribute("loggedUser", loggedUser);
+
 
         return "dashboard";
     }
@@ -66,8 +67,10 @@ public class UserController {
     @GetMapping("/showFormForUpdateOneTimeEvent")
     public String showFormForUpdateOneTimeEvent(@RequestParam("eventId") int eventId, Model theModel) {
 
+        List<Notification> notificationList = userService.getNotifications();
         OneTimeEvent oneTimeEvent = userService.getOneTimeEventById(eventId);
 
+        theModel.addAttribute("notificationList", notificationList);
         theModel.addAttribute("oneTimeEvent", oneTimeEvent);
 
         return "updateOneTimeEvent";
@@ -139,10 +142,39 @@ public class UserController {
         return "redirect:/dashboard";
     }
 
+    @GetMapping("/failRecurringEvent")
+    public String failRecurringEvent(@RequestParam("eventId") int eventId) {
+
+        String username = getLoggedInUsername();
+
+        userService.failRecurringEvent(eventId, username);
+
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/skipRecurringEvent")
+    public String skipRecurringEvent(@RequestParam("eventId") int eventId) {
+
+        userService.skipRecurringEvent(eventId);
+
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/cancelOtherRecurringEvents")
+    public String cancelOtherRecurringEvents(@RequestParam("eventId") int eventId) {
+
+        userService.cancelOtherRecurringEvents(eventId);
+
+        return "redirect:/dashboard";
+    }
+
     @GetMapping("/showFormForUpdateRecurringEvent")
     public String showFormForUpdateRecurringEvent(@RequestParam("eventId") int eventId, Model theModel) {
 
+        List<Notification> notificationList = userService.getNotifications();
         RecurringEvent recurringEvent = userService.getRecurringEventById(eventId);
+
+        theModel.addAttribute("notificationList", notificationList);
         theModel.addAttribute("recurringEvent", recurringEvent);
 
         return "updateRecurringEvent";
@@ -160,26 +192,58 @@ public class UserController {
     }
 
     @GetMapping("/rewards")
-    public String showAwards() {
+    public String showAwards(Model theModel) {
+
+        List<Notification> notificationList = userService.getNotifications();
+
+        theModel.addAttribute("notificationList", notificationList);
 
         return "rewards";
     }
 
-    @GetMapping("/new")
-    public String showNew() {
-
-        return "new";
-    }
 
     @GetMapping("/ranking")
-    public String showRanking() {
+    public String showRanking(Model theModel) {
+
+        String username = getLoggedInUsername();
+
+        List<User> userList = userService.getUsersByCriteria("allUsers", null);
+
+        User currentUser = userService.getUserByUsername(username);
+
+        List<Notification> notificationList = userService.getNotifications();
+
+        theModel.addAttribute("notificationList", notificationList);
+        theModel.addAttribute("currentUser", currentUser);
+        theModel.addAttribute("userList", userList);
 
         return "ranking";
     }
 
+    @GetMapping("/getUsersByCriteria")
+    public String getUsersByCriteria(@RequestParam("criteriaParam") String criteria, Model theModel) {
+
+        String username = getLoggedInUsername();
+
+        User currentUser = userService.getUserByUsername(username);
+
+        List<User> userList = userService.getUsersByCriteria(criteria, username);
+
+        theModel.addAttribute("currentUser", currentUser);
+        theModel.addAttribute("userList", userList);
+
+
+        return "ranking";
+    }
+
+
+
     @GetMapping("/oneTimeEvent")
     public String showOneTimeEvent(Model theModel) {
 
+        List<Notification> notificationList = userService.getNotifications();
+
+        theModel.addAttribute("notificationList", notificationList);
         theModel.addAttribute("oneTimeEvent", new OneTimeEvent());
 
         return "oneTimeEvent";
@@ -188,13 +252,20 @@ public class UserController {
     @GetMapping("/reccuringEvent")
     public String showRecurringEvent(Model theModel) {
 
+        List<Notification> notificationList = userService.getNotifications();
+
+        theModel.addAttribute("notificationList", notificationList);
         theModel.addAttribute("recurringEvent", new RecurringEvent());
 
         return "recurringEvent";
     }
 
     @GetMapping("/history")
-    public String showHistory() {
+    public String showHistory(Model theModel) {
+
+        List<Notification> notificationList = userService.getNotifications();
+
+        theModel.addAttribute("notificationList", notificationList);
 
         return "history";
     }

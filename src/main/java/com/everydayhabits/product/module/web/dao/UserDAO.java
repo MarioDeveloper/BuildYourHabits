@@ -39,4 +39,14 @@ public interface UserDAO {
     RecurringEvent getRecurringEventById(int eventId);
 
     void updateRecurringEvent(RecurringEvent recurringEvent);
+
+    void failRecurringEvent(int eventId, String username);
+
+    void skipRecurringEvent(int eventId);
+
+    void cancelOtherRecurringEvents(int eventId);
+
+    List<User> getUsersByCriteria(String criteria, String username);
+
+    List<Notification> getNotifications();
 }

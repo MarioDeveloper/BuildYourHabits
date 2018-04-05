@@ -1,6 +1,7 @@
 package com.everydayhabits.product.module.web.dto;
 
 import com.everydayhabits.product.module.web.validation.PasswordMatches;
+import com.everydayhabits.product.module.web.validation.ValidCity;
 import com.everydayhabits.product.module.web.validation.ValidEmail;
 
 import javax.validation.constraints.NotEmpty;
@@ -17,6 +18,13 @@ public class UserDto {
     //@NotNull
     @NotEmpty
     private String lastName;
+
+    @NotEmpty
+    @ValidCity
+    private String city;
+
+    @NotEmpty
+    private String gender;
 
     //@NotNull
     @Size(min = 1)
@@ -67,5 +75,21 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

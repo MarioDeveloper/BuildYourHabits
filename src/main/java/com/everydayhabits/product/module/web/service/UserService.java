@@ -1,10 +1,7 @@
 package com.everydayhabits.product.module.web.service;
 
 import com.everydayhabits.product.module.web.dto.UserDto;
-import com.everydayhabits.product.module.web.entity.OneTimeEvent;
-import com.everydayhabits.product.module.web.entity.RealizationRecurringEvent;
-import com.everydayhabits.product.module.web.entity.RecurringEvent;
-import com.everydayhabits.product.module.web.entity.User;
+import com.everydayhabits.product.module.web.entity.*;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -42,4 +39,14 @@ public interface UserService extends UserDetailsService {
     RecurringEvent getRecurringEventById(int eventId);
 
     void updateRecurringEvent(RecurringEvent recurringEvent);
+
+    void failRecurringEvent(int eventId, String username);
+
+    void skipRecurringEvent(int eventId);
+
+    void cancelOtherRecurringEvents(int eventId);
+
+    List<User> getUsersByCriteria(String criteria, String username);
+
+    List<Notification> getNotifications();
 }

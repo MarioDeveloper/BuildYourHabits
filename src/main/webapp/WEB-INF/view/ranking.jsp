@@ -160,86 +160,110 @@
             <div class="row">
                 <div class="col-lg-9 main-chart">
 
+
                     <div class="content-panel">
                         <table class="table table-striped table-advance table-hover">
                             <h4>Ranking</h4>
+
+                            <c:url var="loadByCity" value="/getUsersByCriteria">
+                                <c:param name="criteriaParam" value="${currentUser.city}"/>
+                            </c:url>
+
+                            <c:url var="loadWomen" value="/getUsersByCriteria">
+                                <c:param name="criteriaParam" value="K"/>
+                            </c:url>
+
+                            <c:url var="loadMen" value="/getUsersByCriteria">
+                                <c:param name="criteriaParam" value="M"/>
+                            </c:url>
+
+                            <c:url var="loadAllUser" value="/ranking"/>
+
+                            <div class="showback">
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group">
+                                        <a href="${loadByCity}" class="btn btn-primary btn-round">Twoje Miasto</a>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a href="${loadWomen}" class="btn btn-primary">Kobiety</a>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a href="${loadMen}" class="btn btn-primary">Mężczyźni</a>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a href="${loadAllUser}" class="btn btn-primary btn-round">Wszyscy</a>
+                                    </div>
+                                </div>
+                            </div><!--/showback -->
+
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 mb col-sm-offset-4">
+
+                                <div class="white-panel pn">
+                                    <div class="white-header">
+                                        <h5>Najlepszy użytkownik</h5>
+                                    </div>
+                                    <p><img src="/resources/images/snake.jpg" class="img-circle" width="80"></p>
+                                    <p><b><h4>Mariusz Wcisło</h4></b></p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="large mt">Poziom</p>
+                                            <p>5</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="large mt">Doświadczenie</p>
+                                            <p>90</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
                             <thead>
                             <tr>
-                                <th><i class="fa fa-bullhorn"></i> Company</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Descrition</th>
-                                <th><i class="fa fa-bookmark"></i> Profit</th>
-                                <th><i class=" fa fa-edit"></i> Status</th>
+                                <th><i class="fa fa-bullhorn"></i> Miejsce</th>
+                                <th><i class="fa fa-bullhorn"></i> Imię</th>
+                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Nazwisko</th>
+                                <th><i class="fa fa-bookmark"></i> Miasto</th>
+                                <th><i class="fa fa-edit"></i> Poziom</th>
+                                <th><i class="fa fa-edit"></i> Punkty doświadczenia</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td><a href="basic_table.html#">Company Ltd</a></td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>12000.00$</td>
-                                <td><span class="label label-info label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="basic_table.html#">
-                                        Dashgum co
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>17900.00$</td>
-                                <td><span class="label label-warning label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="basic_table.html#">
-                                        Another Co
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>14400.00$</td>
-                                <td><span class="label label-success label-mini">Paid</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="basic_table.html#">
-                                        Dashgum ext
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>22000.50$</td>
-                                <td><span class="label label-success label-mini">Paid</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="basic_table.html#">Total Ltd</a></td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>12120.00$</td>
-                                <td><span class="label label-warning label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
+
+
+                            <c:forEach var="tempUserList" items="${userList}" varStatus="loop">
+
+                                <c:url var="searchByCity" value="/getUsersByCriteria">
+                                    <c:param name="criteriaParam" value="${tempUserList.city}"/>
+                                </c:url>
+
+                                <c:url var="failRecurringEvent" value="/failRecurringEvent">
+                                    <c:param name="criteriaParam"
+                                             value="${tempRealizationRecurringEvent.recurringEvent.id}"/>
+                                </c:url>
+
+                                <c:url var="skipRecurringEvent" value="/skipRecurringEvent">
+                                    <c:param name="criteriaParam"
+                                             value="${tempRealizationRecurringEvent.recurringEvent.id}"/>
+                                </c:url>
+
+                                <c:url var="cancelOtherRecurringEvents" value="/cancelOtherRecurringEvents">
+                                    <c:param name="criteriaParam"
+                                             value="${tempRealizationRecurringEvent.recurringEvent.id}"/>
+                                </c:url>
+
+
+                                <tr>
+                                    <td>${loop.index + 1}</td>
+                                    <td>${tempUserList.firstName}</td>
+                                    <td>${tempUserList.lastName}</td>
+                                    <td>${tempUserList.city}</td>
+                                    <td>${tempUserList.level.id}</td>
+                                    <td>${tempUserList.experience}</td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div><!-- /content-panel -->
@@ -253,98 +277,25 @@
 
                 <div class="col-lg-3 ds">
                     <!--COMPLETED ACTIONS DONUTS CHART-->
-                    <h3>NOTIFICATIONS</h3>
+                    <h3>POWIADOMIENIA</h3>
 
-                    <!-- First Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                    <c:forEach var="tempNotificationList" items="${notificationList}">
+
+                        <div class="desc">
+                            <div class="thumb">
+                                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                            </div>
+                            <div class="details">
+                                <p>
+                                    <muted>${tempNotificationList.time} temu</muted>
+                                    <br/>
+                                    <a href="#">${tempNotificationList.firstName} ${tempNotificationList.lastName}</a>
+                                    wypełnił zadanie i zdobył ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
+                                </p>
+                            </div>
                         </div>
-                        <div class="details">
-                            <p>
-                                <muted>2 Minutes Ago</muted>
-                                <br/>
-                                <a href="#">James Brown</a> subscribed to your newsletter.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Second Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p>
-                                <muted>3 Hours Ago</muted>
-                                <br/>
-                                <a href="#">Diana Kennedy</a> purchased a year subscription.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Third Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p>
-                                <muted>7 Hours Ago</muted>
-                                <br/>
-                                <a href="#">Brandon Page</a> purchased a year subscription.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Fourth Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p>
-                                <muted>11 Hours Ago</muted>
-                                <br/>
-                                <a href="#">Mark Twain</a> commented your post.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Fifth Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p>
-                                <muted>18 Hours Ago</muted>
-                                <br/>
-                                <a href="#">Daniel Pratt</a> purchased a wallet in your store.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p>
-                                <muted>18 Hours Ago</muted>
-                                <br/>
-                                <a href="#">Daniel Pratt</a> purchased a wallet in your store.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p>
-                                <muted>18 Hours Ago</muted>
-                                <br/>
-                                <a href="#">Daniel Pratt</a> purchased a wallet in your
-                                store.eidheefbkfbkfwedwfbewrfberbi<br/>
-                            </p>
-                        </div>
-                    </div>
+                    </c:forEach>
+
                 </div><!-- /col-lg-3 -->
 
 

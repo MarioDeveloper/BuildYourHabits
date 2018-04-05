@@ -100,11 +100,11 @@
         <c:url value="/dashboard" var="dashboard"/>
         <a href="${dashboard}" class="logo"><b>CODZIENNE NAWYKI</b></a>
         <!--logo end-->
-        <div class="top-menu">
-            <ul class="nav pull-right top-menu">
-                <li><a class="logout">Logout</a></li>
-            </ul>
-        </div>
+        <%--<div class="top-menu">--%>
+        <%--<ul class="nav pull-right top-menu">--%>
+        <%--<li><a class="logout">Logout</a></li>--%>
+        <%--</ul>--%>
+        <%--</div>--%>
     </header>
     <!--header end-->
 
@@ -159,12 +159,24 @@
                         <span>Ustawienia konta</span>
                     </a>
                     <ul class="sub">
-                        <c:url value="/addPhoto" var="addPhoto"/>
-                        <li><a href="${addPhoto}"><b>Dodaj zdjęcie</b></a></li>
+                        <c:url value="/changePersonalData" var="changePersonalData"/>
+                        <li><a href="${changePersonalData}"><b>Edytuj dane osobowe</b></a></li>
                         <c:url value="/changePassword" var="changePassword"/>
                         <li><a href="${changePassword}"><b>Zmień hasło</b></a></li>
                     </ul>
                 </li>
+                    <li class="sub-menu">
+                        <c:url value="/logout" var="logout"/>
+                        <a href="${logout}"><i class="fa fa-briefcase"
+                                               aria-hidden="true"></i><span>&nbsp;Wyloguj się</span></a>
+                    </li>
+
+
+                    <%--<form:form action="${pageContext.request.contextPath}/logout" method="post">--%>
+
+                    <%--<input type="submit" value="logout" class="logout"/>--%>
+
+                    <%--</form:form>--%>
             </ul>
             <!-- sidebar menu end-->
         </div>
@@ -186,7 +198,7 @@
                         <div class="col-md-4 col-sm-4 mb">
 
                             <div class="view overlay polaroid ">
-                                <img src="/resources/images/snake.jpg " width="300" height="290">
+                                <img src="/resources/images/snake.jpg" width="300" height="290">
                                 <%--<a>--%>
                                 <%--<div class="mask waves-effect waves-light rgba-white-slight"></div>--%>
                                 <%--</a>--%>
@@ -281,13 +293,10 @@
                                                 <a href="${updateOneTimeEvent}" class="btn btn-primary btn-xs"><i
                                                         class="fa fa-pencil"></i></a>
 
-                                                <button class="btn btn-danger btn-xs" data-toggle="modal"
-                                                        data-target="#modalRemove"><i class="fa fa-trash-o "></i>
-                                                </button>
-                                                    <%--<a href="<spring:url value="${deleteOneTimeEven}" />" class="btn btn-danger btn-xs triggerRemove"><i class="fa fa-trash-o "></i></a>--%>
-                                                    <%--<a href="<spring:url value="" />" class="btn btn-danger btn-xs triggerRemove" data-target="#modalRemove" data-toggle="modal" ><i class="fa fa-trash-o "></i></a>--%>
+                                                <a href="" class="btn btn-danger btn-xs triggerRemove"><i
+                                                        class="fa fa-trash-o "></i></a>
 
-                                                <div class="modal fade" id="modalRemove" tabindex="-1" role="dialog"
+                                                <div class="modal fade" tabindex="-1" role="dialog"
                                                      aria-labelledby="myModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -300,10 +309,10 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <a href="${failOneTimeEvent}" type="button"
-                                                                   class="btn btn-primary failBtn">Zadanie
+                                                                   class="btn btn-primary">Zadanie
                                                                     niewykonane</a>
                                                                 <a href="${deleteOneTimeEven}"
-                                                                   class="btn btn-primary removeBtn">Anuluj
+                                                                   class="btn btn-primary">Anuluj
                                                                     wydarzenie</a>
                                                                 <button type="button" class="btn btn-default"
                                                                         data-dismiss="modal">Wyjdź
@@ -312,8 +321,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -327,7 +334,7 @@
 
                     </div><!-- /row -->
 
-                    <!-- COMPLEX TO DO LIST -->
+                    <!-- COMPLEX Recurring Events List -->
 
                     <div class="row">
 
@@ -383,18 +390,10 @@
                                         <tr>
                                             <td>${tempRealizationRecurringEvent.recurringEvent.title}</td>
 
-                                                <%--<c:forEach var="tempRealizationRecurringEvent" items="${realizationRecurringEventList}">--%>
-                                                <%--<td>--%>
-                                                <%--<fmt:formatDate value="${tempRealizationRecurringEvent.recurringEvent.}" pattern="dd/MM/yy - HH:mm" />--%>
-                                                <%--</td>--%>
-                                                <%--</c:forEach>--%>
-
                                             <td>
                                                 <fmt:formatDate value="${tempRealizationRecurringEvent.plannedDate}"
                                                                 pattern="dd/MM/yy - HH:mm"/>
                                             </td>
-
-
                                             <td>
                                                 <fmt:formatDate
                                                         value="${tempRealizationRecurringEvent.recurringEvent.finishDate}"
@@ -409,15 +408,42 @@
 
                                                 <a href="${performRecurringEvent}" class="btn btn-success btn-xs"><i
                                                         class="fa fa-check"></i></a>
+
                                                 <a href="${updateRecurringEvent}" class="btn btn-primary btn-xs"><i
                                                         class="fa fa-pencil"></i></a>
-                                                <a href="${failRecurringEvent}" class="btn btn-danger btn-xs"
-                                                   title="Zadanie niewykonane"><i class="fa fa-trash-o"></i></a>
-                                                <a href="${skipRecurringEvent}" class="btn btn-danger btn-xs"
-                                                   title="Pomiń wydarzenie"><i class="fa fa-trash-o"></i></a>
-                                                <a href="${cancelOtherRecurringEvents}" class="btn btn-danger btn-xs"
-                                                   title="Anuluj pozostałe wydarzenia"><i class="fa fa-trash-o"></i></a>
 
+                                                <a href="" class="btn btn-danger btn-xs triggerRemove"><i
+                                                        class="fa fa-trash-o "></i></a>
+
+                                                <div class="modal fade" tabindex="-1" role="dialog"
+                                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-hidden="true">&times;
+                                                                </button>
+                                                                <h4 class="modal-title" id="customModal">Wybierz jedną
+                                                                    z akcji</h4>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <a href="${failRecurringEvent}" type="button"
+                                                                   class="btn btn-primary">Zadanie niewykonane</a>
+
+                                                                <a href="${skipRecurringEvent}" class="btn btn-primary">Pomiń
+                                                                    wydarzenie</a>
+
+                                                                <a href="${cancelOtherRecurringEvents}"
+                                                                   class="btn btn-primary">Anuluj pozostałe
+                                                                    wydarzenia</a>
+
+                                                                <button type="button" class="btn btn-default"
+                                                                        data-dismiss="modal">Wyjdź
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -440,73 +466,25 @@
 
                 <div class="col-lg-3 ds">
                     <!--COMPLETED ACTIONS DONUTS CHART-->
-                    <h3>NOTIFICATIONS</h3>
+                    <h3>POWIADOMIENIA</h3>
 
-                    <!-- First Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                    <c:forEach var="tempNotificationList" items="${notificationList}">
+
+                        <div class="desc">
+                            <div class="thumb">
+                                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                            </div>
+                            <div class="details">
+                                <p>
+                                    <muted>${tempNotificationList.time} temu</muted>
+                                    <br/>
+                                    <a href="#">${tempNotificationList.firstName} ${tempNotificationList.lastName}</a>
+                                    wypełnił zadanie i zdobył ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
+                                </p>
+                            </div>
                         </div>
-                        <div class="details">
-                            <p>
-                                <muted>2 Minutes Ago</muted>
-                                <br/>
-                                <a href="#">James Brown</a> subscribed to your newsletter.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Second Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p>
-                                <muted>3 Hours Ago</muted>
-                                <br/>
-                                <a href="#">Diana Kennedy</a> purchased a year subscription.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Third Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p>
-                                <muted>7 Hours Ago</muted>
-                                <br/>
-                                <a href="#">Brandon Page</a> purchased a year subscription.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Fourth Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p>
-                                <muted>11 Hours Ago</muted>
-                                <br/>
-                                <a href="#">Mark Twain</a> commented your post.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Fifth Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p>
-                                <muted>18 Hours Ago</muted>
-                                <br/>
-                                <a href="#">Daniel Pratt</a> purchased a wallet in your store.<br/>
-                            </p>
-                        </div>
-                    </div>
+                    </c:forEach>
+
                 </div><!-- /col-lg-3 -->
             </div>
             <! --/row -->
@@ -635,20 +613,16 @@
     }
 </script>
 
-<%--<script type="text/javascript">--%>
+<script type="text/javascript">
 
-<%--$(document).ready(function () {--%>
+    $('.triggerRemove').click(function (e) {
+        e.preventDefault();
+        var modal = $(this).parent().find('.modal');
+        modal.modal(); // to otwiera modal
+    });
 
-<%--$(".triggerRemove").click(function(e)  {--%>
-<%--e.preventDefault();--%>
-<%--$("#modalRemove .removeBtn").attr($(this).attr("href"), "href");--%>
-<%--//            $("#modalRemove .removeBtn").attr("href", $(this).attr("href"));--%>
-<%--//            $("#modalRemove .failBtn").attr("href", $(this).attr("href"));--%>
-<%--$("#modalRemove").modal();--%>
-<%--});--%>
-<%--})--%>
 
-<%--</script>--%>
+</script>
 
 
 </body>

@@ -29,6 +29,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "gender")
+    private String gender;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "level_id")
     private Level level;
@@ -51,8 +57,7 @@ public class User {
     private byte[] image;
 
     @Column(name = "registration_date")
-    @Temporal(TemporalType.DATE)
-    private Date registration_date;
+    private Date registrationDate;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
@@ -65,11 +70,12 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String username, String password, int life, int experience) {
+    public User(String firstName, String lastName, String username, String password, String city, int life, int experience) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
+        this.city = city;
         this.life = life;
         this.experience = experience;
     }
@@ -151,6 +157,14 @@ public class User {
         this.experience = experience;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public byte[] getImage() {
         return image;
     }
@@ -159,13 +173,14 @@ public class User {
         this.image = image;
     }
 
-    public Date getRegistration_date() {
-        return registration_date;
+    public Date getRegistrationDate() {
+        return registrationDate;
     }
 
-    public void setRegistration_date(Date registration_date) {
-        this.registration_date = registration_date;
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
+
 
     public List<RecurringEvent> getRecurringEvents() {
         return recurringEvents;
@@ -191,6 +206,13 @@ public class User {
         this.rewards = rewards;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     public void addReward(Reward theReward){
 
@@ -226,7 +248,7 @@ public class User {
 
         @Override
     public String toString() {
-        return "User{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + username + '\'' + ", password='" + password + '\'' + ", level=" + level + ", life=" + life + ", experience=" + experience + ", image=" + Arrays.toString(image) + ", registration_date=" + registration_date + '}';
+            return "User{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + username + '\'' + ", password='" + password + '\'' + ", level=" + level + ", life=" + life + ", experience=" + experience + ", image=" + Arrays.toString(image) + ", registration_date=" + registrationDate + '}';
     }
 
 }

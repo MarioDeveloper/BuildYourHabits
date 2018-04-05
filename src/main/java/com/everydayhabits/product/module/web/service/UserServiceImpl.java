@@ -2,10 +2,7 @@ package com.everydayhabits.product.module.web.service;
 
 import com.everydayhabits.product.module.web.dao.UserDAO;
 import com.everydayhabits.product.module.web.dto.UserDto;
-import com.everydayhabits.product.module.web.entity.OneTimeEvent;
-import com.everydayhabits.product.module.web.entity.RealizationRecurringEvent;
-import com.everydayhabits.product.module.web.entity.RecurringEvent;
-import com.everydayhabits.product.module.web.entity.User;
+import com.everydayhabits.product.module.web.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -40,8 +38,16 @@ public class UserServiceImpl implements UserService {
         user.setLastName(registerUser.getLastName());
         user.setPassword(passwordEncoder.encode(registerUser.getPassword()));
         user.setUsername(registerUser.getEmail());
+        user.setCity(registerUser.getCity());
         user.setExperience(0);
         user.setLife(100);
+        user.setRegistrationDate(new Date());
+
+        if (registerUser.getGender().equals("Mężczyzna")) {
+            user.setGender("M");
+        } else {
+            user.setGender("K");
+        }
 
         user = userDAO.saveUser(user);
 
@@ -130,8 +136,31 @@ public class UserServiceImpl implements UserService {
         userDAO.performRecurringEvent(eventId);
     }
 
+    @Override
+    public void failRecurringEvent(int eventId, String username) {
+        userDAO.failRecurringEvent(eventId, username);
+    }
 
-    
+    @Override
+    public void skipRecurringEvent(int eventId) {
+        userDAO.skipRecurringEvent(eventId);
+    }
+
+    @Override
+    public void cancelOtherRecurringEvents(int eventId) {
+        userDAO.cancelOtherRecurringEvents(eventId);
+    }
+
+    @Override
+    public List<User> getUsersByCriteria(String criteria, String username) {
+        return userDAO.getUsersByCriteria(criteria, username);
+    }
+
+    @Override
+    public List<Notification> getNotifications() {
+        return userDAO.getNotifications();
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userDAO.findByEmail(email);

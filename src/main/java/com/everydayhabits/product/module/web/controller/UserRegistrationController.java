@@ -42,7 +42,13 @@ public class UserRegistrationController {
             }
             if (!(userDto.getPassword().equals(userDto.getMatchingPassword()))) {
                 theBindingResult.rejectValue("password", "error.password", "Passwords are different");
+            }
+            if (userDto.getCity().isEmpty()) {
+                theBindingResult.rejectValue("city", "error.city");
+            }
 
+            if (userDto.getGender().isEmpty()) {
+                theBindingResult.rejectValue("gender", "error.gender");
             }
 
             return "registration";
@@ -50,9 +56,7 @@ public class UserRegistrationController {
             System.out.println("first name: " + userDto.getFirstName());
             System.out.println("Email: " + userDto.getEmail());
 
-            User registerUser = new User();
-
-            registerUser = userService.registerNewUserAccount(userDto);
+            User registerUser = userService.registerNewUserAccount(userDto);
 
             if (registerUser == null) {
                 theBindingResult.rejectValue("email", "error.email", "Address email already exists");

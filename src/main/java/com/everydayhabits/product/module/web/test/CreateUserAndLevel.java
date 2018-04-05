@@ -28,7 +28,7 @@ public class CreateUserAndLevel {
 
             Level tempLevel = new Level("firstAttempt");
 
-            User tempUser = new User("Super","Mario","mario@gmail.com","pass",100,100);
+            User tempUser = new User("Super", "Mario", "mario@gmail.com", "pass", "Kraków", 100, 100);
 
             tempUser.setLevel(tempLevel);
 

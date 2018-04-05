@@ -1,10 +1,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Habitica Login Page</title>
@@ -41,7 +42,7 @@
                 	
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 text">
-                                   <h1><strong>Habitica</strong> Login Form</h1>
+							<h1><strong>Buduj</strong> swoje nawyki</h1>
                             </div>
                         </div>
                     </div>
@@ -49,7 +50,7 @@
 				<div class="row" id="">
 					<div class="col-sm-6 col-sm-offset-3 text">
 						<c:if test="${param.logout != null}">
-							<div class="alert alert-info">Logout successfully</div>
+							<div class="alert alert-info">Udane wylogowanie</div>
 						</c:if>
 					</div>
 				</div>
@@ -60,16 +61,16 @@
 							<div class="form-box" id="bottomdiv">
 	                        	<div class="form-top">
 	                        		<div class="form-top-left">
-	                        			<h3>Login to our site</h3>
-	                            		<p>Enter username and password to log on:</p>
+										<h3>Zaloguj się do naszej aplikacji</h3>
+										<p>Wpisz email oraz hasło, aby się zalogować:</p>
 
 
 										<%--<c:if test="${param.logout !=null}">--%>
-										<%--<div class="error">Logout successfully</div>--%>
+										<%--<div class="alert alert-success">Udane wylogowanie</div>--%>
 										<%--</c:if>--%>
 
 										<c:if test="${param.error != null}">
-											<div class="alert alert-danger">Invalid username or password</div>
+											<div class="alert alert-danger">Niepoprawny email lub hasło</div>
 										</c:if>
 
 	                        		</div>
@@ -81,22 +82,27 @@
 				                    <form role="form" action="<c:url value='/j_security_check?${_csrf.parameterName}=${_csrf.token} }' />" method="POST" class="login-form">
 				                    	<div class="form-group">
 				                    		<label class="sr-only" for="form-username">Username</label>
-				                        	<input type="text" name='j_username' placeholder="Username..." class="form-username form-control" id="form-username">
+											<input type="text" name='j_username' placeholder="Email..."
+												   class="form-username form-control" id="form-username">
 				                        </div>
 				                        <div class="form-group">
 				                        	<label class="sr-only" for="form-password">Password</label>
-				                        	<input type="password" name='j_password' placeholder="Password..." class="form-password form-control" id="form-password">
+											<input type="password" name='j_password' placeholder="Hasło..."
+												   class="form-password form-control" id="form-password">
 				                        </div>
-				                        <button type="submit" class="btn">Log in!</button>
+										<button type="submit" class="btn">Zaloguj się!</button>
 				                    </form>
 			                    </div>
 		                    </div>
 
-							<!-- Footer -->
-							<footer>
-								<c:url value="/registration" var="registration"/>
-								<a href="${registration}">Registration Form</a>
-							</footer>
+							<div class="social-login">
+								<h3>...albo stwórz własne konto:</h3>
+								<div class="social-login-buttons">
+									<c:url value="/registration" var="registration"/>
+									<a href="${registration}" class="btn btn-link-1 btn-link-1-google-plus"> Zarejestruj
+										się! </a>
+								</div>
+							</div>
 
 							<input type="hidden"
 										   name="${_csrf.parameterName}"
