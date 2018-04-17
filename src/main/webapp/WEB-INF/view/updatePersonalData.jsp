@@ -1,17 +1,18 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@page pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Tworzenie wydarzenia cyklicznego</title>
+    <title>Tworzenie wydarzenia jednorazowego</title>
 
     <%--DATE TIME PICKER RESOURCES--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -137,17 +138,19 @@
                                             aria-hidden="true"></i><span>&nbsp;Nagrody</span></a>
                 </li>
                 <%--<hr width="220" align="left">--%>
-                <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fa fa-cogs"></i>
-                        <span>Ustawienia konta</span>
-                    </a>
-                    <ul class="sub">
-                        <c:url var="showFormForUpdateUserPersonalData" value="showFormForUpdateUserPersonalData"/>
-                        <li><a href="<c:out value="${showFormForUpdateUserPersonalData}"/>"><b>Edytuj dane
-                            osobowe</b></a></li>
-                    </ul>
-                </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-cogs"></i>
+                            <span>Ustawienia konta</span>
+                        </a>
+                        <ul class="sub">
+                            <c:url var="showFormForUpdateUserPersonalData" value="showFormForUpdateUserPersonalData"/>
+                            <li><a href="<c:out value="${showFormForUpdateUserPersonalData}"/>"><b>Edytuj dane
+                                osobowe</b></a></li>
+                            <c:url var="showFormForUpdateUserImage" value="showFormForUpdateUserImage"/>
+                            <li><a href="<c:out value="${showFormForUpdateUserImage}"/>"><b>Edytuj zdjęcie</b></a></li>
+                        </ul>
+                    </li>
                     <li class="sub-menu">
                         <c:url value="/logout" var="logout"/>
                         <a href="${logout}"><i class="fa fa-briefcase"
@@ -173,85 +176,70 @@
                     <div class="row mt">
                         <div class="col-lg-12">
                             <div class="form-panel">
-                                <h4 class="mb">Edycja wydarzenia cyklicznego</h4>
+                                <h4 class="mb">Edycja danych osobowych</h4>
 
-                                <form:form action="updateRecurringEvent" modelAttribute="recurringEvent"
+                                <form:form action="/updatePersonalData" modelAttribute="userDto"
                                            class="form-horizontal style-form" method="POST" accept-charset="UTF-8">
 
                                     <form:hidden path="id"/>
+                                    <form:hidden path="gender"/>
+
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2 control-label">Tytuł</label>
+                                        <label class="col-sm-2 col-sm-2 control-label">Imię</label>
                                         <div class="col-sm-10">
-                                            <form:input path="title" type="text" class="form-control"/>
+                                            <form:input path="firstName" type="text" class="form-control"
+                                                        required="required"/>
+                                            <form:errors path="firstName" cssClass="text-danger"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2 control-label">Opis</label>
+                                        <label class="col-sm-2 col-sm-2 control-label">Nazwisko</label>
                                         <div class="col-sm-10">
-                                            <form:input path="description" type="text" class="form-control"/>
+                                            <form:input path="lastName" type="text" class="form-control"
+                                                        required="required"/>
+                                            <form:errors path="lastName" cssClass="text-danger"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2 control-label">Email</label>
+                                        <div class="col-sm-10">
+                                            <form:input path="email" type="text" class="form-control"
+                                                        required="required"/>
+                                            <form:errors path="email" cssClass="text-danger"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2 control-label">Poziom trudności</label>
-                                        <form:select path="difficultyLevel" class="form-control"
-                                                     style="width: 100px;margin-left: 152px">
-                                            <form:option value="Łatwy"/>
-                                            <form:option value="Średni"/>
-                                            <form:option value="Trudny"/>
-                                        </form:select>
+                                        <label class="col-sm-2 col-sm-2 control-label">Miasto</label>
+                                        <div class="col-sm-10">
+                                            <form:input path="city" type="text" class="form-control"
+                                                        required="required"/>
+                                            <form:errors path="city" cssClass="text-danger"/>
+                                        </div>
                                     </div>
-
-
                                     <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2 control-label">Data następnego
-                                            wydarzenia</label>
-                                        <div class='input-group date' id='datetimepicker1'
-                                             style="width: 200px;margin-left: 152px">
-                                            <form:input path="startDate" type="date" class="form-control"/>
-                                            <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
+                                        <label class="col-sm-2 col-sm-2 control-label">Hasło</label>
+                                        <div class="col-sm-10">
+                                            <form:input path="password" type="password" class="form-control"
+                                                        required="required"/>
+                                            <form:errors path="password" cssClass="text-danger"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2 control-label">Data zakończenia</label>
-                                        <div class='input-group date' id='datetimepicker2'
-                                             style="width: 200px;margin-left: 152px">
-                                            <form:input path="finishDate" type="date" class="form-control"/>
-                                            <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
+                                        <label class="col-sm-2 col-sm-2 control-label">Potwierdź hasło</label>
+                                        <div class="col-sm-10">
+                                            <form:input path="matchingPassword" type="password" class="form-control"
+                                                        required="required"/>
+                                            <form:errors path="matchingPassword" cssClass="text-danger"/>
                                         </div>
                                     </div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2 control-label">Powtarzaj co</label>
-                                        <form:input path="frequency" type="text" class="form-control"
-                                                    style="width: 50px;display: inline-block;margin-left: 5px"/>
-                                        <form:select path="frequencyUnit" class="form-control"
-                                                     style="width: 100px;margin-left: 20px;display: inline-block">
-                                            <form:option value="Minut"/>
-                                            <form:option value="Godzin"/>
-                                            <form:option value="Dni"/>
-                                            <form:option value="Tygodnie"/>
-                                            <form:option value="Miesiące"/>
-                                        </form:select>
-                                    </div>
-
-
-                                    <script type="text/javascript">
-                                        $(function () {
-                                            $('#datetimepicker1').datetimepicker({locale: 'pl'});
-                                            $('#datetimepicker2').datetimepicker({locale: 'pl'});
-                                        });
-                                    </script>
 
                                     <input type="submit" value="Zapisz zmiany"
                                            class="btn btn-primary btn-lg btn-block buttonCreateEvent"
                                            style="width: 300px;"/>
+
                                 </form:form>
                             </div>
                         </div><!-- col-lg-12-->
@@ -294,14 +282,8 @@
 
     <!--main content end-->
     <!--footer start-->
-    <%--<footer class="site-footer">--%>
-    <%--<div class="text-center">--%>
-    <%--2018 - MarioDeveloper--%>
-
-    <%--</div>--%>
-    <%--</footer>--%>
-
-
+    <!--main content end-->
+    <!--footer start-->
     <footer class="site-footer">
         <div class="text-center">
             2018 - MarioDeveloper

@@ -22,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.debug(false);

@@ -9,6 +9,8 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -30,6 +32,8 @@ public class AppConfig implements WebMvcConfigurer {
 	@Autowired
 	private Environment env;
 
+	private int maxUploadSizeInMb = 5 * 1024 * 1024; // 5 MB
+
 	private Properties getHibernateProperties() {
 		Properties prop = new Properties();
 		prop.put("hibernate.format_sql", "true");
@@ -37,6 +41,11 @@ public class AppConfig implements WebMvcConfigurer {
 		prop.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		prop.put("hibernate.connection.CharSet", "utf-8");
 		return prop;
+	}
+
+	@Bean
+	public MultipartResolver multipartResolver() {
+		return new StandardServletMultipartResolver();
 	}
 
 	@Bean
@@ -85,6 +94,15 @@ public class AppConfig implements WebMvcConfigurer {
 		viewResolver.setContentType("text/html;charset=UTF-8");
 		return viewResolver;
 	}
+
+//	@Bean
+//	public CommonsMultipartResolver multipartResolver(){
+//		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+//		resolver.setMaxUploadSizePerFile(10240); //10Kb
+//		resolver.setDefaultEncoding("UTF-8");
+//		resolver.setResolveLazily(true);
+//		return resolver;
+//	}
 
 
 	@Override

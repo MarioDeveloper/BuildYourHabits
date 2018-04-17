@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -77,6 +78,35 @@
             bottom: 0;
             left: 10.95%;
             width: 89.05%;
+        }
+
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+
+        .upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
         }
 
     </style>
@@ -159,10 +189,14 @@
                         <span>Ustawienia konta</span>
                     </a>
                     <ul class="sub">
-                        <c:url value="/changePersonalData" var="changePersonalData"/>
-                        <li><a href="${changePersonalData}"><b>Edytuj dane osobowe</b></a></li>
-                        <c:url value="/changePassword" var="changePassword"/>
-                        <li><a href="${changePassword}"><b>Zmień hasło</b></a></li>
+                        <c:url var="showFormForUpdateUserPersonalData" value="showFormForUpdateUserPersonalData"/>
+                        <li><a href="<c:out value="${showFormForUpdateUserPersonalData}"/>"><b>Edytuj dane
+                            osobowe</b></a></li>
+
+                        <c:if test="${loggedUser.image != null}">
+                            <c:url var="showFormForUpdateUserImage" value="showFormForUpdateUserImage"/>
+                            <li><a href="<c:out value="${showFormForUpdateUserImage}"/>"><b>Edytuj zdjęcie</b></a></li>
+                        </c:if>
                     </ul>
                 </li>
                     <li class="sub-menu">
@@ -170,13 +204,6 @@
                         <a href="${logout}"><i class="fa fa-briefcase"
                                                aria-hidden="true"></i><span>&nbsp;Wyloguj się</span></a>
                     </li>
-
-
-                    <%--<form:form action="${pageContext.request.contextPath}/logout" method="post">--%>
-
-                    <%--<input type="submit" value="logout" class="logout"/>--%>
-
-                    <%--</form:form>--%>
             </ul>
             <!-- sidebar menu end-->
         </div>
@@ -196,16 +223,25 @@
                     <div class="row mt">
 
                         <div class="col-md-4 col-sm-4 mb">
-
-                            <div class="view overlay polaroid ">
-                                <img src="/resources/images/snake.jpg" width="300" height="290">
-                                <%--<a>--%>
-                                <%--<div class="mask waves-effect waves-light rgba-white-slight"></div>--%>
-                                <%--</a>--%>
-                            </div>
-
+                            <c:choose>
+                                <c:when test="${loggedUser.image == null}">
+                                    <form method="POST" action="${pageContext.request.contextPath}/upload"
+                                          enctype="multipart/form-data">
+                                        <div class="col-sm-offset-3">
+                                            <label class="badge bg-info" style="text-align: center"><h5>Dodaj swoje
+                                                zdjęcie</h5></label>
+                                        </div>
+                                        <input type="file" name="file" class="form-control"
+                                               onchange="this.form.submit()">
+                                    </form>
+                                </c:when>
+                                <c:otherwise>
+                                    <div>
+                                        <img src="data:image/jpeg;base64,${userImage}" width="300" height="290">
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </div><!-- /col-md-4-->
-
 
                         <div class="col-md-8 col-sm-4  mb">
                             <div class="showback">
@@ -251,11 +287,11 @@
                                     <h4>Wydarzenia jednorazowe</h4>
                                     <thead>
                                     <tr>
-                                        <th><i class="fa fa-bullhorn"></i> Tytuł</th>
-                                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> Termin wykonania
+                                        <th><i class=""></i> Tytuł</th>
+                                        <th class=""><i class=""></i> Termin wykonania
                                         </th>
-                                        <th><i class="fa fa-bookmark"></i> Opis</th>
-                                        <th><i class=" fa fa-edit"></i> Stopień trudności</th>
+                                        <th><i class=""></i> Opis</th>
+                                        <th><i class=" "></i> Stopień trudności</th>
                                         <%--<th></th>--%>
                                     </tr>
                                     </thead>
@@ -345,15 +381,15 @@
                                     <h4>Wydarzenia cykliczne</h4>
                                     <thead>
                                     <tr>
-                                        <th><i class="fa fa-bullhorn"></i> Tytuł</th>
-                                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> Zaplanowany
+                                        <th><i class=""></i> Tytuł</th>
+                                        <th class=""><i class=""></i> Zaplanowany
                                             termin
                                         </th>
-                                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> Ostatni termin
+                                        <th class=""><i class=""></i> Ostatni termin
                                         </th>
-                                        <th><i class="fa fa-bookmark"></i> Powtarzane</th>
-                                        <th><i class="fa fa-bookmark"></i> Opis</th>
-                                        <th><i class=" fa fa-edit"></i> Stopień trudności</th>
+                                        <th><i class=""></i> Powtarzane</th>
+                                        <th><i class=""></i> Opis</th>
+                                        <th><i class=""></i> Stopień trudności</th>
                                         <%--<th></th>--%>
                                     </tr>
                                     </thead>

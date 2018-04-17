@@ -90,11 +90,6 @@
         <c:url value="/dashboard" var="dashboard"/>
         <a href="${dashboard}" class="logo"><b>CODZIENNE NAWYKI</b></a>
         <!--logo end-->
-        <div class="top-menu">
-            <ul class="nav pull-right top-menu">
-                <li><a class="logout">Logout</a></li>
-            </ul>
-        </div>
     </header>
     <!--header end-->
 
@@ -137,7 +132,7 @@
                     <a href="${history}"><i class="fa fa-book"></i><span>&nbsp;Historia</span></a>
                 </li>
                 <li class="sub-menu">
-                    <c:url value="/awards" var="rewards"/>
+                    <c:url value="/rewards" var="rewards"/>
                     <a href="${rewards}"><i class="fa fa-briefcase"
                                             aria-hidden="true"></i><span>&nbsp;Nagrody</span></a>
                 </li>
@@ -148,12 +143,16 @@
                         <span>Ustawienia konta</span>
                     </a>
                     <ul class="sub">
-                        <c:url value="/addPhoto" var="addPhoto"/>
-                        <li><a href="${addPhoto}"><b>Dodaj zdjęcie</b></a></li>
-                        <c:url value="/changePassword" var="changePassword"/>
-                        <li><a href="${changePassword}"><b>Zmień hasło</b></a></li>
+                        <c:url var="showFormForUpdateUserPersonalData" value="showFormForUpdateUserPersonalData"/>
+                        <li><a href="<c:out value="${showFormForUpdateUserPersonalData}"/>"><b>Edytuj dane
+                            osobowe</b></a></li>
                     </ul>
                 </li>
+                    <li class="sub-menu">
+                        <c:url value="/logout" var="logout"/>
+                        <a href="${logout}"><i class="fa fa-briefcase"
+                                               aria-hidden="true"></i><span>&nbsp;Wyloguj się</span></a>
+                    </li>
             </ul>
             <!-- sidebar menu end-->
         </div>

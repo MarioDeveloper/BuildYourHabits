@@ -1,10 +1,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Dashboard">
@@ -80,11 +80,6 @@
         <c:url value="/dashboard" var="dashboard"/>
         <a href="${dashboard}" class="logo"><b>CODZIENNE NAWYKI</b></a>
         <!--logo end-->
-        <div class="top-menu">
-            <ul class="nav pull-right top-menu">
-                <li><a class="logout">Logout</a></li>
-            </ul>
-        </div>
     </header>
     <!--header end-->
 
@@ -138,12 +133,16 @@
                         <span>Ustawienia konta</span>
                     </a>
                     <ul class="sub">
-                        <c:url value="/addPhoto" var="addPhoto"/>
-                        <li><a href="${addPhoto}"><b>Dodaj zdjęcie</b></a></li>
-                        <c:url value="/changePassword" var="changePassword"/>
-                        <li><a href="${changePassword}"><b>Zmień hasło</b></a></li>
+                        <c:url var="showFormForUpdateUserPersonalData" value="showFormForUpdateUserPersonalData"/>
+                        <li><a href="<c:out value="${showFormForUpdateUserPersonalData}"/>"><b>Edytuj dane
+                            osobowe</b></a></li>
                     </ul>
                 </li>
+                    <li class="sub-menu">
+                        <c:url value="/logout" var="logout"/>
+                        <a href="${logout}"><i class="fa fa-briefcase"
+                                               aria-hidden="true"></i><span>&nbsp;Wyloguj się</span></a>
+                    </li>
             </ul>
             <!-- sidebar menu end-->
         </div>
@@ -196,23 +195,34 @@
                                 </div>
                             </div><!--/showback -->
 
-
                             <div class="col-lg-4 col-md-4 col-sm-4 mb col-sm-offset-4">
 
                                 <div class="white-panel pn">
                                     <div class="white-header">
-                                        <h5>Najlepszy użytkownik</h5>
+                                        <h4><b>Najlepszy użytkownik</b></h4>
                                     </div>
-                                    <p><img src="/resources/images/snake.jpg" class="img-circle" width="80"></p>
-                                    <p><b><h4>Mariusz Wcisło</h4></b></p>
+
+                                    <c:choose>
+                                        <c:when test="${images[0] == null}">
+                                            <p class="img-circle badge bg-info" width="80">Dodaj zdjęcie</p>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div>
+                                                <p><img src="data:image/jpeg;base64,${images[0]}" class="img-circle"
+                                                        width="80"></p>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <%--<p><img src="/resources/images/snake.jpg" class="img-circle" width="80"></p>--%>
+                                    <p><b><h4>${userList[0].firstName} ${userList[0].lastName}</h4></b></p>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <p class="large mt">Poziom</p>
-                                            <p>5</p>
+                                            <span class="badge">${userList[0].level.id}</span>
                                         </div>
                                         <div class="col-md-6">
                                             <p class="large mt">Doświadczenie</p>
-                                            <p>90</p>
+                                            <span class="badge">${userList[0].experience}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -221,12 +231,13 @@
 
                             <thead>
                             <tr>
-                                <th><i class="fa fa-bullhorn"></i> Miejsce</th>
-                                <th><i class="fa fa-bullhorn"></i> Imię</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Nazwisko</th>
-                                <th><i class="fa fa-bookmark"></i> Miasto</th>
-                                <th><i class="fa fa-edit"></i> Poziom</th>
-                                <th><i class="fa fa-edit"></i> Punkty doświadczenia</th>
+                                <th>#</th>
+                                <th><i class="glyphicon glyphicon-camera"></i> Zdjęcie</th>
+                                <th>Imię</th>
+                                <th>Nazwisko</th>
+                                <th>Miasto</th>
+                                <th>Poziom</th>
+                                <th>Punkty doświadczenia</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -234,35 +245,36 @@
 
 
                             <c:forEach var="tempUserList" items="${userList}" varStatus="loop">
-
-                                <c:url var="searchByCity" value="/getUsersByCriteria">
-                                    <c:param name="criteriaParam" value="${tempUserList.city}"/>
-                                </c:url>
-
-                                <c:url var="failRecurringEvent" value="/failRecurringEvent">
-                                    <c:param name="criteriaParam"
-                                             value="${tempRealizationRecurringEvent.recurringEvent.id}"/>
-                                </c:url>
-
-                                <c:url var="skipRecurringEvent" value="/skipRecurringEvent">
-                                    <c:param name="criteriaParam"
-                                             value="${tempRealizationRecurringEvent.recurringEvent.id}"/>
-                                </c:url>
-
-                                <c:url var="cancelOtherRecurringEvents" value="/cancelOtherRecurringEvents">
-                                    <c:param name="criteriaParam"
-                                             value="${tempRealizationRecurringEvent.recurringEvent.id}"/>
-                                </c:url>
-
-
+                                <c:if test="${not loop.first}">
                                 <tr>
                                     <td>${loop.index + 1}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${images[loop.index] == '-' }">
+                                                -
+                                            </c:when>
+                                            <c:otherwise>
+
+
+                                                <div class="thumb">
+
+                                                        <%--<img class="img-circle" src="/resources/images/barca.jpg" width="35px" height="35px" align="">--%>
+                                                    <img class="img-circle"
+                                                         src="data:image/jpeg;base64,${images[loop.index]}" width="35px"
+                                                         height="35px" align="">
+                                                        <%--</p>--%>
+                                                </div>
+
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
                                     <td>${tempUserList.firstName}</td>
                                     <td>${tempUserList.lastName}</td>
                                     <td>${tempUserList.city}</td>
                                     <td>${tempUserList.level.id}</td>
                                     <td>${tempUserList.experience}</td>
                                 </tr>
+                                </c:if>
                             </c:forEach>
                             </tbody>
                         </table>

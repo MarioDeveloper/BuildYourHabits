@@ -11,11 +11,11 @@ import javax.validation.constraints.Size;
 @PasswordMatches
 public class UserDto {
 
-    //@NotNull
+    private int id;
+
     @NotEmpty
     private String firstName;
 
-    //@NotNull
     @NotEmpty
     private String lastName;
 
@@ -26,7 +26,6 @@ public class UserDto {
     @NotEmpty
     private String gender;
 
-    //@NotNull
     @Size(min = 1)
     @NotEmpty
     private String password;
@@ -36,6 +35,14 @@ public class UserDto {
     @NotNull
     @NotEmpty
     private String email;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -92,4 +99,5 @@ public class UserDto {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
 }

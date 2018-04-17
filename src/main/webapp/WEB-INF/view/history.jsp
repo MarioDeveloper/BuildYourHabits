@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,11 +81,6 @@
         <c:url value="/dashboard" var="dashboard"/>
         <a href="${dashboard}" class="logo"><b>CODZIENNE NAWYKI</b></a>
         <!--logo end-->
-        <div class="top-menu">
-            <ul class="nav pull-right top-menu">
-                <li><a class="logout">Logout</a></li>
-            </ul>
-        </div>
     </header>
     <!--header end-->
 
@@ -138,12 +134,16 @@
                         <span>Ustawienia konta</span>
                     </a>
                     <ul class="sub">
-                        <c:url value="/addPhoto" var="addPhoto"/>
-                        <li><a href="${addPhoto}"><b>Dodaj zdjęcie</b></a></li>
-                        <c:url value="/changePassword" var="changePassword"/>
-                        <li><a href="${changePassword}"><b>Zmień hasło</b></a></li>
+                        <c:url var="showFormForUpdateUserPersonalData" value="showFormForUpdateUserPersonalData"/>
+                        <li><a href="<c:out value="${showFormForUpdateUserPersonalData}"/>"><b>Edytuj dane
+                            osobowe</b></a></li>
                     </ul>
                 </li>
+                    <li class="sub-menu">
+                        <c:url value="/logout" var="logout"/>
+                        <a href="${logout}"><i class="fa fa-briefcase"
+                                               aria-hidden="true"></i><span>&nbsp;Wyloguj się</span></a>
+                    </li>
             </ul>
             <!-- sidebar menu end-->
         </div>
@@ -158,140 +158,199 @@
         <section class="wrapper">
 
             <div class="row">
-                <div class="col-lg-9 main-chart">
+                <div class="col-lg-12 main-chart">
 
                     <div class="content-panel">
                         <table class="table table-striped table-advance table-hover">
-                            <h4>Ranking</h4>
-                            <hr>
+                            <div class="alert alert-info"><h4><b>Historia wydarzeń jednorazowych</b></h4></div>
                             <thead>
                             <tr>
-                                <th><i class="fa fa-bullhorn"></i> Company</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Descrition</th>
-                                <th><i class="fa fa-bookmark"></i> Profit</th>
-                                <th><i class=" fa fa-edit"></i> Status</th>
-                                <th></th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Tytuł </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Zaplanowany termin </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Termin realizacji </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Opis </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Stopień trudności </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Punkty życia </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Zdobyte doświadczenie </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Status </b></h4></div>
+                                </th>
+
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td><a href="basic_table.html#">Company Ltd</a></td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>12000.00$</td>
-                                <td><span class="label label-info label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="basic_table.html#">
-                                        Dashgum co
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>17900.00$</td>
-                                <td><span class="label label-warning label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="basic_table.html#">
-                                        Another Co
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>14400.00$</td>
-                                <td><span class="label label-success label-mini">Paid</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="basic_table.html#">
-                                        Dashgum ext
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>22000.50$</td>
-                                <td><span class="label label-success label-mini">Paid</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="basic_table.html#">Total Ltd</a></td>
-                                <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                <td>12120.00$</td>
-                                <td><span class="label label-warning label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
+                            <c:forEach var="tempOneTimeEventList" items="${oneTimeEventList}" varStatus="loop">
+
+                                <tr>
+                                    <td><p style="text-align:center"> ${tempOneTimeEventList.title} </p></td>
+                                    <td>
+                                        <p style="text-align:center">
+                                            <fmt:formatDate value="${tempOneTimeEventList.plannedDate}"
+                                                            pattern="dd/MM/yy - HH:mm"/>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p style="text-align:center">
+                                            <fmt:formatDate value="${tempOneTimeEventList.realizationDate}"
+                                                            pattern="dd/MM/yy - HH:mm"/>
+                                        </p>
+                                    </td>
+                                    <td><p style="text-align:center"> ${tempOneTimeEventList.description} </p></td>
+                                    <td><p style="text-align:center"> ${tempOneTimeEventList.difficultyLevel} </p></td>
+
+                                    <c:choose>
+                                        <c:when test="${tempOneTimeEventList.done =='true'}">
+                                            <td><p style="text-align:center"> - </p></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td><p style="text-align:center"><span
+                                                    class="badge bg-important">${tempOneTimeEventList.life} </span></p>
+                                            </td>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                    <c:choose>
+                                        <c:when test="${tempOneTimeEventList.done =='true'}">
+                                            <td><p style="text-align:center"><span
+                                                    class="badge bg-info">+${tempOneTimeEventList.experience}</span></p>
+                                            </td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td><p style="text-align:center"> - </p></td>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                    <c:choose>
+                                        <c:when test="${tempOneTimeEventList.done =='true'}">
+                                            <td><span class="label label-success label-mini">Wykonane</span></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td><span class="label label-danger">Niewykonane</span></td>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div><!-- /content-panel -->
 
+
                 </div>
 
+                <div class="col-lg-12 main-chart">
 
-                <!-- **********************************************************************************************************************************************************
-                  RIGHT SIDEBAR CONTENT
-                  *********************************************************************************************************************************************************** -->
+                    <div class="content-panel">
+                        <table class="table table-striped table-advance table-hover">
+                            <div class="alert alert-info"><h4><b>Historia wydarzeń cyklicznych</b></h4></div>
+                            <thead>
+                            <tr>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Tytuł </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Zaplanowany termin </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Termin realizacji </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Opis </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Stopień trudności </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Punkty życia </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Zdobyte doświadczenie </b></h4></div>
+                                </th>
+                                <th>
+                                    <div style="text-align: center"><h4><b> Status </b></h4></div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="tempRealizationRecurringEventList" items="${realizationRecurringEventList}"
+                                       varStatus="loop">
 
-                <div class="col-lg-3 ds">
-                    <!--COMPLETED ACTIONS DONUTS CHART-->
-                    <h3>POWIADOMIENIA</h3>
+                                <tr>
+                                    <td>
+                                        <p style="text-align:center"> ${tempRealizationRecurringEventList.recurringEvent.title} </p>
+                                    </td>
+                                    <td>
+                                        <p style="text-align:center">
+                                            <fmt:formatDate value="${tempRealizationRecurringEventList.plannedDate}"
+                                                            pattern="dd/MM/yy - HH:mm"/>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p style="text-align:center">
+                                            <fmt:formatDate value="${tempRealizationRecurringEventList.realizationDate}"
+                                                            pattern="dd/MM/yy - HH:mm"/>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p style="text-align:center"> ${tempRealizationRecurringEventList.recurringEvent.description} </p>
+                                    </td>
+                                    <td>
+                                        <p style="text-align:center"> ${tempRealizationRecurringEventList.recurringEvent.difficultyLevel} </p>
+                                    </td>
 
-                    <c:forEach var="tempNotificationList" items="${notificationList}">
+                                    <c:choose>
+                                        <c:when test="${tempRealizationRecurringEventList.done =='true'}">
+                                            <td><p style="text-align:center"> - </p></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td><p style="text-align:center"><span
+                                                    class="badge bg-important">${tempRealizationRecurringEventList.life}
+                                            </p></td>
+                                        </c:otherwise>
+                                    </c:choose>
 
-                        <div class="desc">
-                            <div class="thumb">
-                                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                            </div>
-                            <div class="details">
-                                <p>
-                                    <muted>${tempNotificationList.time} temu</muted>
-                                    <br/>
-                                    <a href="#">${tempNotificationList.firstName} ${tempNotificationList.lastName}</a>
-                                    wypełnił zadanie i zdobył ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
-                                </p>
-                            </div>
-                        </div>
-                    </c:forEach>
+                                    <c:choose>
+                                        <c:when test="${tempRealizationRecurringEventList.done =='true'}">
+                                            <td><p style="text-align:center"><span
+                                                    class="badge bg-info">+${tempRealizationRecurringEventList.experience}</span>
+                                            </p></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td><p style="text-align:center"> - </p></td>
+                                        </c:otherwise>
+                                    </c:choose>
 
-                </div><!-- /col-lg-3 -->
-
-
+                                    <c:choose>
+                                        <c:when test="${tempRealizationRecurringEventList.done =='true'}">
+                                            <td><span class="label label-success label-mini">Wykonane</span></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td><span class="label label-danger">Niewykonane</span></td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div><!-- /content-panel -->
+                </div>
             </div>
         </section>
     </section>
-
-    <!--main content end-->
-    <!--footer start-->
-    <!--main content end-->
-    <!--footer start-->
-    <footer class="site-footer">
-        <div class="text-center">
-            2018 - MarioDeveloper
-        </div>
-    </footer>
-
-
-    <!--footer end-->
 </section>
 
 <!--script for this page-->

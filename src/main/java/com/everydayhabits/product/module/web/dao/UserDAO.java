@@ -1,6 +1,8 @@
 package com.everydayhabits.product.module.web.dao;
 
+import com.everydayhabits.product.module.web.dto.UserDto;
 import com.everydayhabits.product.module.web.entity.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -49,4 +51,20 @@ public interface UserDAO {
     List<User> getUsersByCriteria(String criteria, String username);
 
     List<Notification> getNotifications();
+
+    UserDto getUserDtoByUsername(String username);
+
+    void updateUserPersonalData(UserDto userDto);
+
+    List<OneTimeEvent> getOneTimeEventsByUserIdForHistory(int id);
+
+    List<RealizationRecurringEvent> getRealizationRecurringEventsByUserIdForHistory(List<RecurringEvent> recurringEventList);
+
+    List<RecurringEvent> getRecurringEventsByUserIdForHistory(int id);
+
+    void saveImage(MultipartFile file, String username);
+
+    public void checkUserExperiencePoint(User user);
+
+    public void checkUserLife(User user);
 }

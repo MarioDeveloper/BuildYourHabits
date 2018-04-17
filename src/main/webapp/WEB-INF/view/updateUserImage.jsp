@@ -91,11 +91,6 @@
         <c:url value="/dashboard" var="dashboard"/>
         <a href="${dashboard}" class="logo"><b>CODZIENNE NAWYKI</b></a>
         <!--logo end-->
-        <div class="top-menu">
-            <ul class="nav pull-right top-menu">
-                <li><a class="logout">Logout</a></li>
-            </ul>
-        </div>
     </header>
     <!--header end-->
 
@@ -144,16 +139,22 @@
                 </li>
                 <%--<hr width="220" align="left">--%>
                 <li class="sub-menu">
-                    <a href="javascript:;" class="active">
+                    <a href="javascript:;">
                         <i class="fa fa-cogs"></i>
                         <span>Ustawienia konta</span>
                     </a>
                     <ul class="sub">
-                        <c:url value="/changePersonalData" var="changePersonalData"/>
-                        <li><a href="${changePersonalData}"><b>Edytuj dane osobowe</b></a></li>
-                        <c:url value="/changePassword" var="changePassword"/>
-                        <li><a href="${changePassword}"><b>Zmień hasło</b></a></li>
+                        <c:url var="showFormForUpdateUserPersonalData" value="showFormForUpdateUserPersonalData"/>
+                        <li><a href="<c:out value="${showFormForUpdateUserPersonalData}"/>"><b>Edytuj dane
+                            osobowe</b></a></li>
+                        <c:url var="showFormForUpdateUserImage" value="showFormForUpdateUserImage"/>
+                        <li><a href="<c:out value="${showFormForUpdateUserImage}"/>"><b>Edytuj zdjęcie</b></a></li>
                     </ul>
+                </li>
+                <li class="sub-menu">
+                    <c:url value="/logout" var="logout"/>
+                    <a href="${logout}"><i class="fa fa-briefcase"
+                                           aria-hidden="true"></i><span>&nbsp;Wyloguj się</span></a>
                 </li>
             </ul>
             <!-- sidebar menu end-->
@@ -170,66 +171,30 @@
 
             <div class="row">
                 <div class="col-lg-9 main-chart">
-
-                    <!-- BASIC FORM ELELEMNTS -->
                     <div class="row mt">
-                        <div class="col-lg-12">
-                            <div class="form-panel">
-                                <h4 class="mb">Edycja danych osobowych</h4>
+                        <div class="col-md-6 col-sm-4 mb">
 
-                                <form:form action="updatePersonalData" modelAttribute="user"
-                                           class="form-horizontal style-form" method="POST" accept-charset="UTF-8">
-
-                                    <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2 control-label">Tytuł</label>
-                                        <div class="col-sm-10">
-                                            <form:input path="title" type="text" class="form-control"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2 control-label">Opis</label>
-                                        <div class="col-sm-10">
-                                            <form:input path="description" type="text" class="form-control"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2 control-label">Poziom trudności</label>
-                                        <form:select path="difficultyLevel" class="form-control"
-                                                     style="width: 100px;margin-left: 152px">
-                                            <form:option value="Łatwy"/>
-                                            <form:option value="Średni"/>
-                                            <form:option value="Trudny"/>
-                                        </form:select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-2 col-sm-2 control-label">Data wykonania</label>
-                                        <div class='input-group date' id='datetimepicker1'
-                                             style="width: 200px;margin-left: 152px">
-                                            <form:input path="plannedDate" type="date" class="form-control"/>
-                                            <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                        </div>
-                                    </div>
-
-
-                                    <script type="text/javascript">
-                                        $(function () {
-                                            $('#datetimepicker1').datetimepicker({locale: 'pl'});
-                                        });
-                                    </script>
-
-                                    <input type="submit" value="Stwórz wydarzenie"
-                                           class="btn btn-primary btn-lg btn-block buttonCreateEvent"
-                                           style="width: 300px;"/>
-
-                                </form:form>
+                            <div class="col-sm-offset-3">
+                                <label class="badge bg-info" style="text-align: center"><h5>Twoje aktualne zdjęcie</h5>
+                                </label>
                             </div>
-                        </div><!-- col-lg-12-->
-                    </div><!-- /row -->
 
+                            <div class="col-sm-offset-1">
+                                <img src="data:image/jpeg;base64,${userImage}" width="300" height="290">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-4  mb">
+                            <form method="POST" action="${pageContext.request.contextPath}/upload"
+                                  enctype="multipart/form-data">
+                                <div class="col-sm-offset-3">
+                                    <label class="badge bg-info" style="text-align: center"><h5>Edytuj swoje
+                                        zdjęcie</h5></label>
+                                </div>
+                                <input type="file" name="file" class="form-control" onchange="this.form.submit()">
+                            </form>
+                        </div>
+                    </div>
                 </div>
 
 

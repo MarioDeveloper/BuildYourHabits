@@ -1,12 +1,16 @@
 package com.everydayhabits.product.module.web.dao;
 
+import com.everydayhabits.product.module.web.dto.UserDto;
 import com.everydayhabits.product.module.web.entity.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,6 +18,9 @@ import java.util.List;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -50,6 +57,24 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public UserDto getUserDtoByUsername(String username) {
+
+        User user = getUserByEmail(username);
+
+        UserDto userDto = new UserDto();
+
+        userDto.setId(user.getId());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setCity(user.getCity());
+        userDto.setEmail(user.getUsername());
+        userDto.setPassword(user.getPassword());
+        userDto.setMatchingPassword(user.getPassword());
+        userDto.setGender(user.getGender());
+        return userDto;
+    }
+
+    @Override
     public User findByEmail(String email) {
 
         return getUserByEmail(email);
@@ -80,6 +105,20 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public List<OneTimeEvent> getOneTimeEventsByUserIdForHistory(int id) {
+
+        currentSession = sessionFactory.getCurrentSession();
+
+        Query<OneTimeEvent> theQuery = currentSession.createQuery(" FROM OneTimeEvent WHERE user.id = :user_id  AND is_done IS NOT NULL ORDER BY realizationDate asc");
+        theQuery.setParameter("user_id", id);
+
+        List<OneTimeEvent> oneTimeEventList = theQuery.getResultList();
+
+        return oneTimeEventList;
+    }
+
+
+    @Override
     public List<RecurringEvent> getRecurringEventsByUserId(int userId) {
 
         currentSession = sessionFactory.getCurrentSession();
@@ -91,6 +130,39 @@ public class UserDAOImpl implements UserDAO {
 
         return recurringEventList;
 
+    }
+
+
+    @Override
+    public List<RecurringEvent> getRecurringEventsByUserIdForHistory(int id) {
+        currentSession = sessionFactory.getCurrentSession();
+
+        Query<RecurringEvent> recurringEventQuery = currentSession.createQuery(" FROM RecurringEvent WHERE user.id =:user_id ORDER BY startDate asc");
+        recurringEventQuery.setParameter("user_id", id);
+
+        List<RecurringEvent> recurringEventList = recurringEventQuery.getResultList();
+
+        return recurringEventList;
+    }
+
+    @Override
+    public List<RealizationRecurringEvent> getRealizationRecurringEventsByUserIdForHistory(List<RecurringEvent> recurringEventList) {
+
+        currentSession = sessionFactory.getCurrentSession();
+
+        ArrayList<RealizationRecurringEvent> realizationRecurringEventList = new ArrayList<>();
+
+        for (RecurringEvent recurringEvent : recurringEventList) {
+
+            Query<RealizationRecurringEvent> theQuery = currentSession.createQuery(" FROM RealizationRecurringEvent WHERE recurringEvent.id =:recurring_event_id AND is_done IS NOT NULL ORDER BY realizationDate asc");
+            theQuery.setParameter("recurring_event_id", recurringEvent.getId());
+
+            List<RealizationRecurringEvent> tempRealization = theQuery.getResultList();
+
+            realizationRecurringEventList.addAll(tempRealization);
+
+        }
+        return realizationRecurringEventList;
     }
 
     @Override
@@ -125,10 +197,15 @@ public class UserDAOImpl implements UserDAO {
         updateUser.setParameter("user_id", tempUser.getId());
         updateUser.executeUpdate();
 
+        // refresh user
+        currentSession.refresh(tempUser);
+        checkUserLife(tempUser);
+
         Query updateFailedTaskQuery = currentSession.createQuery("UPDATE OneTimeEvent SET isDone=:code WHERE id=:event_Id");
         updateFailedTaskQuery.setParameter("code", Boolean.FALSE);
         updateFailedTaskQuery.setParameter("event_Id", eventId);
         updateFailedTaskQuery.executeUpdate();
+
     }
 
     @Override
@@ -160,6 +237,9 @@ public class UserDAOImpl implements UserDAO {
         updateEventQuery.setParameter("code", Boolean.TRUE);
         updateEventQuery.setParameter("eventId", theId);
         updateEventQuery.executeUpdate();
+
+        currentSession.refresh(user);
+        checkUserExperiencePoint(user);
     }
 
     @Override
@@ -263,18 +343,23 @@ public class UserDAOImpl implements UserDAO {
 
         Date tempDate = updateDateUsingFrequencyAndFrequencyUnit(recurringEvent, calendar);
 
+        checkDateForCreationNewRealizationReccuringEvent(eventId, recurringEvent, realizationRecurringEvent, tempDate);
+
+        currentSession.refresh(user);
+        checkUserExperiencePoint(user);
+    }
+
+    private void checkDateForCreationNewRealizationReccuringEvent(int eventId, RecurringEvent recurringEvent, RealizationRecurringEvent realizationRecurringEvent, Date tempDate) {
         if (tempDate.before(recurringEvent.getFinishDate())) {
             RealizationRecurringEvent realizationRecurringEvent1 = new RealizationRecurringEvent(tempDate, realizationRecurringEvent.getExperience(), realizationRecurringEvent.getLife(), null);
             recurringEvent.addRealizationRecurringEvent(realizationRecurringEvent1);
             currentSession.save(realizationRecurringEvent1);
+        } else {
+            Query updateQuery = currentSession.createQuery("UPDATE RecurringEvent SET isDone=:code WHERE id=:event_Id");
+            updateQuery.setParameter("code", Boolean.TRUE);
+            updateQuery.setParameter("event_Id", eventId);
+            updateQuery.executeUpdate();
         }
-
-
-        Query updateQuery = currentSession.createQuery("UPDATE RecurringEvent SET isDone=:code WHERE id=:event_Id");
-        updateQuery.setParameter("code", Boolean.TRUE);
-        updateQuery.setParameter("event_Id", eventId);
-        updateQuery.executeUpdate();
-
     }
 
 
@@ -301,6 +386,21 @@ public class UserDAOImpl implements UserDAO {
         updateRealizationQuery.setParameter("event_planned_date", recurringEvent.getStartDate());
         updateRealizationQuery.setParameter("realization_id", realizationRecurringEvent.getId());
         updateRealizationQuery.executeUpdate();
+    }
+
+    @Override
+    public void updateUserPersonalData(UserDto userDto) {
+
+        currentSession = sessionFactory.getCurrentSession();
+
+        User user = currentSession.get(User.class, userDto.getId());
+
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setUsername(userDto.getEmail());
+//        user.setImage(userDto.getImage());
+        user.setCity(userDto.getCity());
+        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
     }
 
     @Override
@@ -332,16 +432,10 @@ public class UserDAOImpl implements UserDAO {
 
         Date tempDate = updateDateUsingFrequencyAndFrequencyUnit(recurringEvent, calendar);
 
-        if (tempDate.before(recurringEvent.getFinishDate())) {
-            RealizationRecurringEvent realizationRecurringEvent1 = new RealizationRecurringEvent(tempDate, realizationRecurringEvent.getExperience(), realizationRecurringEvent.getLife(), null);
-            recurringEvent.addRealizationRecurringEvent(realizationRecurringEvent1);
-            currentSession.save(realizationRecurringEvent1);
-        }
+        checkDateForCreationNewRealizationReccuringEvent(eventId, recurringEvent, realizationRecurringEvent, tempDate);
 
-        Query updateQuery1 = currentSession.createQuery("UPDATE RecurringEvent SET isDone=:code WHERE id=:event_Id");
-        updateQuery1.setParameter("code", Boolean.TRUE);
-        updateQuery1.setParameter("event_Id", eventId);
-        updateQuery1.executeUpdate();
+        currentSession.refresh(tempUser);
+        checkUserLife(tempUser);
 
     }
 
@@ -366,16 +460,7 @@ public class UserDAOImpl implements UserDAO {
 
         Date tempDate = updateDateUsingFrequencyAndFrequencyUnit(recurringEvent, calendar);
 
-        if (tempDate.before(recurringEvent.getFinishDate())) {
-            RealizationRecurringEvent realizationRecurringEvent1 = new RealizationRecurringEvent(tempDate, realizationRecurringEvent.getExperience(), realizationRecurringEvent.getLife(), null);
-            recurringEvent.addRealizationRecurringEvent(realizationRecurringEvent1);
-            currentSession.save(realizationRecurringEvent1);
-        }
-
-        Query updateQuery1 = currentSession.createQuery("UPDATE RecurringEvent SET isDone=:code WHERE id=:event_Id");
-        updateQuery1.setParameter("code", Boolean.TRUE);
-        updateQuery1.setParameter("event_Id", eventId);
-        updateQuery1.executeUpdate();
+        checkDateForCreationNewRealizationReccuringEvent(eventId, recurringEvent, realizationRecurringEvent, tempDate);
 
     }
 
@@ -424,21 +509,35 @@ public class UserDAOImpl implements UserDAO {
 
 
     @Override
+    public void saveImage(MultipartFile file, String username) {
+
+        User user = getUserByEmail(username);
+
+        if (file != null && file.getSize() > 0) {
+            try {
+                user.setImage(file.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            currentSession.update(user);
+        }
+
+
+    }
+
+    @Override
     public List<Notification> getNotifications() {
 
         currentSession = sessionFactory.getCurrentSession();
         List<Notification> notificationList = new ArrayList<>();
 
 
-        Query<OneTimeEvent> theQuery = currentSession.createQuery(" FROM OneTimeEvent WHERE isDone=:code ORDER BY realizationDate asc, ");
+        Query<OneTimeEvent> theQuery = currentSession.createQuery(" FROM OneTimeEvent WHERE isDone=:code ORDER BY realizationDate desc");
         theQuery.setParameter("code", Boolean.TRUE);
         theQuery.setMaxResults(10);
 
         List<OneTimeEvent> oneTimeEventList = theQuery.getResultList();
 
-//        for(OneTimeEvent one : oneTimeEventList) {
-//            System.out.println(one.toString());
-//        }
 
         for (OneTimeEvent ote : oneTimeEventList) {
 
@@ -487,6 +586,38 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
+    @Override
+    public void checkUserExperiencePoint(User user) {
+
+        currentSession = sessionFactory.getCurrentSession();
+
+        if (user.getExperience() >= 100) {
+            Query updateUser = currentSession.createQuery("UPDATE User SET experience=:new_value, level_id=:user_level, life=:user_life WHERE id=:user_id");
+            updateUser.setParameter("new_value", (user.getExperience() - 100));
+            updateUser.setParameter("user_level", (user.getLevel().getId() + 1));
+            updateUser.setParameter("user_life", 100);
+            updateUser.setParameter("user_id", user.getId());
+            updateUser.executeUpdate();
+        }
+    }
+
+    @Override
+    public void checkUserLife(User user) {
+
+        currentSession = sessionFactory.getCurrentSession();
+
+
+        if (user.getLife() < 0) {
+            Query updateUser = currentSession.createQuery("UPDATE User SET experience=:new_value, level_id=:user_level, life=:user_life WHERE id=:user_id");
+            updateUser.setParameter("new_value", 0);
+            updateUser.setParameter("user_level", (user.getLevel().getId() - 1));
+            updateUser.setParameter("user_life", 100);
+            updateUser.setParameter("user_id", user.getId());
+            updateUser.executeUpdate();
+        }
+    }
+
+    // temporary ugly code
     private int getExperienceDependentOnDifficultyLevel(OneTimeEvent ote, RecurringEvent re) {
 
         int tempExperience = 0;
@@ -514,6 +645,7 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
+    // temporary ugly code
     private int getLifeDependentOnDifficultyLevel(OneTimeEvent ote, RecurringEvent re) {
 
         int tempLife = 0;

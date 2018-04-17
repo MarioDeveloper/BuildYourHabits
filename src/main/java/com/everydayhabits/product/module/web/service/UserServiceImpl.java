@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,6 +64,25 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
+    public User validUserByUsername(String email) {
+
+        Boolean isCreated = emailExist(email);
+
+        User user = getUserByUsername(email);
+
+        if (isCreated && !user.getUsername().equals(email)) {
+            System.out.println("UserSrviceIMpl jestem w if");
+            return null;
+        }
+        System.out.println("Zwracam usera");
+        return new User();
+    }
+
+    @Override
+    public void updateUserPersonalData(UserDto userDto) {
+        userDAO.updateUserPersonalData(userDto);
+    }
 
     @Override
     public User getUserByUsername(String username) {
@@ -127,6 +147,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<RealizationRecurringEvent> getRealizationRecurringEventsByUserIdForHistory(List<RecurringEvent> recurringEventList) {
+        return userDAO.getRealizationRecurringEventsByUserIdForHistory(recurringEventList);
+    }
+
+    @Override
+    public List<RecurringEvent> getRecurringEventsByUserIdForHistory(int id) {
+        return userDAO.getRecurringEventsByUserIdForHistory(id);
+    }
+
+    @Override
     public void createRecurringEvent(RecurringEvent recurringEvent, String username) {
         userDAO.createRecurringEvent(recurringEvent, username);
     }
@@ -157,8 +187,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto getUserDtoByUsername(String username) {
+        return userDAO.getUserDtoByUsername(username);
+    }
+
+    @Override
     public List<Notification> getNotifications() {
         return userDAO.getNotifications();
+    }
+
+    @Override
+    public List<OneTimeEvent> getOneTimeEventsByUserIdForHistory(int id) {
+        return userDAO.getOneTimeEventsByUserIdForHistory(id);
+    }
+
+    @Override
+    public void saveImage(MultipartFile file, String username) {
+        userDAO.saveImage(file, username);
     }
 
     @Override

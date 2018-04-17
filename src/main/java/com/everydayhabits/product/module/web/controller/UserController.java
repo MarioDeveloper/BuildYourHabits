@@ -1,7 +1,10 @@
 package com.everydayhabits.product.module.web.controller;
 
+import com.everydayhabits.product.module.web.dto.UserDto;
 import com.everydayhabits.product.module.web.entity.*;
+import com.everydayhabits.product.module.web.model.UploadForm;
 import com.everydayhabits.product.module.web.service.UserService;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -9,16 +12,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Controller
 public class UserController {
-
 
     @Autowired
     private UserService userService;
@@ -33,7 +39,6 @@ public class UserController {
         dataBinder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
 
-
     @GetMapping("/dashboard")
     public String showDashboard(Model theModel) {
 
@@ -46,6 +51,16 @@ public class UserController {
 
         List<Notification> notificationList = userService.getNotifications();
 
+        String encodedString = "";
+
+        if (loggedUser.getImage() != null) {
+            byte[] encoded = Base64.encodeBase64(loggedUser.getImage());
+            encodedString = new String(encoded);
+        }
+
+
+        theModel.addAttribute("userImage", encodedString);
+        theModel.addAttribute("fileBucket", new UploadForm());
         theModel.addAttribute("notificationList", notificationList);
         theModel.addAttribute("oneTimeEventList", oneTimeEventList);
         theModel.addAttribute("realizationRecurringEventList", realizationRecurringEventList);
@@ -180,6 +195,87 @@ public class UserController {
         return "updateRecurringEvent";
     }
 
+
+    @GetMapping("/showFormForUpdateUserPersonalData")
+    public String showFormForUpdateUserPersonalData(Model theModel) {
+
+        String username = getLoggedInUsername();
+
+        List<Notification> notificationList = userService.getNotifications();
+
+        UserDto userDto = userService.getUserDtoByUsername(username);
+
+        theModel.addAttribute("userDto", userDto);
+        theModel.addAttribute("notificationList", notificationList);
+
+        return "updatePersonalData";
+    }
+
+    @PostMapping("/updatePersonalData")
+    public String updatePersonalData(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult theBindingResult, Model theModel) throws Exception {
+
+        List<Notification> notificationList = userService.getNotifications();
+        theModel.addAttribute("notificationList", notificationList);
+
+        if (theBindingResult.hasErrors()) {
+
+            System.out.println(theBindingResult.getAllErrors());
+
+            if (userDto.getFirstName().isEmpty()) {
+                theBindingResult.rejectValue("firstName", "error.firstName");
+            }
+
+            if (userDto.getLastName().isEmpty()) {
+                theBindingResult.rejectValue("lastName", "error.lastName");
+            }
+            if (!(userDto.getPassword().equals(userDto.getMatchingPassword()))) {
+                theBindingResult.rejectValue("password", "error.password", "Passwords are different");
+            }
+            if (userDto.getCity().isEmpty()) {
+                theBindingResult.rejectValue("city", "error.city");
+            }
+
+            return "updatePersonalData";
+        } else {
+
+
+            User registerUser = userService.validUserByUsername(userDto.getEmail());
+
+            if (registerUser == null) {
+                theBindingResult.rejectValue("email", "error.email", "Address email already exists");
+            }
+
+            userService.updateUserPersonalData(userDto);
+
+            return "redirect:/dashboard";
+        }
+    }
+
+    @GetMapping("/showFormForUpdateUserImage")
+    public String showFormForUpdateUserImage(Model theModel) {
+
+        String username = getLoggedInUsername();
+
+        List<Notification> notificationList = userService.getNotifications();
+
+
+        User loggedUser = userService.getUserByUsername(username);
+
+        String encodedString = "";
+
+        if (loggedUser.getImage() != null) {
+            byte[] encoded = Base64.encodeBase64(loggedUser.getImage());
+            encodedString = new String(encoded);
+        }
+
+
+        theModel.addAttribute("userImage", encodedString);
+        theModel.addAttribute("notificationList", notificationList);
+
+        return "updateUserImage";
+    }
+
+
     @GetMapping("/login")
     public String showLoginPage() {
         return "login";
@@ -205,6 +301,9 @@ public class UserController {
     @GetMapping("/ranking")
     public String showRanking(Model theModel) {
 
+        String encodedString = "";
+        List<String> images = new ArrayList<>();
+
         String username = getLoggedInUsername();
 
         List<User> userList = userService.getUsersByCriteria("allUsers", null);
@@ -213,6 +312,18 @@ public class UserController {
 
         List<Notification> notificationList = userService.getNotifications();
 
+        for (User user : userList) {
+            if (user.getImage() != null) {
+                byte[] encoded = Base64.encodeBase64(user.getImage());
+                encodedString = new String(encoded);
+                images.add(encodedString);
+            } else {
+                images.add("-");
+            }
+
+        }
+
+        theModel.addAttribute("images", images);
         theModel.addAttribute("notificationList", notificationList);
         theModel.addAttribute("currentUser", currentUser);
         theModel.addAttribute("userList", userList);
@@ -223,12 +334,27 @@ public class UserController {
     @GetMapping("/getUsersByCriteria")
     public String getUsersByCriteria(@RequestParam("criteriaParam") String criteria, Model theModel) {
 
+        String encodedString = "";
+        List<String> images = new ArrayList<>();
+
         String username = getLoggedInUsername();
 
         User currentUser = userService.getUserByUsername(username);
 
         List<User> userList = userService.getUsersByCriteria(criteria, username);
+        List<Notification> notificationList = userService.getNotifications();
 
+        for (User user : userList) {
+            if (user.getImage() != null) {
+                byte[] encoded = Base64.encodeBase64(user.getImage());
+                encodedString = new String(encoded);
+                images.add(encodedString);
+                System.out.println();
+            }
+        }
+
+        theModel.addAttribute("images", images);
+        theModel.addAttribute("notificationList", notificationList);
         theModel.addAttribute("currentUser", currentUser);
         theModel.addAttribute("userList", userList);
 
@@ -263,11 +389,38 @@ public class UserController {
     @GetMapping("/history")
     public String showHistory(Model theModel) {
 
-        List<Notification> notificationList = userService.getNotifications();
+        String username = getLoggedInUsername();
 
-        theModel.addAttribute("notificationList", notificationList);
+        User currentUser = userService.getUserByUsername(username);
+
+        List<OneTimeEvent> oneTimeEventList = userService.getOneTimeEventsByUserIdForHistory(currentUser.getId());
+
+
+        List<RecurringEvent> recurringEventList = userService.getRecurringEventsByUserIdForHistory(currentUser.getId());
+
+        List<RealizationRecurringEvent> realizationRecurringEventList = userService.getRealizationRecurringEventsByUserIdForHistory(recurringEventList);
+
+
+        theModel.addAttribute("realizationRecurringEventList", realizationRecurringEventList);
+        theModel.addAttribute("oneTimeEventList", oneTimeEventList);
+
 
         return "history";
+    }
+
+    @PostMapping("/upload")
+    public String singleFileUpload(@RequestParam("file") MultipartFile file) throws Exception {
+
+        String username = getLoggedInUsername();
+
+        userService.saveImage(file, username);
+
+        return "redirect:/dashboard";
+    }
+
+    @RequestMapping("/access-denied")
+    public String accessDenied() {
+        return "access-denied";
     }
 
     private String getLoggedInUsername() {
