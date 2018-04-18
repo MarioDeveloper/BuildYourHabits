@@ -143,13 +143,9 @@
     *********************************************************************************************************************************************************** -->
     <!--sidebar start-->
     <aside>
-        <div id="sidebar" class="nav-collapse ">
+        <div id="sidebar" class="nav-collapse">
             <!-- sidebar menu start-->
             <ul class="sidebar-menu" id="nav-accordion">
-
-                <%--MIEJSCE NA LOGO HABITICA --%>
-                <%--<p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>--%>
-                <%--<h5 class="centered">Marcel Newman</h5>--%>
 
                 <li class="mt">
                     <c:url value="/dashboard" var="dashboard"/>
@@ -508,7 +504,7 @@
 
                         <div class="desc">
                             <div class="thumb">
-                                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                                <span class="badge bg-warning"><i class="fa fa-clock-o"></i></span>
                             </div>
                             <div class="details">
                                 <p>
