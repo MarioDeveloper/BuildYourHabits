@@ -61,6 +61,9 @@
     <spring:url value="/resources/Theme/assets/css/to-do.css" var="to_do"/>
     <link href="${to_do}" rel="stylesheet"/>
 
+    <spring:url value="/resources/Theme/assets/js/fancybox/jquery.fancybox.css" var="fancybox"/>
+    <link href="${fancybox}" rel="stylesheet"/>
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -154,7 +157,7 @@
     *********************************************************************************************************************************************************** -->
     <!--main content start-->
     <section id="main-content">
-        <section class="wrapper">
+        <section class="wrapper site-min-height">
 
             <div class="row">
                 <div class="col-lg-9 main-chart">
@@ -209,7 +212,7 @@
                                         <c:otherwise>
                                             <div>
                                                 <p><img src="data:image/jpeg;base64,${images[0]}" class="img-circle"
-                                                        width="80"></p>
+                                                        width="95"></p>
                                             </div>
                                         </c:otherwise>
                                     </c:choose>
@@ -254,17 +257,18 @@
                                                 -
                                             </c:when>
                                             <c:otherwise>
-
-
-                                                <div class="thumb">
-
-                                                        <%--<img class="img-circle" src="/resources/images/barca.jpg" width="35px" height="35px" align="">--%>
-                                                    <img class="img-circle"
-                                                         src="data:image/jpeg;base64,${images[loop.index]}" width="35px"
-                                                         height="35px" align="">
-                                                        <%--</p>--%>
-                                                </div>
-
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+                                                    <div class="project-wrapper">
+                                                        <div class="project">
+                                                            <div class="photo-wrapper">
+                                                                <div class="photo">
+                                                                    <a class="fancybox" href="data:image/jpeg;base64,${images[loop.index]}" style="height: 500px; widows:500px;"><img class="img-responsive img-circle" src="data:image/jpeg;base64,${images[loop.index]}" alt="" width="80" height="80"/></a>
+                                                                </div>
+                                                                <div class="overlay"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- col-lg-4 -->
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
@@ -380,6 +384,11 @@
 <spring:url value="/resources/Theme/assets/js/chart-master/Chart.js" var="chart"/>
 <script src="${chart}"></script>
 
+<spring:url value="/resources/Theme/assets/js/fancybox/jquery.fancybox.js" var="fancybox_js"/>
+<script src="${fancybox_js}"></script>
+
+
+
 <%--<script type="text/javascript">--%>
 <%--$(document).ready(function () {--%>
 <%--var unique_id = $.gritter.add({--%>
@@ -434,6 +443,23 @@
         var to = $("#" + id).data("to");
         console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        //    fancybox
+        jQuery(".fancybox").fancybox();
+    });
+
+</script>
+
+<script>
+    //custom select box
+
+    $(function(){
+        $("select.styled").customSelect();
+    });
+
 </script>
 
 

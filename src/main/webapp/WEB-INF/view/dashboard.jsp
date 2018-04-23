@@ -128,7 +128,7 @@
     <header class="header black-bg">
         <!--logo start-->
         <c:url value="/dashboard" var="dashboard"/>
-        <a href="${dashboard}" class="logo"><b>CODZIENNE NAWYKI</b></a>
+        <a href="${dashboard}" class="logo"><b>BUDUJ SWOJE NAWYKI</b></a>
         <!--logo end-->
         <%--<div class="top-menu">--%>
         <%--<ul class="nav pull-right top-menu">--%>
@@ -233,7 +233,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <div>
-                                        <img src="data:image/jpeg;base64,${userImage}" width="300" height="290">
+                                        <img src="data:image/jpeg;base64,${userImage}" width="305" height="290">
                                     </div>
                                 </c:otherwise>
                             </c:choose>
@@ -261,7 +261,7 @@
                                 </div>
 
                                 <h4> Aktualny poziom: <b>${loggedUser.level.id}</b></h4>
-                                <div class="alert alert-success text-center" style="width: 150px;">
+                                <div class="alert alert-success text-center" style="width: 150px; color: white">
 
                                     <h5><b>${loggedUser.level.description}</b></h5></div>
 
@@ -504,13 +504,13 @@
 
                         <div class="desc">
                             <div class="thumb">
-                                <span class="badge bg-warning"><i class="fa fa-clock-o"></i></span>
+                                <span class="badge bg-inverse"><i class="fa fa-clock-o"></i></span>
                             </div>
                             <div class="details">
                                 <p>
                                     <muted>${tempNotificationList.time} temu</muted>
                                     <br/>
-                                    <a href="#">${tempNotificationList.firstName} ${tempNotificationList.lastName}</a>
+                                    <a href="#" >${tempNotificationList.firstName} ${tempNotificationList.lastName}</a>
                                     wypełnił zadanie i zdobył ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
                                 </p>
                             </div>
