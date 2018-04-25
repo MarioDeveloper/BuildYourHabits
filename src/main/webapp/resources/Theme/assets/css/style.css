@@ -361,7 +361,7 @@ ul.sidebar-menu li a {
 }
 
 ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
-    background: #68dff0;
+    background: #088e3d;
     color: #fff;
     display: block;
 
@@ -410,8 +410,8 @@ ul.sidebar-menu li a.active i {
 }
 
 .black-bg {
-    background: #c9aa5f;
-    border-bottom: 1px solid #c9aa5f;
+    background: #088e3d;
+    border-bottom: 1px solid #088e3d;
 }
 
 .wrapper {
@@ -776,7 +776,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     line-height: 60px;
     height: 60px;
     margin: 0;
-    background: #ff865c;
+    background: #088e3d;
     text-align: center;
 }
 
@@ -820,7 +820,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .ds a {
-    color: #68dff0;
+    color: #2A67A0;
 }
 
 /* LINE ICONS CONFIGURATION */
