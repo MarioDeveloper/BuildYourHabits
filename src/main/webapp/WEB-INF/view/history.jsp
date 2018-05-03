@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -10,6 +11,13 @@
     <meta name="description" content="">
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+    <meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="Your Website Title" />
+    <meta property="og:description"   content="Your description" />
+    <%--<meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />--%>
+
 
     <title>Historia</title>
 
@@ -98,7 +106,7 @@
                 <%--<h5 class="centered">Marcel Newman</h5>--%>
 
                 <li class="mt">
-                    <c:url value="/dashboard" var="dashboard"/>
+                    <c:url value="/" var="dashboard"/>
                     <a href="${dashboard}"><i class="fa fa-dashboard"></i><span>&nbsp;Dashboard</span></a>
                 </li>
 
@@ -463,3 +471,6 @@
 
 </body>
 </html>
+
+
+

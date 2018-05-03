@@ -39,15 +39,6 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
 
         registration.setMultipartConfig(multipartConfigElement);
 
-
-//			CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-//			resolver.setMaxUploadSizePerFile(10240); //10Kb
-//			resolver.setDefaultEncoding("UTF-8");
-//			resolver.setResolveLazily(true);
-//			registration.
-//		}
-
-
     }
 
 }

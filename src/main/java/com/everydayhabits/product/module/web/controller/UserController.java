@@ -39,7 +39,7 @@ public class UserController {
         dataBinder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
 
-    @GetMapping("/dashboard")
+    @GetMapping("/")
     public String showDashboard(Model theModel) {
 
         String username = getLoggedInUsername();
@@ -76,7 +76,7 @@ public class UserController {
 
         userService.performOneTimeEvent(theId);
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
     @GetMapping("/showFormForUpdateOneTimeEvent")
@@ -100,7 +100,7 @@ public class UserController {
 
         userService.createOneTimeEvent(oneTimeEvent, username);
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
     @PostMapping("/updateOneTimeEvent")
@@ -110,7 +110,7 @@ public class UserController {
 
         userService.updateOneTimeEvent(oneTimeEvent);
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
     @GetMapping("/deleteOneTimeEvent")
@@ -118,7 +118,7 @@ public class UserController {
 
         userService.deleteOneTimeEvent(eventId);
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
     @GetMapping("/failOneTimeEvent")
@@ -128,7 +128,7 @@ public class UserController {
 
         userService.failOneTimeEvent(eventId, username);
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
     @PostMapping("/createRecurringEvent")
@@ -138,7 +138,7 @@ public class UserController {
 
         userService.createRecurringEvent(recurringEvent, username);
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
     @GetMapping("/performRecurringEvent")
@@ -146,7 +146,7 @@ public class UserController {
 
         userService.performRecurringEvent(eventId);
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
     @PostMapping("/updateRecurringEvent")
@@ -154,7 +154,7 @@ public class UserController {
 
         userService.updateRecurringEvent(recurringEvent);
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
     @GetMapping("/failRecurringEvent")
@@ -164,7 +164,7 @@ public class UserController {
 
         userService.failRecurringEvent(eventId, username);
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
     @GetMapping("/skipRecurringEvent")
@@ -172,7 +172,7 @@ public class UserController {
 
         userService.skipRecurringEvent(eventId);
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
     @GetMapping("/cancelOtherRecurringEvents")
@@ -180,7 +180,7 @@ public class UserController {
 
         userService.cancelOtherRecurringEvents(eventId);
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
     @GetMapping("/showFormForUpdateRecurringEvent")
@@ -247,7 +247,7 @@ public class UserController {
 
             userService.updateUserPersonalData(userDto);
 
-            return "redirect:/dashboard";
+            return "redirect:/";
         }
     }
 
@@ -415,7 +415,7 @@ public class UserController {
 
         userService.saveImage(file, username);
 
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
     @RequestMapping("/access-denied")

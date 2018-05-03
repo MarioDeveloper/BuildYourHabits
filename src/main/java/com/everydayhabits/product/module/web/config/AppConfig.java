@@ -32,8 +32,6 @@ public class AppConfig implements WebMvcConfigurer {
 	@Autowired
 	private Environment env;
 
-	private int maxUploadSizeInMb = 5 * 1024 * 1024; // 5 MB
-
 	private Properties getHibernateProperties() {
 		Properties prop = new Properties();
 		prop.put("hibernate.format_sql", "true");
@@ -41,6 +39,17 @@ public class AppConfig implements WebMvcConfigurer {
 		prop.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		prop.put("hibernate.connection.CharSet", "utf-8");
 		return prop;
+	}
+
+
+	@Bean
+	public Properties getMyProperties() {
+		Properties myProperties = new Properties();
+		myProperties.setProperty("connection.pool.initialPoolSize", "5");
+		myProperties.setProperty("connection.pool.minPoolSize", "5");
+		myProperties.setProperty("connection.pool.maxPoolSize", "5");
+		myProperties.setProperty("connection.pool.maxIdleTime", "5");
+		return myProperties;
 	}
 
 	@Bean
@@ -55,6 +64,7 @@ public class AppConfig implements WebMvcConfigurer {
 		dataSource.setUrl(env.getRequiredProperty("jdbc.url"));
 		dataSource.setUsername(env.getRequiredProperty("jdbc.user"));
 		dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
+		dataSource.setConnectionProperties(getMyProperties());
 		return dataSource;
 	}
 
@@ -94,16 +104,6 @@ public class AppConfig implements WebMvcConfigurer {
 		viewResolver.setContentType("text/html;charset=UTF-8");
 		return viewResolver;
 	}
-
-//	@Bean
-//	public CommonsMultipartResolver multipartResolver(){
-//		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-//		resolver.setMaxUploadSizePerFile(10240); //10Kb
-//		resolver.setDefaultEncoding("UTF-8");
-//		resolver.setResolveLazily(true);
-//		return resolver;
-//	}
-
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

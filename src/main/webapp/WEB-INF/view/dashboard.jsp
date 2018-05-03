@@ -1,7 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>
+<%--<%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>--%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -9,17 +9,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Habitica</title>
+
+    <%--<meta property="og:url"           content="https://www.buduj.pl" />--%>
+    <%--<meta property="og:type"          content="website" />--%>
+    <%--<meta property="og:title"         content="My Title" />--%>
+    <%--<meta property="og:description"   content="Dziala" />--%>
+    <%--<meta property="og:image"         content="http://i.imgur.com/HiliJUx.png" />--%>
+
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-
-    <title>Habitica</title>
-
-    <%-- Progress bar--%>
-    <%--<spring:url value="/resources/LoadingBar/loading-bar.css" var="bar_css" />--%>
-    <%--<link href="${bar_css}" rel="stylesheet" type="text/css" />--%>
 
     <!-- Bootstrap core CSS -->
     <spring:url value="/resources/Theme/assets/css/bootstrap.css" var="bootstrap_core"/>
@@ -50,7 +52,6 @@
 
     <spring:url value="/resources/Theme/assets/css/to-do.css" var="to_do"/>
     <link href="${to_do}" rel="stylesheet"/>
-
 
     <%--<spring:url value="/resources/assets/bootstrap/css/bootstrap.min.css" var="min_css" />--%>
     <%--<link href="${min_css}" rel="stylesheet" />--%>
@@ -119,6 +120,7 @@
 </head>
 
 <body>
+
 
 <section id="container">
     <!-- **********************************************************************************************************************************************************
@@ -197,8 +199,7 @@
                 </li>
                     <li class="sub-menu">
                         <c:url value="/logout" var="logout"/>
-                        <a href="${logout}"><i class="fa fa-briefcase"
-                                               aria-hidden="true"></i><span>&nbsp;Wyloguj się</span></a>
+                        <a href="${logout}"><i class="fa fa-briefcase" aria-hidden="true"></i><span>&nbsp;Wyloguj się</span></a>
                     </li>
             </ul>
             <!-- sidebar menu end-->
@@ -265,8 +266,12 @@
 
                                     <h5><b>${loggedUser.level.description}</b></h5></div>
 
+                                <div class="fb-share-button" data-href="https://www.meczyki.pl" data-layout="button" data-size="large" data-mobile-iframe="false"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.meczyki.pl%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Udostępnij</a></div>
+                                <%--<a href="http://www.facebook.com/sharer/sharer.php?s=100&p[url]=http://budujswojenawyki.pl&p[title]=tytuł strony&p[summary]=zajawka” target="_blank">Udostępnij</a>--%>
 
                             </div><!-- /showback -->
+
+
 
                         </div><!-- /col-md-4 -->
                     </div><!-- /row -->
@@ -588,6 +593,11 @@
 <spring:url value="/resources/Theme/assets/js/chart-master/Chart.js" var="chart"/>
 <script src="${chart}"></script>
 
+<%--FACEBOOK--%>
+
+
+
+
 
 <%--<script type="text/javascript">--%>
 <%--$(document).ready(function () {--%>
@@ -655,6 +665,20 @@
 
 
 </script>
+
+
+<%-- FACEBOOK SHARE BUTTON JAVASCRIPT --%>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.12&appId=440306113072008&autoLogAppEvents=1';
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
 
 
 </body>

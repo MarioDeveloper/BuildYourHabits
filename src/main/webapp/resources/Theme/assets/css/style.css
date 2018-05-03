@@ -361,7 +361,7 @@ ul.sidebar-menu li a {
 }
 
 ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
-    background: #088e3d;
+    background: #00b33c;
     color: #fff;
     display: block;
 
@@ -410,8 +410,8 @@ ul.sidebar-menu li a.active i {
 }
 
 .black-bg {
-    background: #088e3d;
-    border-bottom: 1px solid #088e3d;
+    background: #00b33c;
+    border-bottom: 1px solid #00b33c;
 }
 
 .wrapper {
@@ -776,7 +776,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     line-height: 60px;
     height: 60px;
     margin: 0;
-    background: #088e3d;
+    background: #00b33c;
     text-align: center;
 }
 

@@ -87,7 +87,7 @@
     <!--header start-->
     <header class="header black-bg">
         <!--logo start-->
-        <c:url value="/dashboard" var="dashboard"/>
+        <c:url value="/" var="dashboard"/>
         <a href="${dashboard}" class="logo"><b>CODZIENNE NAWYKI</b></a>
         <!--logo end-->
     </header>
@@ -107,7 +107,7 @@
                 <%--<h5 class="centered">Marcel Newman</h5>--%>
 
                 <li class="mt">
-                    <c:url value="/dashboard" var="dashboard"/>
+                    <c:url value="/" var="dashboard"/>
                     <a href="${dashboard}"><i class="fa fa-dashboard"></i><span>&nbsp;Dashboard</span></a>
                 </li>
 
