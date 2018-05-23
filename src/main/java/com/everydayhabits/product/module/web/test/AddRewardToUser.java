@@ -27,30 +27,30 @@ public class AddRewardToUser {
 
         try {
 
-            // start a transaction
-            session.beginTransaction();
-
-            int userId = 4;
-            User tempUser = session.get(User.class, userId);
-
-            System.out.println("\nLoaded user: " + tempUser);
-            System.out.println("Rewards: " + tempUser.getRewards());
-
-            int rewardId = 1;
-            Reward tempReward = session.get(Reward.class, rewardId);
-
-            System.out.println("\nLoaded reward: " + tempReward);
-
-            tempUser.addReward(tempReward);
-
-            System.out.println("\nSaving the courses...");
-
-            session.save(tempUser);
-
-            // commit transaction
-            session.getTransaction().commit();
-
-            System.out.println("Done!");
+//            // start a transaction
+//            session.beginTransaction();
+//
+//            int userId = 4;
+//            User tempUser = session.get(User.class, userId);
+//
+//            System.out.println("\nLoaded user: " + tempUser);
+//            System.out.println("Rewards: " + tempUser.getRewards());
+//
+//            int rewardId = 1;
+//            Reward tempReward = session.get(Reward.class, rewardId);
+//
+//            System.out.println("\nLoaded reward: " + tempReward);
+//
+//            tempUser.addReward(tempReward);
+//
+//            System.out.println("\nSaving the courses...");
+//
+//            session.save(tempUser);
+//
+//            // commit transaction
+//            session.getTransaction().commit();
+//
+//            System.out.println("Done!");
 
         } finally {
             factory.close();

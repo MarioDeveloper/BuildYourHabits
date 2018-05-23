@@ -1,7 +1,12 @@
 package com.everydayhabits.product.module.web.service;
 
+import com.everydayhabits.product.module.web.dto.ChallengeEventDto;
+import com.everydayhabits.product.module.web.dto.NotificationDto;
 import com.everydayhabits.product.module.web.dto.UserDto;
-import com.everydayhabits.product.module.web.entity.*;
+import com.everydayhabits.product.module.web.entity.OneTimeEvent;
+import com.everydayhabits.product.module.web.entity.RealizationRecurringEvent;
+import com.everydayhabits.product.module.web.entity.RecurringEvent;
+import com.everydayhabits.product.module.web.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,7 +54,7 @@ public interface UserService extends UserDetailsService {
 
     List<User> getUsersByCriteria(String criteria, String username);
 
-    List<Notification> getNotifications();
+    List<NotificationDto> getNotifications(User user);
 
     UserDto getUserDtoByUsername(String username);
 
@@ -64,5 +69,21 @@ public interface UserService extends UserDetailsService {
     List<RecurringEvent> getRecurringEventsByUserIdForHistory(int id);
 
     void saveImage(MultipartFile file, String username);
+
+    List<User> getAllUsers(String username);
+
+    void createChallengeEvent(ChallengeEventDto challengeEventDto, String username);
+
+    List<ChallengeEventDto> getChallengeEventsByUser(User user);
+
+    void performChallengeEvent(int theId, User loggedUser);
+
+    void acceptChallengeEvent(int theId);
+
+    void rejectChallengeEvent(int theId);
+
+    void failChallengeEvent(int theId, User loggedUser);
+
+    List<NotificationDto> getChallengeNotifications(User loggedUser);
 
 }

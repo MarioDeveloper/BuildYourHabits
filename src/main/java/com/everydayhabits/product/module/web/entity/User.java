@@ -1,8 +1,5 @@
 package com.everydayhabits.product.module.web.entity;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,13 +42,22 @@ public class User {
     @Column(name = "experience")
     private int experience;
 
-    @LazyCollection(LazyCollectionOption.FALSE)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
     private List<RecurringEvent> recurringEvents;
 
-    @LazyCollection(LazyCollectionOption.FALSE)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<OneTimeEvent> oneTimeEvents;
+
+//    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Notification> notifications;
+
+//    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ChallengeEvent> challengeEventInit;
+
 
     @Column(name = "image")
     private byte[] image;
@@ -59,13 +65,20 @@ public class User {
     @Column(name = "registration_date")
     private Date registrationDate;
 
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+//    @JoinTable(
+//            name = "user_reward",
+//            joinColumns=@JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "reward_id")
+//    )
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
-            name = "user_reward",
+            name = "user_challenge",
             joinColumns=@JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "reward_id")
+            inverseJoinColumns = @JoinColumn(name = "challenge_event_id")
     )
-    private List<Reward> rewards;
+    private List<ChallengeEvent> challengeEventList;
 
     public User() {
     }
@@ -198,13 +211,7 @@ public class User {
         this.recurringEvents = recurringEvents;
     }
 
-    public List<Reward> getRewards() {
-        return rewards;
-    }
 
-    public void setRewards(List<Reward> rewards) {
-        this.rewards = rewards;
-    }
 
     public String getGender() {
         return gender;
@@ -214,13 +221,36 @@ public class User {
         this.gender = gender;
     }
 
-    public void addReward(Reward theReward){
+    public List<ChallengeEvent> getChallengeEventInit() {
+        return challengeEventInit;
+    }
 
-        if(rewards == null) {
-            rewards = new ArrayList<Reward>();
-        }
+    public void setChallengeEventInit(List<ChallengeEvent> challengeEventInit) {
+        this.challengeEventInit = challengeEventInit;
+    }
 
-        rewards.add(theReward);
+    public List<ChallengeEvent> getChallengeEvents() {
+        return challengeEventInit;
+    }
+
+    public void setChallengeEvents(List<ChallengeEvent> challengeEvents) {
+        this.challengeEventInit = challengeEvents;
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public List<ChallengeEvent> getChallengeEventList() {
+        return challengeEventList;
+    }
+
+    public void setChallengeEventList(List<ChallengeEvent> challengeEventList) {
+        this.challengeEventList = challengeEventList;
     }
 
     public void addRecuuringEvent(RecurringEvent tempRecurringEvent) {
@@ -244,6 +274,39 @@ public class User {
         oneTimeEvents.add(tempOneTimeEvent);
 
         tempOneTimeEvent.setUser(this);
+    }
+
+    public void addNotification(Notification tempNotification) {
+
+        if(notifications == null) {
+            notifications = new ArrayList<Notification>();
+        }
+
+        notifications.add(tempNotification);
+
+        tempNotification.setUser(this);
+    }
+
+    public void addChallengeEventInit(ChallengeEvent tempChallengeEventInit) {
+
+        if(challengeEventInit == null) {
+            challengeEventInit = new ArrayList<ChallengeEvent>();
+        }
+
+        challengeEventInit.add(tempChallengeEventInit);
+
+        tempChallengeEventInit.setUser(this);
+    }
+
+    public void addChallengeEvent(ChallengeEvent tempChallengeEvent) {
+
+        if(challengeEventList == null) {
+            challengeEventList = new ArrayList<ChallengeEvent>();
+        }
+
+        challengeEventList.add(tempChallengeEvent);
+
+        tempChallengeEvent.setUser(this);
     }
 
         @Override

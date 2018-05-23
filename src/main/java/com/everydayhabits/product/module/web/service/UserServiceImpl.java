@@ -1,8 +1,13 @@
 package com.everydayhabits.product.module.web.service;
 
 import com.everydayhabits.product.module.web.dao.UserDAO;
+import com.everydayhabits.product.module.web.dto.ChallengeEventDto;
+import com.everydayhabits.product.module.web.dto.NotificationDto;
 import com.everydayhabits.product.module.web.dto.UserDto;
-import com.everydayhabits.product.module.web.entity.*;
+import com.everydayhabits.product.module.web.entity.OneTimeEvent;
+import com.everydayhabits.product.module.web.entity.RealizationRecurringEvent;
+import com.everydayhabits.product.module.web.entity.RecurringEvent;
+import com.everydayhabits.product.module.web.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -192,8 +197,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Notification> getNotifications() {
-        return userDAO.getNotifications();
+    public List<NotificationDto> getNotifications(User user) {
+        return userDAO.getNotifications(user);
+    }
+
+    @Override
+    public List<User> getAllUsers(String username) {
+        return userDAO.getAllUsers(username);
+    }
+
+    @Override
+    public void createChallengeEvent(ChallengeEventDto challengeEventDto, String username) {
+        userDAO.createChallengeEvent(challengeEventDto,username);
+    }
+
+    @Override
+    public void rejectChallengeEvent(int theId) {
+        userDAO.rejectChallengeEvent(theId);
+    }
+
+    @Override
+    public void acceptChallengeEvent(int theId) {
+        userDAO.acceptChallengeEvent(theId);
+    }
+
+    @Override
+    public List<NotificationDto> getChallengeNotifications(User loggedUser) {
+        return userDAO.getChallengeNotifications(loggedUser);
+    }
+
+    @Override
+    public void failChallengeEvent(int theId, User loggedUser) {
+        userDAO.failChallengeEvent(theId,loggedUser);
+    }
+
+    @Override
+    public void performChallengeEvent(int theId, User loggedUser) {
+        userDAO.performChallengeEvent(theId,loggedUser);
+    }
+
+    @Override
+    public List<ChallengeEventDto> getChallengeEventsByUser(User user) {
+       return userDAO.getChallengeEventsByUser(user);
     }
 
     @Override

@@ -9,16 +9,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Habitica</title>
+    <title>Dashboard</title>
 
-    <%--<meta property="og:url"           content="https://www.buduj.pl" />--%>
-    <%--<meta property="og:type"          content="website" />--%>
-    <%--<meta property="og:title"         content="My Title" />--%>
-    <%--<meta property="og:description"   content="Dziala" />--%>
-    <%--<meta property="og:image"         content="http://i.imgur.com/HiliJUx.png" />--%>
+    <meta property="og:url"           content="http://budujswojenawyki.pl" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="Your Website Title" />
+    <meta property="og:description"   content="Your description" />
+    <%--<meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />--%>
 
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
@@ -110,6 +111,13 @@
             opacity: 0;
         }
 
+
+        #header #main-content #footer #body
+
+        @viewport {
+            zoom: 1.0;
+        }
+
     </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -128,15 +136,52 @@
     *********************************************************************************************************************************************************** -->
     <!--header start-->
     <header class="header black-bg">
+        <div class="sidebar-toggle-box">
+            <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+        </div>
         <!--logo start-->
-        <c:url value="/dashboard" var="dashboard"/>
+        <c:url value="/" var="dashboard"/>
         <a href="${dashboard}" class="logo"><b>BUDUJ SWOJE NAWYKI</b></a>
-        <!--logo end-->
-        <%--<div class="top-menu">--%>
-        <%--<ul class="nav pull-right top-menu">--%>
-        <%--<li><a class="logout">Logout</a></li>--%>
-        <%--</ul>--%>
+
+        <%--<div class="nav notify-row" id="top_menu">--%>
+            <%--<!--  notification start -->--%>
+            <%--<ul class="nav top-menu">--%>
+                <%--<!-- inbox dropdown start-->--%>
+                <%--<li id="header_inbox_bar" class="dropdown">--%>
+                    <%--<a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">--%>
+                        <%--<i class="fa fa-envelope-o"></i>--%>
+                        <%--<span class="badge bg-theme">${notificationDtoList.size()}</span>--%>
+                    <%--</a>--%>
+
+
+                    <%--<ul class="dropdown-menu extended inbox">--%>
+                        <%--<div class="notify-arrow notify-arrow-green"></div>--%>
+                        <%--<li>--%>
+                            <%--<p class="green">Masz ${notificationDtoList.size()} nowe wyzwania</p>--%>
+                        <%--</li>--%>
+
+
+                        <%--<c:forEach var="tempNotificationDtoList" items="${notificationDtoList}">--%>
+
+                        <%--<li>--%>
+                            <%--<a href="index.html#">--%>
+                                <%--<span class="photo"><img alt="avatar" src="/resources/Theme/assets/img/ui-danro.jpg"></span>--%>
+                                <%--<span class="subject">--%>
+                                    <%--<span class="from">${tempNotificationDtoList.firstName} ${tempNotificationDtoList.lastName}</span>--%>
+                                    <%--<span class="time">${tempNotificationDtoList.time}</span>--%>
+                                    <%--</span>--%>
+                                <%--<span class="message">--%>
+                                       <%--Podejmujesz wyzwanie?--%>
+                                    <%--</span>--%>
+                            <%--</a>--%>
+                        <%--</li>--%>
+                        <%--</c:forEach>--%>
+                    <%--</ul>--%>
+            <%--</ul>--%>
+            <%--<!--  notification end -->--%>
         <%--</div>--%>
+
+
     </header>
     <!--header end-->
 
@@ -150,7 +195,7 @@
             <ul class="sidebar-menu" id="nav-accordion">
 
                 <li class="mt">
-                    <c:url value="/dashboard" var="dashboard"/>
+                    <c:url value="/" var="dashboard"/>
                     <a class="active" href="${dashboard}"><i
                             class="fa fa-dashboard"></i><span>&nbsp;Dashboard</span></a>
                 </li>
@@ -176,9 +221,9 @@
                     <a href="${history}"><i class="fa fa-book"></i><span>&nbsp;Historia</span></a>
                 </li>
                 <li class="sub-menu">
-                    <c:url value="/rewards" var="rewards"/>
-                    <a href="${rewards}"><i class="fa fa-briefcase"
-                                            aria-hidden="true"></i><span>&nbsp;Nagrody</span></a>
+                    <c:url value="/challengeEvent" var="challenge"/>
+                    <a href="${challenge}"><i class="fa fa-briefcase"
+                                            aria-hidden="true"></i><span>&nbsp;Rzuć wyzwanie</span></a>
                 </li>
                 <%--<hr width="220" align="left">--%>
                 <li class="sub-menu">
@@ -266,8 +311,8 @@
 
                                     <h5><b>${loggedUser.level.description}</b></h5></div>
 
-                                <div class="fb-share-button" data-href="https://www.meczyki.pl" data-layout="button" data-size="large" data-mobile-iframe="false"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.meczyki.pl%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Udostępnij</a></div>
-                                <%--<a href="http://www.facebook.com/sharer/sharer.php?s=100&p[url]=http://budujswojenawyki.pl&p[title]=tytuł strony&p[summary]=zajawka” target="_blank">Udostępnij</a>--%>
+                                <div class="fb-share-button" data-href="http://budujswojenawyki.pl" data-layout="button" data-title ="title of your post" data-desc="description of your post" ></div>
+
 
                             </div><!-- /showback -->
 
@@ -293,7 +338,6 @@
                                         </th>
                                         <th><i class=""></i> Opis</th>
                                         <th><i class=" "></i> Stopień trudności</th>
-                                        <%--<th></th>--%>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -391,7 +435,6 @@
                                         <th><i class=""></i> Powtarzane</th>
                                         <th><i class=""></i> Opis</th>
                                         <th><i class=""></i> Stopień trudności</th>
-                                        <%--<th></th>--%>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -494,6 +537,124 @@
 
                     </div><!-- /row -->
 
+
+
+                    <!-- COMPLEX Challenge Events List -->
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+
+                            <div class="content-panel">
+                                <table class="table table-striped table-advance table-hover">
+                                    <h4>Aktualne wyzwania</h4>
+                                    <thead>
+                                    <tr>
+                                        <th><i class=""></i> Tytuł</th>
+                                        <th class=""><i class=""></i> Termin wykonania</th>
+                                        <th><i class=""></i> Opis</th>
+                                        <th><i class=""></i> Stopień trudności</th>
+                                        <th><i class=""></i> Przeciwnik</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="tempChallengeEvent" items="${challengeEventList}">
+
+                                        <c:url var="performChallengeEvent" value="/performChallengeEvent">
+                                            <c:param name="eventId"
+                                                     value="${tempChallengeEvent.id}"/>
+                                        </c:url>
+
+                                        <c:url var="acceptChallengeEvent" value="/acceptChallengeEvent">
+                                            <c:param name="eventId"
+                                                     value="${tempChallengeEvent.id}"/>
+                                        </c:url>
+
+                                        <c:url var="rejectChallengeEvent" value="/rejectChallengeEvent">
+                                            <c:param name="eventId"
+                                                     value="${tempChallengeEvent.id}"/>
+                                        </c:url>
+
+                                        <c:url var="failChallengeEvent" value="/failChallengeEvent">
+                                            <c:param name="eventId"
+                                                     value="${tempChallengeEvent.id}"/>
+                                        </c:url>
+
+                                        <tr>
+                                            <td>${tempChallengeEvent.title}</td>
+
+                                            <td>
+                                                <fmt:formatDate value="${tempChallengeEvent.plannedDate}"
+                                                                pattern="dd/MM/yy - HH:mm"/>
+                                            </td>
+                                            <td>${tempChallengeEvent.description}</td>
+                                            <td>${tempChallengeEvent.difficultyLevel}</td>
+                                            <td>${tempChallengeEvent.firstName} ${tempChallengeEvent.lastName}</td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${tempChallengeEvent.confirmed == true}">
+                                                        <a href="${performChallengeEvent}" class="btn btn-success btn-xs"><i
+                                                                class="fa fa-check"></i></a>
+                                                        <a href="${failChallengeEvent}" class="btn btn-danger btn-xs"><i
+                                                                class="fa fa-trash-o "></i></a>
+                                                    </c:when>
+                                                    <c:when test="${tempChallengeEvent.confirmed == null && tempChallengeEvent.userInitiatorId == loggedUser.id}">
+                                                        <span class="badge bg-info">Oczekuje na zatwierdzenie</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <div class="btn-group">
+                                                            <a href="${acceptChallengeEvent}" class="btn btn-success">Akceptuje</a>
+                                                        </div>
+                                                        <div class="btn-group">
+                                                            <a href="${rejectChallengeEvent}" class="btn btn-danger">Odrzucam</a>
+                                                        </div>
+                                                    </c:otherwise>
+                                                </c:choose>
+
+
+                                                <div class="modal fade" tabindex="-1" role="dialog"
+                                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-hidden="true">&times;
+                                                                </button>
+                                                                <h4 class="modal-title" id="customModal2">Wybierz jedną
+                                                                    z akcji</h4>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <a href="${failRecurringEvent}" type="button"
+                                                                   class="btn btn-primary">Zadanie niewykonane</a>
+
+                                                                <a href="${skipRecurringEvent}" class="btn btn-primary">Pomiń
+                                                                    wydarzenie</a>
+
+                                                                <a href="${cancelOtherRecurringEvents}"
+                                                                   class="btn btn-primary">Anuluj pozostałe
+                                                                    wydarzenia</a>
+
+                                                                <button type="button" class="btn btn-default"
+                                                                        data-dismiss="modal">Wyjdź
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div><!-- /content-panel -->
+
+
+                        </div>
+
+
+                    </div><!-- /row -->
+
+
                 </div><!-- /col-lg-9 END SECTION MIDDLE -->
 
 
@@ -594,31 +755,22 @@
 <script src="${chart}"></script>
 
 <%--FACEBOOK--%>
+<%--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>--%>
+    <div id="fb-root"></div>
+<script>
 
 
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=440306113072008&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+<%--FACEBOOK END--%>
 
 
-
-<%--<script type="text/javascript">--%>
-<%--$(document).ready(function () {--%>
-<%--var unique_id = $.gritter.add({--%>
-<%--// (string | mandatory) the heading of the notification--%>
-<%--title: 'Welcome to Dashgum!',--%>
-<%--// (string | mandatory) the text inside the notification--%>
-<%--text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo. Free version for <a href="http://blacktie.co" target="_blank" style="color:#ffd777">BlackTie.co</a>.',--%>
-<%--// (string | optional) the image to display on the left--%>
-<%--image: 'assets/img/ui-sam.jpg',--%>
-<%--// (bool | optional) if you want it to fade out on its own or just sit there--%>
-<%--sticky: true,--%>
-<%--// (int | optional) the time you want it to be alive for before fading out--%>
-<%--time: '',--%>
-<%--// (string | optional) the class name you want to apply to that specific message--%>
-<%--class_name: 'my-sticky-class'--%>
-<%--});--%>
-
-<%--return false;--%>
-<%--});--%>
-<%--</script>--%>
 
 <script type="application/javascript">
     $(document).ready(function () {
@@ -669,14 +821,14 @@
 
 <%-- FACEBOOK SHARE BUTTON JAVASCRIPT --%>
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = 'https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.12&appId=440306113072008&autoLogAppEvents=1';
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+<%--<div id="fb-root"></div>--%>
+<%--<script>(function(d, s, id) {--%>
+    <%--var js, fjs = d.getElementsByTagName(s)[0];--%>
+    <%--if (d.getElementById(id)) return;--%>
+    <%--js = d.createElement(s); js.id = id;--%>
+    <%--js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1";--%>
+    <%--fjs.parentNode.insertBefore(js, fjs);--%>
+<%--}(document, 'script', 'facebook-jssdk'));</script>--%>
 
 
 
