@@ -12,7 +12,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Tworzenie wydarzenia jednorazowego</title>
+    <title>Tworzenie wyzwania</title>
 
     <%--DATE TIME PICKER RESOURCES--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -124,7 +124,6 @@
                         <li><a href="${reccuringEvent}"><b>Cykliczne</b></a></li>
                     </ul>
                 </li>
-
                 <li class="sub-menu">
                     <c:url value="/ranking" var="ranking"/>
                     <a href="${ranking}"><i class="fa fa-bar-chart-o"></i><span>&nbsp;Ranking</span></a>
@@ -149,11 +148,11 @@
                         <li><a href="<c:out value="${showFormForUpdateUserPersonalData}"/>"><b>Edytuj dane
                             osobowe</b></a></li>
                     </ul>
-                    <li class="sub-menu">
-                        <c:url value="/logout" var="logout"/>
-                        <a href="${logout}"><i class="fa fa-briefcase"
-                                               aria-hidden="true"></i><span>&nbsp;Wyloguj się</span></a>
-                    </li>
+                <li class="sub-menu">
+                    <c:url value="/logout" var="logout"/>
+                    <a href="${logout}"><i class="fa fa-briefcase"
+                                           aria-hidden="true"></i><span>&nbsp;Wyloguj się</span></a>
+                </li>
                 </li>
             </ul>
             <!-- sidebar menu end-->
@@ -175,45 +174,64 @@
                     <div class="row mt">
                         <div class="col-lg-12">
                             <div class="form-panel">
-                                <h4 class="mb">Tworzenie wydarzenia jednorazowego</h4>
+                                <h4 class="mb">Tworzenie wyzwania</h4>
 
-                                <form:form action="createOneTimeEvent" modelAttribute="oneTimeEvent"
-                                           class="form-horizontal style-form" method="POST" accept-charset="UTF-8">
+                                <form action="createChallengeEvent" class="form-horizontal style-form" method="POST" accept-charset="UTF-8">
 
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Tytuł</label>
                                         <div class="col-sm-10">
-                                            <form:input path="title" type="text" class="form-control"/>
+                                            <spring:bind path="challenge.title">
+                                                <input type="text" class="form-control" name="${status.expression}" value="${status.value}"><br />
+                                            </spring:bind>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Opis</label>
                                         <div class="col-sm-10">
-                                            <form:input path="description" type="text" class="form-control"/>
+                                            <spring:bind path="challenge.description">
+                                                <input type="text" class="form-control" name="${status.expression}" value="${status.value}"><br />
+                                            </spring:bind>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Poziom trudności</label>
-                                        <form:select path="difficultyLevel" class="form-control"
-                                                     style="width: 100px;margin-left: 152px">
-                                            <form:option value="Łatwy"/>
-                                            <form:option value="Średni"/>
-                                            <form:option value="Trudny"/>
-                                        </form:select>
+                                        <spring:bind path="challenge.difficultyLevel">
+                                            <select name="${status.expression}" class="form-control" style="width: 100px;margin-left: 152px">
+                                                <%--<c:forEach var="entry" items="${unitList}">--%>
+                                                    <%--<option value="${entry.ID}"> ${entry.name}</option>--%>
+                                                <%--</c:forEach>--%>
+                                                    <option value="Łatwy"> Łatwy</option>
+                                                    <option value="Średni"> Średni</option>
+                                                    <option value="Trudny"> Trudny</option>
+                                            </select>
+                                        </spring:bind>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Data wykonania</label>
                                         <div class='input-group date' id='datetimepicker1'
                                              style="width: 200px;margin-left: 152px">
-                                            <form:input path="plannedDate" type="date" class="form-control"/>
+                                            <spring:bind path="challenge.plannedDate">
+                                                <input type="text" class="form-control" name="${status.expression}" value="${status.value}"><br />
+                                            </spring:bind>
                                             <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2 control-label">Wybierz swoje przeciwnika</label>
+                                        <spring:bind path="challenge.opponentId">
+                                            <select name="${status.expression}" class="form-control" style="width: 200px;margin-left: 152px">
+                                                    <c:forEach var="entry" items="${userList}">
+                                                        <option value="${entry.id}"> ${entry.firstName} ${entry.lastName}</option>
+                                                    </c:forEach>
+                                            </select>
+                                        </spring:bind>
+                                    </div>
 
                                     <script type="text/javascript">
                                         $(function () {
@@ -221,11 +239,11 @@
                                         });
                                     </script>
 
-                                    <input type="submit" value="Stwórz wydarzenie"
+                                    <input type="submit" value="Rzuć wyzwanie!"
                                            class="btn btn-primary btn-lg btn-block buttonCreateEvent"
                                            style="width: 300px;"/>
 
-                                </form:form>
+                                </form>
                             </div>
                         </div><!-- col-lg-12-->
                     </div><!-- /row -->

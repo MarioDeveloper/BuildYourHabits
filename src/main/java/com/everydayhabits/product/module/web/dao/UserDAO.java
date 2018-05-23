@@ -1,5 +1,7 @@
 package com.everydayhabits.product.module.web.dao;
 
+import com.everydayhabits.product.module.web.dto.ChallengeEventDto;
+import com.everydayhabits.product.module.web.dto.NotificationDto;
 import com.everydayhabits.product.module.web.dto.UserDto;
 import com.everydayhabits.product.module.web.entity.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,7 +52,7 @@ public interface UserDAO {
 
     List<User> getUsersByCriteria(String criteria, String username);
 
-    List<Notification> getNotifications();
+    List<NotificationDto> getNotifications(User user);
 
     UserDto getUserDtoByUsername(String username);
 
@@ -67,4 +69,21 @@ public interface UserDAO {
     public void checkUserExperiencePoint(User user);
 
     public void checkUserLife(User user);
+
+    List<User> getAllUsers(String user);
+
+    void createChallengeEvent(ChallengeEventDto challengeEventDto, String username);
+
+    List<ChallengeEventDto> getChallengeEventsByUser(User user);
+
+    void performChallengeEvent(int theId, User loggedUser);
+
+    void acceptChallengeEvent(int theId);
+
+    void rejectChallengeEvent(int theId);
+
+    void failChallengeEvent(int theId, User loggedUser);
+
+    List<NotificationDto> getChallengeNotifications(User loggedUser);
+
 }

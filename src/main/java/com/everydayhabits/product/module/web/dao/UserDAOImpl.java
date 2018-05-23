@@ -1,5 +1,7 @@
 package com.everydayhabits.product.module.web.dao;
 
+import com.everydayhabits.product.module.web.dto.ChallengeEventDto;
+import com.everydayhabits.product.module.web.dto.NotificationDto;
 import com.everydayhabits.product.module.web.dto.UserDto;
 import com.everydayhabits.product.module.web.entity.*;
 import org.hibernate.Session;
@@ -54,6 +56,192 @@ public class UserDAOImpl implements UserDAO {
         User user = (User) userQuery.uniqueResult();
 
         return user;
+    }
+
+    @Override
+    public List<User> getAllUsers(String username) {
+
+        currentSession = sessionFactory.getCurrentSession();
+
+        userQuery = currentSession.createQuery("from User WHERE username != :loggedUser ORDER BY firstName asc");
+        userQuery.setParameter("loggedUser", username);
+
+        List<User> users = userQuery.getResultList();
+
+        return users;
+    }
+
+    @Override
+    public void createChallengeEvent(ChallengeEventDto ced, String username) {
+
+        currentSession = sessionFactory.getCurrentSession();
+
+        User loggedUser = getUserByEmail(username);
+
+        User userOpponent = getUserById(ced.getOpponentId());
+
+        int experience = getExperienceDependentOnDifficultyLevel(null, null, ced);
+        int life = getLifeDependentOnDifficultyLevel(null, null, ced);
+
+        Notification tempNotification = new Notification(loggedUser.getFirstName(), loggedUser.getLastName(), 0, new Date(), "C", false);
+
+        userOpponent.addNotification(tempNotification);
+
+        currentSession.save(tempNotification);
+
+        ChallengeEvent newChallengeEvent = new ChallengeEvent(loggedUser, tempNotification, ced.getTitle(), ced.getDescription(), ced.getDifficultyLevel(), null, null, null, ced.getPlannedDate(), null, experience, life);
+
+        newChallengeEvent.addUser(loggedUser);
+        newChallengeEvent.addUser(userOpponent);
+
+        currentSession.save(newChallengeEvent);
+    }
+
+    private User getUserById(int opponentId) {
+
+        currentSession = sessionFactory.getCurrentSession();
+
+        userQuery = currentSession.createQuery("from User WHERE id = :userOpponentId");
+        userQuery.setParameter("userOpponentId", opponentId);
+
+        User user = (User) userQuery.uniqueResult();
+
+        return user;
+
+    }
+
+    @Override
+    public void performChallengeEvent(int theId, User loggedUser) {
+
+        currentSession = sessionFactory.getCurrentSession();
+
+        ChallengeEvent challengeEvent = currentSession.get(ChallengeEvent.class, theId);
+        List<User> userList = challengeEvent.getUsers();
+
+        for(User tempUser : userList) {
+            if (challengeEvent.getUser().getId() == loggedUser.getId() && tempUser.getId() == loggedUser.getId()) {
+                challengeEvent.setDoneUserInit(Boolean.TRUE);
+                tempUser.setExperience(tempUser.getExperience() + challengeEvent.getExperience());
+
+                checkUserExperiencePoint(tempUser);
+            } else if(tempUser.getId() == loggedUser.getId()) {
+                challengeEvent.setDoneUserOpponent(Boolean.TRUE);
+                tempUser.setExperience(tempUser.getExperience() + challengeEvent.getExperience());
+
+                checkUserExperiencePoint(tempUser);
+            }
+        }
+
+
+
+    }
+
+    @Override
+    public void acceptChallengeEvent(int theId) {
+        currentSession = sessionFactory.getCurrentSession();
+
+        ChallengeEvent challengeEvent = currentSession.get(ChallengeEvent.class, theId);
+        challengeEvent.setConfirmed(Boolean.TRUE);
+    }
+
+    @Override
+    public List<NotificationDto> getChallengeNotifications(User loggedUser) {
+
+        currentSession = sessionFactory.getCurrentSession();
+
+        Query<Notification> theQuery = currentSession.createQuery("FROM Notification WHERE user_id != :userId AND type = 'C' ORDER BY date desc");
+        theQuery.setParameter("userId", loggedUser.getId());
+        theQuery.setMaxResults(5);
+
+        List<Notification> notificationList = theQuery.getResultList();
+
+        return getReturnedNotificationList(notificationList);
+
+    }
+
+    private List<NotificationDto> getReturnedNotificationList(List<Notification> notificationList) {
+        List<NotificationDto> notificationDtos = new ArrayList<>();
+
+        for (Notification notification : notificationList) {
+
+            String tempDate = "";
+
+            long diff = Math.abs(new Date().getTime() - notification.getDate().getTime());
+            long diffDays = diff / (24 * 60 * 60 * 1000);
+            long diffHour = diff / (60 * 60 * 1000);
+            long diffMinute = diff / (60 * 1000);
+
+            if (diffDays > 0) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(diffDays);
+                sb.append(" Dni");
+                tempDate = sb.toString();
+
+            } else if (diffHour > 0) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(diffHour);
+                sb.append(" Godzin");
+                tempDate = sb.toString();
+
+            } else {
+
+                if (diffMinute == 0) {
+                    diffMinute = 1;
+                }
+                StringBuilder sb = new StringBuilder();
+                sb.append(diffMinute);
+                sb.append(" Minut");
+                tempDate = sb.toString();
+            }
+            NotificationDto tempNotification = new NotificationDto(notification.getFirstName(), notification.getLastName(), notification.getExperiencePoint(), tempDate);
+
+            System.out.println("Notyfikacja " + tempNotification.toString());
+
+            notificationDtos.add(tempNotification);
+        }
+        return notificationDtos;
+    }
+
+    @Override
+    public List<ChallengeEventDto> getChallengeEventsByUser(User user) {
+
+        currentSession = sessionFactory.getCurrentSession();
+
+
+        Query queryChallenge = currentSession.createQuery("SELECT ce FROM ChallengeEvent ce JOIN ce.users ces where ces.id =:user_id AND (ce.isConfirmed != :code OR ce.isConfirmed IS NULL) ORDER BY ce.plannedDate asc");
+        queryChallenge.setParameter("user_id", user.getId());
+        queryChallenge.setParameter("code", Boolean.FALSE);
+
+        List<ChallengeEventDto> challengeEvents = new ArrayList<>();
+        List<ChallengeEvent> challengeEventList1 = queryChallenge.getResultList();
+
+
+        // set opponent for challengeEvent
+        int tempId;
+        for(ChallengeEvent challengeEvent : challengeEventList1) {
+            for (int i = 0; i < challengeEvent.getUsers().size(); i++) {
+                 tempId = challengeEvent.getUsers().get(i).getId();
+                if (!(user.getId() == tempId)) {
+                    User tempUser = currentSession.get(User.class, tempId);
+                    ChallengeEventDto challengeEventDto = new ChallengeEventDto(challengeEvent.getId(), challengeEvent.getTitle(), challengeEvent.getDescription(), challengeEvent.getDifficultyLevel(), challengeEvent.getPlannedDate(), tempUser.getFirstName(), tempUser.getLastName(), challengeEvent.getConfirmed(), challengeEvent.getUser().getId());
+
+                    if(user.getId() == challengeEvent.getUser().getId() && challengeEvent.getDoneUserInit() == null)
+                    challengeEvents.add(challengeEventDto);
+                    else if(!(user.getId() == challengeEvent.getUser().getId()) && challengeEvent.getDoneUserOpponent() == null)
+                        challengeEvents.add(challengeEventDto);
+                }
+            }
+        }
+
+        return challengeEvents;
+    }
+
+    @Override
+    public void rejectChallengeEvent(int theId) {
+        currentSession = sessionFactory.getCurrentSession();
+
+        ChallengeEvent challengeEvent = currentSession.get(ChallengeEvent.class, theId);
+        challengeEvent.setConfirmed(Boolean.FALSE);
     }
 
     @Override
@@ -184,6 +372,28 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public void failChallengeEvent(int theId, User loggedUser) {
+
+        currentSession = sessionFactory.getCurrentSession();
+
+        ChallengeEvent challengeEvent = currentSession.get(ChallengeEvent.class, theId);
+        List<User> userList = challengeEvent.getUsers();
+
+        for(User tempUser : userList) {
+            if (challengeEvent.getUser().getId() == loggedUser.getId() && tempUser.getId() == loggedUser.getId()) {
+                challengeEvent.setDoneUserInit(Boolean.FALSE);
+                tempUser.setLife(tempUser.getLife() + challengeEvent.getLife());
+                checkUserLife(tempUser);
+
+            } else if(tempUser.getId() == loggedUser.getId()) {
+                challengeEvent.setDoneUserOpponent(Boolean.FALSE);
+                tempUser.setLife(tempUser.getLife() + challengeEvent.getLife());
+                checkUserLife(tempUser);
+            }
+        }
+    }
+
+    @Override
     public void failOneTimeEvent(int eventId, String username) {
 
         currentSession = sessionFactory.getCurrentSession();
@@ -240,6 +450,13 @@ public class UserDAOImpl implements UserDAO {
 
         currentSession.refresh(user);
         checkUserExperiencePoint(user);
+
+        Notification notification = new Notification(user.getFirstName(), user.getLastName(), oneTimeEvent.getExperience(), new Date(), "O", null);
+
+        user.addNotification(notification);
+
+        currentSession.save(notification);
+
     }
 
     @Override
@@ -247,8 +464,8 @@ public class UserDAOImpl implements UserDAO {
 
         currentSession = sessionFactory.getCurrentSession();
 
-        int experience = getExperienceDependentOnDifficultyLevel(ote, null);
-        int life = getLifeDependentOnDifficultyLevel(ote, null);
+        int experience = getExperienceDependentOnDifficultyLevel(ote, null, null);
+        int life = getLifeDependentOnDifficultyLevel(ote, null,null);
 
         User user = getUserByEmail(username);
 
@@ -297,8 +514,8 @@ public class UserDAOImpl implements UserDAO {
 
         currentSession = sessionFactory.getCurrentSession();
 
-        int experience = getExperienceDependentOnDifficultyLevel(null, recurringEvent);
-        int life = getLifeDependentOnDifficultyLevel(null, recurringEvent);
+        int experience = getExperienceDependentOnDifficultyLevel(null, recurringEvent, null);
+        int life = getLifeDependentOnDifficultyLevel(null, recurringEvent, null);
 
         User user = getUserByEmail(username);
 
@@ -526,63 +743,17 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<Notification> getNotifications() {
+    public List<NotificationDto> getNotifications(User user) {
 
         currentSession = sessionFactory.getCurrentSession();
-        List<Notification> notificationList = new ArrayList<>();
 
-
-        Query<OneTimeEvent> theQuery = currentSession.createQuery(" FROM OneTimeEvent WHERE isDone=:code ORDER BY realizationDate desc");
-        theQuery.setParameter("code", Boolean.TRUE);
+        Query<Notification> theQuery = currentSession.createQuery(" FROM Notification WHERE user_id !=:userId AND type = 'O' ORDER BY date desc");
+        theQuery.setParameter("userId", user.getId());
         theQuery.setMaxResults(10);
 
-        List<OneTimeEvent> oneTimeEventList = theQuery.getResultList();
+        List<Notification> notificationList = theQuery.getResultList();
 
-
-        for (OneTimeEvent ote : oneTimeEventList) {
-
-            String tempDate = "";
-
-            long diff = Math.abs(new Date().getTime() - ote.getRealizationDate().getTime());
-            System.out.println("Diff: " + diff);
-
-            long diffDays = diff / (24 * 60 * 60 * 1000);
-            long diffHour = diff / (60 * 60 * 1000);
-            long diffMinute = diff / (60 * 1000);
-
-            System.out.println("diffDays: " + diffDays);
-            System.out.println("diffMinute: " + diffMinute);
-            System.out.println("diffHours: " + diffHour);
-
-            if (diffDays > 0) {
-                StringBuilder sb = new StringBuilder();
-                sb.append(diffDays);
-                sb.append(" Dni");
-                tempDate = sb.toString();
-
-            } else if (diffHour > 0) {
-                StringBuilder sb = new StringBuilder();
-                sb.append(diffHour);
-                sb.append(" Godzin");
-                tempDate = sb.toString();
-
-            } else {
-
-                if (diffMinute == 0) {
-                    diffMinute = 1;
-                }
-                StringBuilder sb = new StringBuilder();
-                sb.append(diffMinute);
-                sb.append(" Minut");
-                tempDate = sb.toString();
-            }
-            Notification tempNotification = new Notification(ote.getUser().getFirstName(), ote.getUser().getLastName(), ote.getExperience(), tempDate);
-
-            System.out.println("Notyfikacja " + tempNotification.toString());
-
-            notificationList.add(tempNotification);
-        }
-        return notificationList;
+        return getReturnedNotificationList(notificationList);
 
     }
 
@@ -618,7 +789,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     // temporary ugly code
-    private int getExperienceDependentOnDifficultyLevel(OneTimeEvent ote, RecurringEvent re) {
+    private int getExperienceDependentOnDifficultyLevel(OneTimeEvent ote, RecurringEvent re, ChallengeEventDto ce) {
 
         int tempExperience = 0;
 
@@ -631,7 +802,7 @@ public class UserDAOImpl implements UserDAO {
             } else {
                 tempExperience = 25;
             }
-        } else {
+        } else if(re != null ){
             if (re.getDifficultyLevel().equals("Łatwy")) {
                 System.out.println();
                 tempExperience = 10;
@@ -640,13 +811,23 @@ public class UserDAOImpl implements UserDAO {
             } else {
                 tempExperience = 25;
             }
+        } else {
+            if (ce.getDifficultyLevel().equals("Łatwy")) {
+                System.out.println("");
+                tempExperience = 10;
+            } else if (ce.getDifficultyLevel().equals("Średni")) {
+                tempExperience = 20;
+            } else {
+                tempExperience = 25;
+            }
+
         }
         return tempExperience;
 
     }
 
     // temporary ugly code
-    private int getLifeDependentOnDifficultyLevel(OneTimeEvent ote, RecurringEvent re) {
+    private int getLifeDependentOnDifficultyLevel(OneTimeEvent ote, RecurringEvent re, ChallengeEventDto ce) {
 
         int tempLife = 0;
 
@@ -659,7 +840,7 @@ public class UserDAOImpl implements UserDAO {
             } else {
                 tempLife = -10;
             }
-        } else {
+        } else if(re != null) {
             if (re.getDifficultyLevel().equals("Łatwy")) {
                 System.out.println();
                 tempLife = -10;
@@ -668,7 +849,17 @@ public class UserDAOImpl implements UserDAO {
             } else {
                 tempLife = -10;
             }
+        } else {
+            if (ce.getDifficultyLevel().equals("Łatwy")) {
+                System.out.println("");
+                tempLife = -10;
+            } else if (ce.getDifficultyLevel().equals("Średni")) {
+                tempLife = -10;
+            } else {
+                tempLife = -10;
+            }
         }
+
         return tempLife;
     }
 

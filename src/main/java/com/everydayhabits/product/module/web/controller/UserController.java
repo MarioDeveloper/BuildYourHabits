@@ -1,7 +1,12 @@
 package com.everydayhabits.product.module.web.controller;
 
+import com.everydayhabits.product.module.web.dto.ChallengeEventDto;
+import com.everydayhabits.product.module.web.dto.NotificationDto;
 import com.everydayhabits.product.module.web.dto.UserDto;
-import com.everydayhabits.product.module.web.entity.*;
+import com.everydayhabits.product.module.web.entity.OneTimeEvent;
+import com.everydayhabits.product.module.web.entity.RealizationRecurringEvent;
+import com.everydayhabits.product.module.web.entity.RecurringEvent;
+import com.everydayhabits.product.module.web.entity.User;
 import com.everydayhabits.product.module.web.model.UploadForm;
 import com.everydayhabits.product.module.web.service.UserService;
 import org.apache.commons.codec.binary.Base64;
@@ -39,6 +44,8 @@ public class UserController {
         dataBinder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
 
+
+
     @GetMapping("/")
     public String showDashboard(Model theModel) {
 
@@ -48,8 +55,11 @@ public class UserController {
         List<OneTimeEvent> oneTimeEventList = userService.getOneTimeEventsByUserId(loggedUser.getId());
         List<RecurringEvent> recurringEventList = userService.getRecurringEventsByUserId(loggedUser.getId());
         List<RealizationRecurringEvent> realizationRecurringEventList = userService.getRealizationRecurringEventList(recurringEventList);
+        List<ChallengeEventDto> challengeEventDtos = userService.getChallengeEventsByUser(loggedUser);
 
-        List<Notification> notificationList = userService.getNotifications();
+        List<NotificationDto> notificationDtos = userService.getNotifications(loggedUser);
+
+        List<NotificationDto> notificationDtoList = userService.getChallengeNotifications(loggedUser);
 
         String encodedString = "";
 
@@ -58,12 +68,13 @@ public class UserController {
             encodedString = new String(encoded);
         }
 
-
         theModel.addAttribute("userImage", encodedString);
         theModel.addAttribute("fileBucket", new UploadForm());
-        theModel.addAttribute("notificationList", notificationList);
+        theModel.addAttribute("notificationList", notificationDtos);
+        theModel.addAttribute("notificationDtoList", notificationDtoList);
         theModel.addAttribute("oneTimeEventList", oneTimeEventList);
         theModel.addAttribute("realizationRecurringEventList", realizationRecurringEventList);
+        theModel.addAttribute("challengeEventList", challengeEventDtos);
         theModel.addAttribute("loggedUser", loggedUser);
 
 
@@ -79,26 +90,77 @@ public class UserController {
         return "redirect:/";
     }
 
+    @GetMapping("/acceptChallengeEvent")
+    public String acceptChallengeEvent(@RequestParam("eventId") int theId) {
+
+        userService.acceptChallengeEvent(theId);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/rejectChallengeEvent")
+    public String rejectChallengeEvent(@RequestParam("eventId") int theId) {
+
+        userService.rejectChallengeEvent(theId);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/performChallengeEvent")
+    public String performChallengeEvent(@RequestParam("eventId") int theId) {
+
+        String username = getLoggedInUsername();
+        User loggedUser = userService.getUserByUsername(username);
+
+        userService.performChallengeEvent(theId, loggedUser);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/failChallengeEvent")
+    public String failChallengeEvent(@RequestParam("eventId") int theId) {
+
+        String username = getLoggedInUsername();
+        User loggedUser = userService.getUserByUsername(username);
+
+        userService.failChallengeEvent(theId, loggedUser);
+
+        return "redirect:/";
+    }
+
     @GetMapping("/showFormForUpdateOneTimeEvent")
     public String showFormForUpdateOneTimeEvent(@RequestParam("eventId") int eventId, Model theModel) {
 
-        List<Notification> notificationList = userService.getNotifications();
+        String username = getLoggedInUsername();
+        User loggedUser = userService.getUserByUsername(username);
+
+        List<NotificationDto> notificationDtos = userService.getNotifications(loggedUser);
         OneTimeEvent oneTimeEvent = userService.getOneTimeEventById(eventId);
 
-        theModel.addAttribute("notificationList", notificationList);
+        theModel.addAttribute("notificationList", notificationDtos);
         theModel.addAttribute("oneTimeEvent", oneTimeEvent);
 
         return "updateOneTimeEvent";
     }
 
     @PostMapping("/createOneTimeEvent")
-    public String saveOneTimeEvent(@ModelAttribute("oneTimeEvent") OneTimeEvent oneTimeEvent) {
+    public String createOneTimeEvent(@ModelAttribute("challengeEvent") OneTimeEvent oneTimeEvent) {
 
         String username = getLoggedInUsername();
 
         System.out.println("Polskie znaki: " + oneTimeEvent.getDifficultyLevel());
 
         userService.createOneTimeEvent(oneTimeEvent, username);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/createChallengeEvent")
+    public String createChallengeEvent(@ModelAttribute("challenge") ChallengeEventDto challengeEventDto) {
+
+        String username = getLoggedInUsername();
+
+        userService.createChallengeEvent(challengeEventDto, username);
 
         return "redirect:/";
     }
@@ -186,10 +248,13 @@ public class UserController {
     @GetMapping("/showFormForUpdateRecurringEvent")
     public String showFormForUpdateRecurringEvent(@RequestParam("eventId") int eventId, Model theModel) {
 
-        List<Notification> notificationList = userService.getNotifications();
+        String username = getLoggedInUsername();
+        User loggedUser = userService.getUserByUsername(username);
+
+        List<NotificationDto> notificationDtos = userService.getNotifications(loggedUser);
         RecurringEvent recurringEvent = userService.getRecurringEventById(eventId);
 
-        theModel.addAttribute("notificationList", notificationList);
+        theModel.addAttribute("notificationList", notificationDtos);
         theModel.addAttribute("recurringEvent", recurringEvent);
 
         return "updateRecurringEvent";
@@ -200,13 +265,14 @@ public class UserController {
     public String showFormForUpdateUserPersonalData(Model theModel) {
 
         String username = getLoggedInUsername();
+        User loggedUser = userService.getUserByUsername(username);
 
-        List<Notification> notificationList = userService.getNotifications();
+        List<NotificationDto>  notificationDtos = userService.getNotifications(loggedUser);
 
         UserDto userDto = userService.getUserDtoByUsername(username);
 
         theModel.addAttribute("userDto", userDto);
-        theModel.addAttribute("notificationList", notificationList);
+        theModel.addAttribute("notificationList", notificationDtos);
 
         return "updatePersonalData";
     }
@@ -214,8 +280,12 @@ public class UserController {
     @PostMapping("/updatePersonalData")
     public String updatePersonalData(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult theBindingResult, Model theModel) throws Exception {
 
-        List<Notification> notificationList = userService.getNotifications();
-        theModel.addAttribute("notificationList", notificationList);
+        String username = getLoggedInUsername();
+        User loggedUser = userService.getUserByUsername(username);
+
+
+        List<NotificationDto>  notificationDtos = userService.getNotifications(loggedUser);
+        theModel.addAttribute("notificationList", notificationDtos);
 
         if (theBindingResult.hasErrors()) {
 
@@ -255,11 +325,9 @@ public class UserController {
     public String showFormForUpdateUserImage(Model theModel) {
 
         String username = getLoggedInUsername();
-
-        List<Notification> notificationList = userService.getNotifications();
-
-
         User loggedUser = userService.getUserByUsername(username);
+
+        List<NotificationDto> notificationDtos = userService.getNotifications(loggedUser);
 
         String encodedString = "";
 
@@ -270,7 +338,7 @@ public class UserController {
 
 
         theModel.addAttribute("userImage", encodedString);
-        theModel.addAttribute("notificationList", notificationList);
+        theModel.addAttribute("notificationList", notificationDtos);
 
         return "updateUserImage";
     }
@@ -290,9 +358,12 @@ public class UserController {
     @GetMapping("/rewards")
     public String showAwards(Model theModel) {
 
-        List<Notification> notificationList = userService.getNotifications();
+        String username = getLoggedInUsername();
+        User loggedUser = userService.getUserByUsername(username);
 
-        theModel.addAttribute("notificationList", notificationList);
+        List<NotificationDto> notificationDtos = userService.getNotifications(loggedUser);
+
+        theModel.addAttribute("notificationList", notificationDtos);
 
         return "rewards";
     }
@@ -301,16 +372,17 @@ public class UserController {
     @GetMapping("/ranking")
     public String showRanking(Model theModel) {
 
+        String username = getLoggedInUsername();
+        User loggedUser = userService.getUserByUsername(username);
+
         String encodedString = "";
         List<String> images = new ArrayList<>();
-
-        String username = getLoggedInUsername();
 
         List<User> userList = userService.getUsersByCriteria("allUsers", null);
 
         User currentUser = userService.getUserByUsername(username);
 
-        List<Notification> notificationList = userService.getNotifications();
+        List<NotificationDto> notificationDtos = userService.getNotifications(loggedUser);
 
         for (User user : userList) {
             if (user.getImage() != null) {
@@ -324,7 +396,7 @@ public class UserController {
         }
 
         theModel.addAttribute("images", images);
-        theModel.addAttribute("notificationList", notificationList);
+        theModel.addAttribute("notificationList", notificationDtos);
         theModel.addAttribute("currentUser", currentUser);
         theModel.addAttribute("userList", userList);
 
@@ -334,15 +406,16 @@ public class UserController {
     @GetMapping("/getUsersByCriteria")
     public String getUsersByCriteria(@RequestParam("criteriaParam") String criteria, Model theModel) {
 
+        String username = getLoggedInUsername();
+        User loggedUser = userService.getUserByUsername(username);
+
         String encodedString = "";
         List<String> images = new ArrayList<>();
-
-        String username = getLoggedInUsername();
 
         User currentUser = userService.getUserByUsername(username);
 
         List<User> userList = userService.getUsersByCriteria(criteria, username);
-        List<Notification> notificationList = userService.getNotifications();
+        List<NotificationDto> notificationDtos = userService.getNotifications(loggedUser);
 
         for (User user : userList) {
             if (user.getImage() != null) {
@@ -354,7 +427,7 @@ public class UserController {
         }
 
         theModel.addAttribute("images", images);
-        theModel.addAttribute("notificationList", notificationList);
+        theModel.addAttribute("notificationList", notificationDtos);
         theModel.addAttribute("currentUser", currentUser);
         theModel.addAttribute("userList", userList);
 
@@ -367,20 +440,44 @@ public class UserController {
     @GetMapping("/oneTimeEvent")
     public String showOneTimeEvent(Model theModel) {
 
-        List<Notification> notificationList = userService.getNotifications();
+        String username = getLoggedInUsername();
+        User loggedUser = userService.getUserByUsername(username);
 
-        theModel.addAttribute("notificationList", notificationList);
+        List<NotificationDto> notificationDtos = userService.getNotifications(loggedUser);
+
+        theModel.addAttribute("notificationList", notificationDtos);
         theModel.addAttribute("oneTimeEvent", new OneTimeEvent());
 
         return "oneTimeEvent";
     }
 
+    @GetMapping("/challengeEvent")
+    public String showFormForChallengeEvent(Model theModel) {
+
+        String username = getLoggedInUsername();
+        User loggedUser = userService.getUserByUsername(username);
+
+        List<NotificationDto> notificationDtos = userService.getNotifications(loggedUser);
+        List<User> userList = userService.getAllUsers(username);
+
+
+        theModel.addAttribute("notificationList", notificationDtos);
+        theModel.addAttribute("challenge", new ChallengeEventDto());
+//        theModel.addAttribute("user", new UserChallengeDto());
+        theModel.addAttribute("userList", userList);
+
+        return "challengeEvent";
+    }
+
     @GetMapping("/reccuringEvent")
     public String showRecurringEvent(Model theModel) {
 
-        List<Notification> notificationList = userService.getNotifications();
+        String username = getLoggedInUsername();
+        User loggedUser = userService.getUserByUsername(username);
 
-        theModel.addAttribute("notificationList", notificationList);
+        List<NotificationDto> notificationDtos = userService.getNotifications(loggedUser);
+
+        theModel.addAttribute("notificationList", notificationDtos);
         theModel.addAttribute("recurringEvent", new RecurringEvent());
 
         return "recurringEvent";
