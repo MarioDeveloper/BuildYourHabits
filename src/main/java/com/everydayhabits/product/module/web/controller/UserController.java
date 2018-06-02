@@ -349,26 +349,6 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("/account")
-    public String showMyAccount() {
-
-        return "account";
-    }
-
-    @GetMapping("/rewards")
-    public String showAwards(Model theModel) {
-
-        String username = getLoggedInUsername();
-        User loggedUser = userService.getUserByUsername(username);
-
-        List<NotificationDto> notificationDtos = userService.getNotifications(loggedUser);
-
-        theModel.addAttribute("notificationList", notificationDtos);
-
-        return "rewards";
-    }
-
-
     @GetMapping("/ranking")
     public String showRanking(Model theModel) {
 

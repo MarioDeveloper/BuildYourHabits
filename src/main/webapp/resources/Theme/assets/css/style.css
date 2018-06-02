@@ -361,7 +361,7 @@ ul.sidebar-menu li a {
 }
 
 ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
-    background: #00b33c;
+    background: #ffc233;
     color: #fff;
     display: block;
 
@@ -410,8 +410,8 @@ ul.sidebar-menu li a.active i {
 }
 
 .black-bg {
-    background: #00b33c;
-    border-bottom: 1px solid #00b33c;
+    background: #ffc233;
+    border-bottom: 1px solid #ffc233;
 }
 
 .wrapper {
@@ -776,7 +776,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     line-height: 60px;
     height: 60px;
     margin: 0;
-    background: #00b33c;
+    background: #ffc233;
     text-align: center;
 }
 
@@ -2200,7 +2200,7 @@ label {
 
 /*footer*/
 .site-footer {
-    background: #0099ff;
+    background: #ffc94d;
     color: #fff;
     padding: 5px 0;
 }

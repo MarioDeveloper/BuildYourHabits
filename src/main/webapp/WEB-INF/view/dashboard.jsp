@@ -60,33 +60,6 @@
 
 
     <style>
-        .polaroid {
-            width: 250px;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            text-align: center;
-        }
-
-        .data-image {
-            margin: 30px 0px;
-        }
-
-        .padding {
-            margin: 10px 0px;
-        }
-
-        .myFooter {
-            position: relative;
-            right: 0;
-            bottom: 0;
-            left: 10.95%;
-            width: 89.05%;
-        }
-
-        .btn-file {
-            position: relative;
-            overflow: hidden;
-        }
-
         .btn-file input[type=file] {
             position: absolute;
             top: 0;
@@ -143,45 +116,6 @@
         <c:url value="/" var="dashboard"/>
         <a href="${dashboard}" class="logo"><b>BUDUJ SWOJE NAWYKI</b></a>
 
-        <%--<div class="nav notify-row" id="top_menu">--%>
-            <%--<!--  notification start -->--%>
-            <%--<ul class="nav top-menu">--%>
-                <%--<!-- inbox dropdown start-->--%>
-                <%--<li id="header_inbox_bar" class="dropdown">--%>
-                    <%--<a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">--%>
-                        <%--<i class="fa fa-envelope-o"></i>--%>
-                        <%--<span class="badge bg-theme">${notificationDtoList.size()}</span>--%>
-                    <%--</a>--%>
-
-
-                    <%--<ul class="dropdown-menu extended inbox">--%>
-                        <%--<div class="notify-arrow notify-arrow-green"></div>--%>
-                        <%--<li>--%>
-                            <%--<p class="green">Masz ${notificationDtoList.size()} nowe wyzwania</p>--%>
-                        <%--</li>--%>
-
-
-                        <%--<c:forEach var="tempNotificationDtoList" items="${notificationDtoList}">--%>
-
-                        <%--<li>--%>
-                            <%--<a href="index.html#">--%>
-                                <%--<span class="photo"><img alt="avatar" src="/resources/Theme/assets/img/ui-danro.jpg"></span>--%>
-                                <%--<span class="subject">--%>
-                                    <%--<span class="from">${tempNotificationDtoList.firstName} ${tempNotificationDtoList.lastName}</span>--%>
-                                    <%--<span class="time">${tempNotificationDtoList.time}</span>--%>
-                                    <%--</span>--%>
-                                <%--<span class="message">--%>
-                                       <%--Podejmujesz wyzwanie?--%>
-                                    <%--</span>--%>
-                            <%--</a>--%>
-                        <%--</li>--%>
-                        <%--</c:forEach>--%>
-                    <%--</ul>--%>
-            <%--</ul>--%>
-            <%--<!--  notification end -->--%>
-        <%--</div>--%>
-
-
     </header>
     <!--header end-->
 
@@ -222,8 +156,7 @@
                 </li>
                 <li class="sub-menu">
                     <c:url value="/challengeEvent" var="challenge"/>
-                    <a href="${challenge}"><i class="fa fa-briefcase"
-                                            aria-hidden="true"></i><span>&nbsp;Rzuć wyzwanie</span></a>
+                    <a href="${challenge}"><i class="glyphicon glyphicon-fire" aria-hidden="true"></i><span>&nbsp;Rzuć wyzwanie</span></a>
                 </li>
                 <%--<hr width="220" align="left">--%>
                 <li class="sub-menu">

@@ -10,15 +10,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>BUDUJ SWOJE NAWYKI</title>
 
-        <!-- CSS -->
-
-
-		<%--<meta property="og:url"           content="http://budujswojenawyki.pl" />--%>
-		<%--<meta property="og:type"          content="website" />--%>
-		<%--<meta property="og:title"         content="Your Website Title" />--%>
-		<%--<meta property="og:description"   content="Your description" />--%>
-		<%--&lt;%&ndash;<meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />&ndash;%&gt;--%>
-
 		<spring:url value="/resources/assets/bootstrap/css/bootstrap.min.css" var="minCss" />
 		<spring:url value="/resources/assets/font-awesome/css/font-awesome.min.css" var="awesome" />
 		<spring:url value="/resources/assets/css/form-elements.css" var="fe" />
@@ -138,94 +129,6 @@
 		<script src="${bootstrapMin}"></script>
 		<script src="${backstretchMin}"></script>
 		<script src="${scriptJs}"></script>
-
-		<%--<spring:url value="/resources/assets/js/placeholder.js" var="placeholder" />--%>
-		<%--<script src="${placeholder}"></script>--%>
-
-
-		<%--FACEBOOK--%>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
-		<div id="fb-root"></div>
-		<script>
-
-
-            (function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=440306113072008&version=v2.0";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
-
-		<%--FACEBOOK END--%>
-<script>
-
-		$( document ).ready(function() {
-		$( "#btn" ).click(function() {
-		var val=$("#name").val();
-		FB.login(function(response)
-		{
-		if (response.authResponse)
-		{
-		// Post message to your wall
-		var opts = {
-		message : val,
-		name: 'budujswojenawyki ',
-//		picture: 'http://javafreakers.com/wp-content/uploads/2014/04/SDJINFO.png',
-		link: 'http://budujswojenawyki.pl',
-		description: 'javafreaker for java tutorial ',
-		redirect_uri: 'http://budujswojenawyki.pl',
-		};
-
-		FB.api('/feed', 'post', opts, function(response)
-		{
-		if (!response || response.error)
-		{
-		//alert('Posting error occured');
-		}
-		else
-		{
-		// alert('Success - Post ID: ' + response.id);
-		}
-		if(response){
-		//do some task when response come
-		}
-		// var element = document.getElementById('fb-root');
-		//FB.Canvas.showFlashElement(element);
-		//FB.XFBML.parse();
-		});
-		}
-		else
-		{
-		alert('Not logged in');
-
-		}
-		}, { scope : 'publish_stream' });
-		});
-		});
-		//}
-        </script>
-        <div id="fb-root"></div>
-        <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId : '440306113072008',
-                status : true, // check login status
-                cookie : true, // enable cookies to allow the server to access the session
-                xfbml : true // parse XFBML
-            });
-        };
-
-        (function() {
-            var e = document.createElement('script');
-            e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
-            e.async = true;
-            document.getElementById('fb-root').appendChild(e);
-        }());
-		</script>
-
-
-
 
 	</body>
 </html>

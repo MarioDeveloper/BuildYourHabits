@@ -90,18 +90,30 @@
     MAIN SIDEBAR MENU
     *********************************************************************************************************************************************************** -->
     <!--sidebar start-->
+    <header class="header black-bg">
+        <div class="sidebar-toggle-box">
+            <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+        </div>
+        <!--logo start-->
+        <c:url value="/" var="dashboard"/>
+        <a href="${dashboard}" class="logo"><b>BUDUJ SWOJE NAWYKI</b></a>
+
+    </header>
+    <!--header end-->
+
+    <!-- **********************************************************************************************************************************************************
+    MAIN SIDEBAR MENU
+    *********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
     <aside>
-        <div id="sidebar" class="nav-collapse ">
+        <div id="sidebar" class="nav-collapse">
             <!-- sidebar menu start-->
             <ul class="sidebar-menu" id="nav-accordion">
 
-                <%--MIEJSCE NA LOGO HABITICA --%>
-                <%--<p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>--%>
-                <%--<h5 class="centered">Marcel Newman</h5>--%>
-
                 <li class="mt">
                     <c:url value="/" var="dashboard"/>
-                    <a href="${dashboard}"><i class="fa fa-dashboard"></i><span>&nbsp;Dashboard</span></a>
+                    <a href="${dashboard}"><i
+                            class="fa fa-dashboard"></i><span>&nbsp;Dashboard</span></a>
                 </li>
 
                 <li class="sub-menu">
@@ -116,18 +128,18 @@
                         <li><a href="${reccuringEvent}"><b>Cykliczne</b></a></li>
                     </ul>
                 </li>
-                <li class="sub-menu">
+                <li class="sub-menu" class="active">
                     <c:url value="/ranking" var="ranking"/>
-                    <a href="${ranking}" class="active"><i class="fa fa-bar-chart-o"></i><span>&nbsp;Ranking</span></a>
+                    <a href="${ranking}"><i class="fa fa-bar-chart-o"></i><span>&nbsp;Ranking</span></a>
                 </li>
                 <li class="sub-menu">
                     <c:url value="/history" var="history"/>
                     <a href="${history}"><i class="fa fa-book"></i><span>&nbsp;Historia</span></a>
                 </li>
                 <li class="sub-menu">
-                    <c:url value="/rewards" var="rewards"/>
-                    <a href="${rewards}"><i class="fa fa-briefcase"
-                                            aria-hidden="true"></i><span>&nbsp;Nagrody</span></a>
+                    <c:url value="/challengeEvent" var="challenge"/>
+                    <a href="${challenge}"><i class="fa fa-briefcase"
+                                              aria-hidden="true"></i><span>&nbsp;Rzuć wyzwanie</span></a>
                 </li>
                 <%--<hr width="220" align="left">--%>
                 <li class="sub-menu">
@@ -139,13 +151,17 @@
                         <c:url var="showFormForUpdateUserPersonalData" value="showFormForUpdateUserPersonalData"/>
                         <li><a href="<c:out value="${showFormForUpdateUserPersonalData}"/>"><b>Edytuj dane
                             osobowe</b></a></li>
+
+                        <c:if test="${loggedUser.image != null}">
+                            <c:url var="showFormForUpdateUserImage" value="showFormForUpdateUserImage"/>
+                            <li><a href="<c:out value="${showFormForUpdateUserImage}"/>"><b>Edytuj zdjęcie</b></a></li>
+                        </c:if>
                     </ul>
                 </li>
-                    <li class="sub-menu">
-                        <c:url value="/logout" var="logout"/>
-                        <a href="${logout}"><i class="fa fa-briefcase"
-                                               aria-hidden="true"></i><span>&nbsp;Wyloguj się</span></a>
-                    </li>
+                <li class="sub-menu">
+                    <c:url value="/logout" var="logout"/>
+                    <a href="${logout}"><i class="fa fa-briefcase" aria-hidden="true"></i><span>&nbsp;Wyloguj się</span></a>
+                </li>
             </ul>
             <!-- sidebar menu end-->
         </div>
