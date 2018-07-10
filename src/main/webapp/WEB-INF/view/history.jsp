@@ -132,7 +132,7 @@
                 </li>
                 <li class="sub-menu">
                     <c:url value="/challengeEvent" var="challenge"/>
-                    <a href="${challenge}"><i class="fa fa-briefcase"
+                    <a href="${challenge}"><i class="glyphicon glyphicon-fire"
                                               aria-hidden="true"></i><span>&nbsp;Rzuć wyzwanie</span></a>
                 </li>
                 <%--<hr width="220" align="left">--%>

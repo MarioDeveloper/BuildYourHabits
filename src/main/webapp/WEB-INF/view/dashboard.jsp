@@ -207,13 +207,11 @@
                                                 zdjęcie</h5></label>
                                         </div>
                                         <input type="file" name="file" class="form-control"
-                                               onchange="this.form.submit()">
+                                               onchange="this.form.submit()" id = 'button1' />
                                     </form>
                                 </c:when>
                                 <c:otherwise>
-                                    <div>
-                                        <img src="data:image/jpeg;base64,${userImage}" width="305" height="290">
-                                    </div>
+                                    <img src="data:image/jpeg;base64,${userImage}" style="width: 100%; height: auto">
                                 </c:otherwise>
                             </c:choose>
                         </div><!-- /col-md-4-->
@@ -240,12 +238,19 @@
                                 </div>
 
                                 <h4> Aktualny poziom: <b>${loggedUser.level.id}</b></h4>
-                                <div class="alert alert-success text-center" style="width: 150px; color: white">
+                                <div class="row" style="margin-left: 0;margin-right: 0;">
+                                    <div class="col-md-3" style="padding: 0">
+                                        <div class="alert alert-success text-center" style="width: 150px; color: white">
 
-                                    <h5><b>${loggedUser.level.description}</b></h5></div>
+                                            <h5><b>${loggedUser.level.description}</b></h5></div>
+                                    </div>
+                                    <div class="col-md-4" style="top: 0px;">
 
-                                <div class="fb-share-button" data-href="http://budujswojenawyki.pl" data-layout="button" data-title ="title of your post" data-desc="description of your post" ></div>
+                                        <span style="margin-left: 80%" class="badge bg-warning">Poleć aplikację znajomym</span>
+                                        <div style="margin-left: 96%; margin-top: 5%" class="fb-share-button" data-href="https://budujswojenawyki.pl" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbudujswojenawyki.pl%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Udostępnij</a></div>
 
+                                    </div>
+                                </div>
 
                             </div><!-- /showback -->
 
@@ -302,12 +307,12 @@
                                             <td>${tempOneTimeEventList.difficultyLevel}</td>
                                             <td>
 
-                                                <a href="${performOneTimeEvent}" class="btn btn-success btn-xs"><i
+                                                <a href="${performOneTimeEvent}" class="btn btn-success btn-xs" id ='button2'><i
                                                         class="fa fa-check"></i></a>
-                                                <a href="${updateOneTimeEvent}" class="btn btn-primary btn-xs"><i
+                                                <a href="${updateOneTimeEvent}" class="btn btn-primary btn-xs" id ='button3'><i
                                                         class="fa fa-pencil"></i></a>
 
-                                                <a href="" class="btn btn-danger btn-xs triggerRemove"><i
+                                                <a href="" class="btn btn-danger btn-xs triggerRemove" id ='button4'><i
                                                         class="fa fa-trash-o "></i></a>
 
                                                 <div class="modal fade" tabindex="-1" role="dialog"
@@ -323,10 +328,10 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <a href="${failOneTimeEvent}" type="button"
-                                                                   class="btn btn-primary">Zadanie
+                                                                   class="btn btn-primary" id ='button5'>Zadanie
                                                                     niewykonane</a>
                                                                 <a href="${deleteOneTimeEven}"
-                                                                   class="btn btn-primary">Anuluj
+                                                                   class="btn btn-primary" id ='button6'>Anuluj
                                                                     wydarzenie</a>
                                                                 <button type="button" class="btn btn-default"
                                                                         data-dismiss="modal">Wyjdź
@@ -419,13 +424,13 @@
                                             <td>${tempRealizationRecurringEvent.recurringEvent.difficultyLevel}</td>
                                             <td>
 
-                                                <a href="${performRecurringEvent}" class="btn btn-success btn-xs"><i
+                                                <a href="${performRecurringEvent}" class="btn btn-success btn-xs" id ='button8'><i
                                                         class="fa fa-check"></i></a>
 
-                                                <a href="${updateRecurringEvent}" class="btn btn-primary btn-xs"><i
+                                                <a href="${updateRecurringEvent}" class="btn btn-primary btn-xs" id ='button9'><i
                                                         class="fa fa-pencil"></i></a>
 
-                                                <a href="" class="btn btn-danger btn-xs triggerRemove"><i
+                                                <a href="" class="btn btn-danger btn-xs triggerRemove" id ='button10'><i
                                                         class="fa fa-trash-o "></i></a>
 
                                                 <div class="modal fade" tabindex="-1" role="dialog"
@@ -441,9 +446,9 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <a href="${failRecurringEvent}" type="button"
-                                                                   class="btn btn-primary">Zadanie niewykonane</a>
+                                                                   class="btn btn-primary" id ='button11'>Zadanie niewykonane</a>
 
-                                                                <a href="${skipRecurringEvent}" class="btn btn-primary">Pomiń
+                                                                <a href="${skipRecurringEvent}" class="btn btn-primary" id ='button12'>Pomiń
                                                                     wydarzenie</a>
 
                                                                 <a href="${cancelOtherRecurringEvents}"
@@ -526,9 +531,9 @@
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${tempChallengeEvent.confirmed == true}">
-                                                        <a href="${performChallengeEvent}" class="btn btn-success btn-xs"><i
+                                                        <a href="${performChallengeEvent}" class="btn btn-success btn-xs" id ='butto13'><i
                                                                 class="fa fa-check"></i></a>
-                                                        <a href="${failChallengeEvent}" class="btn btn-danger btn-xs"><i
+                                                        <a href="${failChallengeEvent}" class="btn btn-danger btn-xs" id ='button14'><i
                                                                 class="fa fa-trash-o "></i></a>
                                                     </c:when>
                                                     <c:when test="${tempChallengeEvent.confirmed == null && tempChallengeEvent.userInitiatorId == loggedUser.id}">
@@ -536,10 +541,10 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <div class="btn-group">
-                                                            <a href="${acceptChallengeEvent}" class="btn btn-success">Akceptuje</a>
+                                                            <a href="${acceptChallengeEvent}" class="btn btn-success" id ='button15'>Akceptuje</a>
                                                         </div>
                                                         <div class="btn-group">
-                                                            <a href="${rejectChallengeEvent}" class="btn btn-danger">Odrzucam</a>
+                                                            <a href="${rejectChallengeEvent}" class="btn btn-danger" id ='button16'>Odrzucam</a>
                                                         </div>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -558,13 +563,13 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <a href="${failRecurringEvent}" type="button"
-                                                                   class="btn btn-primary">Zadanie niewykonane</a>
+                                                                   class="btn btn-primary" id ='button17' >Zadanie niewykonane</a>
 
-                                                                <a href="${skipRecurringEvent}" class="btn btn-primary">Pomiń
+                                                                <a href="${skipRecurringEvent}" class="btn btn-primary" id ='button18'>Pomiń
                                                                     wydarzenie</a>
 
                                                                 <a href="${cancelOtherRecurringEvents}"
-                                                                   class="btn btn-primary">Anuluj pozostałe
+                                                                   class="btn btn-primary" id ='button19'>Anuluj pozostałe
                                                                     wydarzenia</a>
 
                                                                 <button type="button" class="btn btn-default"
@@ -610,7 +615,7 @@
                                     <muted>${tempNotificationList.time} temu</muted>
                                     <br/>
                                     <a href="#" >${tempNotificationList.firstName} ${tempNotificationList.lastName}</a>
-                                    wypełnił zadanie i zdobył ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
+                                    wypełnił(a) zadanie i zdobył(a) ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
                                 </p>
                             </div>
                         </div>
@@ -681,25 +686,22 @@
 <spring:url value="/resources/Theme/assets/js/zabuto_calendar.js" var="zabuto_js"/>
 <script src="${zabuto_js}" type="text/javascript"></script>
 
-<spring:url value="/resources/LoadingBar/loading-bar.js" var="loading_bar"/>
-<script src="${loading_bar}" type="text/javascript"></script>
+<%--<spring:url value="/resources/LoadingBar/loading-bar.js" var="loading_bar"/>--%>
+<%--<script src="${loading_bar}" type="text/javascript"></script>--%>
 
 <spring:url value="/resources/Theme/assets/js/chart-master/Chart.js" var="chart"/>
 <script src="${chart}"></script>
 
 <%--FACEBOOK--%>
 <%--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>--%>
-    <div id="fb-root"></div>
-<script>
-
-
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=440306113072008&version=v2.0";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v3.0&appId=440306113072008&autoLogAppEvents=1';
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 <%--FACEBOOK END--%>
 
@@ -746,6 +748,141 @@
         e.preventDefault();
         var modal = $(this).parent().find('.modal');
         modal.modal(); // to otwiera modal
+    });
+
+
+    $('#button1').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button2').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button3').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button4').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button5').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button6').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button7').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button8').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button9').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button10').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button11').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button12').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button13').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button14').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button15').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button16').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button17').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button18').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+    $('#button19').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
     });
 
 

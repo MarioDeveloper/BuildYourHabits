@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(filter, CsrfFilter.class);
 
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/resources/**", "/registration**", "/processRegistrationForm")
+        http.authorizeRequests().antMatchers("/resources/**", "/registration**", "/processRegistrationForm","/resources/assets/img/backgrounds/1.jpg")
                 .permitAll().anyRequest().authenticated()
                 .and().formLogin().defaultSuccessUrl("/", true).loginPage("/login").loginProcessingUrl("/j_security_check")
                 .failureUrl("/login?error").usernameParameter("j_username").passwordParameter("j_password").permitAll()

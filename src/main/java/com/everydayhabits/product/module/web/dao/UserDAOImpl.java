@@ -24,12 +24,15 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
     private SessionFactory sessionFactory;
 
-    Session currentSession;
-    Query userQuery;
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
+    private Query userQuery;
+    private Session currentSession;
 
     @Override
     public User saveUser(User theUser) {
@@ -194,8 +197,6 @@ public class UserDAOImpl implements UserDAO {
                 tempDate = sb.toString();
             }
             NotificationDto tempNotification = new NotificationDto(notification.getFirstName(), notification.getLastName(), notification.getExperiencePoint(), tempDate);
-
-            System.out.println("Notyfikacja " + tempNotification.toString());
 
             notificationDtos.add(tempNotification);
         }

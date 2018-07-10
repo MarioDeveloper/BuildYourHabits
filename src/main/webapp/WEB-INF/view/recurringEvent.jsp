@@ -133,7 +133,7 @@
                 </li>
                 <li class="sub-menu">
                     <c:url value="/challengeEvent" var="challenge"/>
-                    <a href="${challenge}"><i class="fa fa-briefcase"
+                    <a href="${challenge}"><i class="glyphicon glyphicon-fire"
                                               aria-hidden="true"></i><span>&nbsp;Rzuć wyzwanie</span></a>
                 </li>
                 <%--<hr width="220" align="left">--%>
@@ -177,7 +177,7 @@
                     <div class="row mt">
                         <div class="col-lg-12">
                             <div class="form-panel">
-                                <h4 class="mb">Tworzenie wydarzenia jednorazowego</h4>
+                                <h4 class="mb">Tworzenie wydarzenia cyklicznego</h4>
 
                                 <form:form action="createRecurringEvent" modelAttribute="recurringEvent"
                                            class="form-horizontal style-form" method="POST" accept-charset="UTF-8">
@@ -185,13 +185,13 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Tytuł</label>
                                         <div class="col-sm-10">
-                                            <form:input path="title" type="text" class="form-control"/>
+                                            <form:input path="title" type="text" class="form-control" required="required"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Opis</label>
                                         <div class="col-sm-10">
-                                            <form:input path="description" type="text" class="form-control"/>
+                                            <form:input path="description" type="text" class="form-control" />
                                         </div>
                                     </div>
 
@@ -210,7 +210,7 @@
                                         <label class="col-sm-2 col-sm-2 control-label">Data rozpoczęcia</label>
                                         <div class='input-group date' id='datetimepicker1'
                                              style="width: 200px;margin-left: 152px">
-                                            <form:input path="startDate" type="date" class="form-control"/>
+                                            <form:input path="startDate" type="text" class="form-control" required="required"/>
                                             <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -221,7 +221,7 @@
                                         <label class="col-sm-2 col-sm-2 control-label">Data zakończenia</label>
                                         <div class='input-group date' id='datetimepicker2'
                                              style="width: 200px;margin-left: 152px">
-                                            <form:input path="finishDate" type="date" class="form-control"/>
+                                            <form:input path="finishDate" type="text" class="form-control" required="required"/>
                                             <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -231,9 +231,9 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Powtarzaj co</label>
                                         <form:input path="frequency" type="text" class="form-control"
-                                                    style="width: 50px;display: inline-block;margin-left: 5px"/>
+                                                    style="width: 50px;display: inline-block;margin-left: 5px" required="required"/>
                                         <form:select path="frequencyUnit" class="form-control"
-                                                style="width: 100px;margin-left: 20px;display: inline-block">
+                                                style="width: 100px;margin-left: 20px;display: inline-block" required="required">
                                             <form:option value="Minut"/>
                                             <form:option value="Godzin"/>
                                             <form:option value="Dni"/>
@@ -250,7 +250,7 @@
                                         });
                                     </script>
 
-                                    <input type="submit" value="Stwórz wydarzenie"
+                                    <input id = 'button1' type="submit" value="Stwórz wydarzenie"
                                            class="btn btn-primary btn-lg btn-block buttonCreateEvent"
                                            style="width: 300px;"/>
                                 </form:form>
@@ -273,14 +273,14 @@
 
                         <div class="desc">
                             <div class="thumb">
-                                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                                <span class="badge bg-inverse"><i class="fa fa-clock-o"></i></span>
                             </div>
                             <div class="details">
                                 <p>
                                     <muted>${tempNotificationList.time} temu</muted>
                                     <br/>
                                     <a href="#">${tempNotificationList.firstName} ${tempNotificationList.lastName}</a>
-                                    wypełnił zadanie i zdobył ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
+                                    wypełnił(a) zadanie i zdobył(a) ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
                                 </p>
                             </div>
                         </div>
@@ -418,6 +418,15 @@
         var to = $("#" + id).data("to");
         console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
+
+    $('#button1').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+
 </script>
 
 

@@ -134,7 +134,7 @@
                 </li>
                 <li class="sub-menu" class="active">
                     <c:url value="/challengeEvent" var="challenge"/>
-                    <a href="${challenge}"><i class="fa fa-briefcase"
+                    <a href="${challenge}"><i class="glyphicon glyphicon-fire"
                                               aria-hidden="true"></i><span>&nbsp;Rzuć wyzwanie</span></a>
                 </li>
                 <%--<hr width="220" align="left">--%>
@@ -186,7 +186,7 @@
                                         <label class="col-sm-2 col-sm-2 control-label">Tytuł</label>
                                         <div class="col-sm-10">
                                             <spring:bind path="challenge.title">
-                                                <input type="text" class="form-control" name="${status.expression}" value="${status.value}"><br />
+                                                <input type="text" class="form-control" name="${status.expression}" value="${status.value}" required="required"><br />
                                             </spring:bind>
                                         </div>
                                     </div>
@@ -218,7 +218,7 @@
                                         <div class='input-group date' id='datetimepicker1'
                                              style="width: 200px;margin-left: 152px">
                                             <spring:bind path="challenge.plannedDate">
-                                                <input type="text" class="form-control" name="${status.expression}" value="${status.value}"><br />
+                                                <input type="text" class="form-control" name="${status.expression}" value="${status.value}" required="required"><br />
                                             </spring:bind>
                                             <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -226,12 +226,13 @@
                                         </div>
                                     </div>
 
+
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Wybierz swoje przeciwnika</label>
                                         <spring:bind path="challenge.opponentId">
                                             <select name="${status.expression}" class="form-control" style="width: 200px;margin-left: 152px">
                                                     <c:forEach var="entry" items="${userList}">
-                                                        <option value="${entry.id}"> ${entry.firstName} ${entry.lastName}</option>
+                                                        <option value="${entry.id}" > ${entry.firstName} ${entry.lastName}</option>
                                                     </c:forEach>
                                             </select>
                                         </spring:bind>
@@ -243,7 +244,7 @@
                                         });
                                     </script>
 
-                                    <input type="submit" value="Rzuć wyzwanie!"
+                                    <input id = 'button1' type="submit" value="Rzuć wyzwanie!"
                                            class="btn btn-primary btn-lg btn-block buttonCreateEvent"
                                            style="width: 300px;"/>
 
@@ -267,14 +268,14 @@
 
                         <div class="desc">
                             <div class="thumb">
-                                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                                <span class="badge bg-inverse"><i class="fa fa-clock-o"></i></span>
                             </div>
                             <div class="details">
                                 <p>
                                     <muted>${tempNotificationList.time} temu</muted>
                                     <br/>
                                     <a href="#">${tempNotificationList.firstName} ${tempNotificationList.lastName}</a>
-                                    wypełnił zadanie i zdobył ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
+                                    wypełnił(a) zadanie i zdobył(a) ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
                                 </p>
                             </div>
                         </div>
@@ -406,6 +407,15 @@
         var to = $("#" + id).data("to");
         console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
+
+
+    $('#button1').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
 </script>
 
 

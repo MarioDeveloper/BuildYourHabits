@@ -49,7 +49,7 @@
 				<div class="row" id="">
 					<div class="col-sm-6 col-sm-offset-3 text">
 						<c:if test="${param.logout != null}">
-							<div class="alert alert-info">Udane wylogowanie</div>
+							<div class="alert alert-info">Zostałeś pomyślnie wylogowany</div>
 						</c:if>
 					</div>
 				</div>
@@ -82,14 +82,14 @@
 				                    	<div class="form-group">
 				                    		<label class="sr-only" for="form-username">Username</label>
 											<input type="text" name='j_username' placeholder="Email..."
-												   class="form-username form-control" id="form-username">
+												   class="form-username form-control" id="form-username" required="required">
 				                        </div>
 				                        <div class="form-group">
 				                        	<label class="sr-only" for="form-password">Password</label>
 											<input type="password" name='j_password' placeholder="Hasło..."
-												   class="form-password form-control" id="form-password">
+												   class="form-password form-control" id="form-password" required="required">
 				                        </div>
-										<button type="submit" class="btn">Zaloguj się!</button>
+										<button id = 'button1' type="submit" class="btn">Zaloguj się!</button>
 				                    </form>
 			                    </div>
 		                    </div>
@@ -129,6 +129,16 @@
 		<script src="${bootstrapMin}"></script>
 		<script src="${backstretchMin}"></script>
 		<script src="${scriptJs}"></script>
+
+	<script>
+        $('#button1').on('click', function() {
+            var self = this;
+
+            setTimeout(function() {
+                $(self).attr('disabled', true);
+            });
+        });
+	</script>
 
 	</body>
 </html>

@@ -134,7 +134,7 @@
                 </li>
                 <li class="sub-menu">
                     <c:url value="/challengeEvent" var="challenge"/>
-                    <a href="${challenge}"><i class="fa fa-briefcase"
+                    <a href="${challenge}"><i class="glyphicon glyphicon-fire"
                                               aria-hidden="true"></i><span>&nbsp;Rzuć wyzwanie</span></a>
                 </li>
                 <%--<hr width="220" align="left">--%>
@@ -186,7 +186,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Tytuł</label>
                                         <div class="col-sm-10">
-                                            <form:input path="title" type="text" class="form-control"/>
+                                            <form:input path="title" type="text" class="form-control" required="required"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -199,7 +199,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Poziom trudności</label>
                                         <form:select path="difficultyLevel" class="form-control"
-                                                     style="width: 100px;margin-left: 152px">
+                                                     style="width: 100px;margin-left: 152px" required="required">
                                             <form:option value="Łatwy"/>
                                             <form:option value="Średni"/>
                                             <form:option value="Trudny"/>
@@ -210,7 +210,7 @@
                                         <label class="col-sm-2 col-sm-2 control-label">Data wykonania</label>
                                         <div class='input-group date' id='datetimepicker1'
                                              style="width: 200px;margin-left: 152px">
-                                            <form:input path="plannedDate" type="date" class="form-control"/>
+                                            <form:input path="plannedDate" type="text" class="form-control" required="required"/>
                                             <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -224,7 +224,7 @@
                                         });
                                     </script>
 
-                                    <input type="submit" value="Stwórz wydarzenie"
+                                    <input id = 'button1' type="submit" value="Stwórz wydarzenie"
                                            class="btn btn-primary btn-lg btn-block buttonCreateEvent"
                                            style="width: 300px;"/>
 
@@ -248,14 +248,14 @@
 
                         <div class="desc">
                             <div class="thumb">
-                                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                                <span class="badge bg-inverse"><i class="fa fa-clock-o"></i></span>
                             </div>
                             <div class="details">
                                 <p>
                                     <muted>${tempNotificationList.time} temu</muted>
                                     <br/>
                                     <a href="#">${tempNotificationList.firstName} ${tempNotificationList.lastName}</a>
-                                    wypełnił zadanie i zdobył ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
+                                    wypełnił(a) zadanie i zdobył(a) ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
                                 </p>
                             </div>
                         </div>
@@ -387,6 +387,15 @@
         var to = $("#" + id).data("to");
         console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
+
+    $('#button1').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
+
 </script>
 
 

@@ -133,7 +133,7 @@
                 </li>
                 <li class="sub-menu">
                     <c:url value="/challengeEvent" var="challenge"/>
-                    <a href="${challenge}"><i class="fa fa-briefcase"
+                    <a href="${challenge}"><i class="glyphicon glyphicon-fire"
                                               aria-hidden="true"></i><span>&nbsp;Rzuć wyzwanie</span></a>
                 </li>
                 <%--<hr width="220" align="left">--%>
@@ -253,7 +253,7 @@
                                         });
                                     </script>
 
-                                    <input type="submit" value="Zapisz zmiany"
+                                    <input id = 'button1' type="submit" value="Zapisz zmiany"
                                            class="btn btn-primary btn-lg btn-block buttonCreateEvent"
                                            style="width: 300px;"/>
                                 </form:form>
@@ -276,14 +276,14 @@
 
                         <div class="desc">
                             <div class="thumb">
-                                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                                <span class="badge bg-inverse"><i class="fa fa-clock-o"></i></span>
                             </div>
                             <div class="details">
                                 <p>
                                     <muted>${tempNotificationList.time} temu</muted>
                                     <br/>
                                     <a href="#">${tempNotificationList.firstName} ${tempNotificationList.lastName}</a>
-                                    wypełnił zadanie i zdobył ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
+                                    wypełnił(a) zadanie i zdobył(a) ${tempNotificationList.experiencePoint} pkt doświadczenia.<br/>
                                 </p>
                             </div>
                         </div>
@@ -421,6 +421,14 @@
         var to = $("#" + id).data("to");
         console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
+
+    $('#button1').on('click', function() {
+        var self = this;
+
+        setTimeout(function() {
+            $(self).attr('disabled', true);
+        });
+    });
 </script>
 
 

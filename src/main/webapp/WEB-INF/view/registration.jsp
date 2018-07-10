@@ -52,7 +52,7 @@
 				<div class="col-sm-6 col-sm-offset-3 text">
 					<c:if test="${param.success != null}">
                         <c:url value="/" var="loginPage"/>
-                        <div class="alert alert-info">Udanie zarejestrowałeś się do naszej aplikacji :) <a
+                        <div class="alert alert-info">Dziękujęmy za zarejestrowanie się do naszej aplikacji :) <a
                                 href="${loginPage}"> Zaloguj się! </a></div>
 					</c:if>
 				</div>

@@ -1,14 +1,11 @@
 package com.everydayhabits.product.module.web.config;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
-import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -19,6 +16,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
 import java.util.Properties;
 
 @EnableWebMvc
@@ -29,27 +27,15 @@ import java.util.Properties;
 @Import({SecurityConfig.class})
 public class AppConfig implements WebMvcConfigurer {
 
-	@Autowired
-	private Environment env;
-
 	private Properties getHibernateProperties() {
 		Properties prop = new Properties();
-		prop.put("hibernate.format_sql", "true");
-		prop.put("hibernate.show_sql", "true");
+		prop.put("hibernate.format_sql", "false");
+		prop.put("hibernate.show_sql", "false");
+		prop.put("hibernate.generate_statistics", "true");
+		prop.put("org.hibernate.stat", "DEBUG");
 		prop.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		prop.put("hibernate.connection.CharSet", "utf-8");
 		return prop;
-	}
-
-
-	@Bean
-	public Properties getMyProperties() {
-		Properties myProperties = new Properties();
-		myProperties.setProperty("connection.pool.initialPoolSize", "5");
-		myProperties.setProperty("connection.pool.minPoolSize", "5");
-		myProperties.setProperty("connection.pool.maxPoolSize", "5");
-		myProperties.setProperty("connection.pool.maxIdleTime", "5");
-		return myProperties;
 	}
 
 	@Bean
@@ -59,12 +45,23 @@ public class AppConfig implements WebMvcConfigurer {
 
 	@Bean
 	public DataSource getDataSource() {
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName(env.getRequiredProperty("jdbc.driver"));
-		dataSource.setUrl(env.getRequiredProperty("jdbc.url"));
-		dataSource.setUsername(env.getRequiredProperty("jdbc.user"));
-		dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
-		dataSource.setConnectionProperties(getMyProperties());
+		ComboPooledDataSource dataSource = new ComboPooledDataSource();
+		try{
+			dataSource.setDriverClass("com.mysql.jdbc.Driver");
+		} catch (PropertyVetoException e) {
+			e.printStackTrace();
+		}
+		dataSource.setJdbcUrl("jdbc:mysql://budujswojenawyki.c1qkxyy7jfrg.eu-west-1.rds.amazonaws.com:3306/budujswojenawyki?characterEncoding=UTF-8");
+		dataSource.setUser("admin");
+		dataSource.setPassword("Bestadmin.93");
+		dataSource.setAcquireIncrement(50);
+		dataSource.setIdleConnectionTestPeriod(100);
+		dataSource.setMaxPoolSize(50);
+		dataSource.setMinPoolSize(10);
+		dataSource.setInitialPoolSize(20);
+		dataSource.setMaxStatements(150);
+
+
 		return dataSource;
 	}
 
@@ -83,15 +80,6 @@ public class AppConfig implements WebMvcConfigurer {
 		HibernateTransactionManager txManager = new HibernateTransactionManager();
 		txManager.setSessionFactory(sessionFactory);
 		return txManager;
-	}
-
-	@Bean
-	public CommonsRequestLoggingFilter requestLoggingFilter() {
-		CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();
-		loggingFilter.setIncludeClientInfo(true);
-		loggingFilter.setIncludeQueryString(true);
-		loggingFilter.setIncludePayload(true);
-		return loggingFilter;
 	}
 
 
