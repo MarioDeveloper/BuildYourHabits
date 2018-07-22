@@ -269,8 +269,8 @@
                                     <td>${loop.index + 1}</td>
                                     <td>
                                         <c:choose>
-                                            <c:when test="${images[loop.index] == '-' }">
-                                                -
+                                            <c:when test="${images[loop.index] == null }">
+                                                <p class="img-circle badge bg-info" width="80">Brak zdjęcia</p>
                                             </c:when>
                                             <c:otherwise>
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
@@ -381,11 +381,11 @@
 <spring:url value="/resources/Theme/assets/js/common-scripts.js" var="common_scripts"/>
 <script src="${common_scripts}"></script>
 
-<spring:url value="/resources/Theme/assets/js/gritter/js/jquery.gritter.js" var="jquery_gritter"/>
-<script src="${jquery_gritter}" type="text/javascript"></script>
+<%--<spring:url value="/resources/Theme/assets/js/gritter/js/jquery.gritter.js" var="jquery_gritter"/>--%>
+<%--<script src="${jquery_gritter}" type="text/javascript"></script>--%>
 
-<spring:url value="/resources/Theme/assets/js/gritter-conf.js" var="gritter_conf"/>
-<script src="${gritter_conf}" type="text/javascript"></script>
+<%--<spring:url value="/resources/Theme/assets/js/gritter-conf.js" var="gritter_conf"/>--%>
+<%--<script src="${gritter_conf}" type="text/javascript"></script>--%>
 
 <!--script for this page-->
 <spring:url value="/resources/Theme/assets/js/sparkline-chart.js" var="sparkline_js"/>

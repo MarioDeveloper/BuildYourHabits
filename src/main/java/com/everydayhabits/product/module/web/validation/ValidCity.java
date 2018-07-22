@@ -14,7 +14,7 @@ import static java.lang.annotation.ElementType.*;
 @Constraint(validatedBy = CityValidator.class)
 @Documented
 public @interface ValidCity {
-    String message() default "Fist letter has to be upperCase";
+    String message() default "Pierwsz litera musi być duża";
 
     Class<?>[] groups() default {};
 

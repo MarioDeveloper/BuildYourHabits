@@ -2,7 +2,9 @@ package com.everydayhabits.product.module.web.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -27,6 +29,10 @@ import java.util.Properties;
 @Import({SecurityConfig.class})
 public class AppConfig implements WebMvcConfigurer {
 
+	@Autowired
+	private Environment env;
+
+
 	private Properties getHibernateProperties() {
 		Properties prop = new Properties();
 		prop.put("hibernate.format_sql", "false");
@@ -47,13 +53,13 @@ public class AppConfig implements WebMvcConfigurer {
 	public DataSource getDataSource() {
 		ComboPooledDataSource dataSource = new ComboPooledDataSource();
 		try{
-			dataSource.setDriverClass("com.mysql.jdbc.Driver");
+			dataSource.setDriverClass(env.getRequiredProperty("jdbc.driver"));
 		} catch (PropertyVetoException e) {
 			e.printStackTrace();
 		}
-		dataSource.setJdbcUrl("jdbc:mysql://budujswojenawyki.c1qkxyy7jfrg.eu-west-1.rds.amazonaws.com:3306/budujswojenawyki?characterEncoding=UTF-8");
-		dataSource.setUser("admin");
-		dataSource.setPassword("Bestadmin.93");
+		dataSource.setJdbcUrl(env.getRequiredProperty("jdbc.url"));
+		dataSource.setUser(env.getRequiredProperty("jdbc.user"));
+		dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
 		dataSource.setAcquireIncrement(50);
 		dataSource.setIdleConnectionTestPeriod(100);
 		dataSource.setMaxPoolSize(50);

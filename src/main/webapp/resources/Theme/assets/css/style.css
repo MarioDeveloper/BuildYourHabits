@@ -44,7 +44,7 @@ a, a:hover, a:focus {
 
 /* Bootstrap Modifications */
 .modal-header {
-    background: #68dff0;
+    background: #ffc233;
 }
 
 .modal-title {
@@ -1668,7 +1668,7 @@ PANELS CONFIGURATIONS
     display: block;
     position: relative;
     overflow: hidden;
-    background-color: #68dff0;
+    /*background-color: #68dff0;*/
     -webkit-transition: background-color 0.4s;
     -moz-transition: background-color 0.4s;
     -o-transition: background-color 0.4s;
@@ -1688,7 +1688,7 @@ PANELS CONFIGURATIONS
 }
 
 .project:hover .photo-wrapper {
-    background-color: #68dff0;
+    /*background-color: #68dff0;*/
     background-image: url(../img/zoom.png);
     background-repeat: no-repeat;
     background-position: center;

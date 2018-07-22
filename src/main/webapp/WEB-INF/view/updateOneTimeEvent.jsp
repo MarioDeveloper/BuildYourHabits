@@ -212,7 +212,7 @@
                                         <label class="col-sm-2 col-sm-2 control-label">Data wykonania</label>
                                         <div class='input-group date' id='datetimepicker1'
                                              style="width: 200px;margin-left: 152px">
-                                            <form:input path="plannedDate" type="date" class="form-control"/>
+                                            <form:input path="plannedDate" type="text" class="form-control"/>
                                             <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>

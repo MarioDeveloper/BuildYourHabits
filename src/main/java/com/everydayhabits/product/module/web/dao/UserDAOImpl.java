@@ -797,29 +797,29 @@ public class UserDAOImpl implements UserDAO {
         if (ote != null) {
 
             if (ote.getDifficultyLevel().equals("Łatwy")) {
-                tempExperience = 10;
+                tempExperience = 5;
             } else if (ote.getDifficultyLevel().equals("Średni")) {
-                tempExperience = 20;
+                tempExperience = 10;
             } else {
-                tempExperience = 25;
+                tempExperience = 15;
             }
         } else if(re != null ){
             if (re.getDifficultyLevel().equals("Łatwy")) {
                 System.out.println();
-                tempExperience = 10;
+                tempExperience = 5;
             } else if (ote.getDifficultyLevel().equals("Średni")) {
-                tempExperience = 20;
+                tempExperience = 10;
             } else {
-                tempExperience = 25;
+                tempExperience = 15;
             }
         } else {
             if (ce.getDifficultyLevel().equals("Łatwy")) {
                 System.out.println("");
-                tempExperience = 10;
+                tempExperience = 5;
             } else if (ce.getDifficultyLevel().equals("Średni")) {
-                tempExperience = 20;
+                tempExperience = 10;
             } else {
-                tempExperience = 25;
+                tempExperience = 15;
             }
 
         }

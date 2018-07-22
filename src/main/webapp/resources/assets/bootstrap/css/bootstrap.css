@@ -1406,7 +1406,7 @@ a.bg-warning:focus {
 }
 a.bg-danger:hover,
 a.bg-danger:focus {
-    background-color: #a6a6a6;
+  background-color: #e4b9b9;
 }
 .page-header {
   padding-bottom: 9px;
@@ -6797,4 +6797,4 @@ button.close {
     display: none !important;
   }
 }
-
+/*# sourceMappingURL=bootstrap.css.map */

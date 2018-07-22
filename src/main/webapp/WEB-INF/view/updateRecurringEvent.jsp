@@ -213,7 +213,7 @@
                                             wydarzenia</label>
                                         <div class='input-group date' id='datetimepicker1'
                                              style="width: 200px;margin-left: 152px">
-                                            <form:input path="startDate" type="date" class="form-control"/>
+                                            <form:input path="startDate" type="text" class="form-control"/>
                                             <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -224,7 +224,7 @@
                                         <label class="col-sm-2 col-sm-2 control-label">Data zakończenia</label>
                                         <div class='input-group date' id='datetimepicker2'
                                              style="width: 200px;margin-left: 152px">
-                                            <form:input path="finishDate" type="date" class="form-control"/>
+                                            <form:input path="finishDate" type="text" class="form-control"/>
                                             <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>

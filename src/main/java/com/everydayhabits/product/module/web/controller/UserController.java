@@ -355,7 +355,6 @@ public class UserController {
         String username = getLoggedInUsername();
         User loggedUser = userService.getUserByUsername(username);
 
-        String encodedString = "";
         List<String> images = new ArrayList<>();
 
         List<User> userList = userService.getUsersByCriteria("allUsers", null);
@@ -364,16 +363,7 @@ public class UserController {
 
         List<NotificationDto> notificationDtos = userService.getNotifications(loggedUser);
 
-        for (User user : userList) {
-            if (user.getImage() != null) {
-                byte[] encoded = Base64.encodeBase64(user.getImage());
-                encodedString = new String(encoded);
-                images.add(encodedString);
-            } else {
-                images.add("-");
-            }
-
-        }
+        addImagesToImageList(images, userList);
 
         theModel.addAttribute("images", images);
         theModel.addAttribute("notificationList", notificationDtos);
@@ -383,13 +373,13 @@ public class UserController {
         return "ranking";
     }
 
+
     @GetMapping("/getUsersByCriteria")
     public String getUsersByCriteria(@RequestParam("criteriaParam") String criteria, Model theModel) {
 
         String username = getLoggedInUsername();
         User loggedUser = userService.getUserByUsername(username);
 
-        String encodedString = "";
         List<String> images = new ArrayList<>();
 
         User currentUser = userService.getUserByUsername(username);
@@ -397,14 +387,7 @@ public class UserController {
         List<User> userList = userService.getUsersByCriteria(criteria, username);
         List<NotificationDto> notificationDtos = userService.getNotifications(loggedUser);
 
-        for (User user : userList) {
-            if (user.getImage() != null) {
-                byte[] encoded = Base64.encodeBase64(user.getImage());
-                encodedString = new String(encoded);
-                images.add(encodedString);
-                System.out.println();
-            }
-        }
+        addImagesToImageList(images, userList);
 
         theModel.addAttribute("images", images);
         theModel.addAttribute("notificationList", notificationDtos);
@@ -505,5 +488,16 @@ public class UserController {
         return auth.getName();
     }
 
+    private void addImagesToImageList(List<String> images, List<User> userList) {
+        String encodedString;
+        for (User user : userList) {
+            if (user.getImage() != null) {
+                byte[] encoded = Base64.encodeBase64(user.getImage());
+                encodedString = new String(encoded);
+                images.add(encodedString);
+            }
+
+        }
+    }
 
 }
