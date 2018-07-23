@@ -183,6 +183,7 @@
                                            class="form-horizontal style-form" method="POST" accept-charset="UTF-8">
 
                                     <form:hidden path="id"/>
+                                    <%--<form:hidden path="realizationRecurringEvents"/>--%>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Tytuł</label>

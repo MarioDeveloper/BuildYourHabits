@@ -57,23 +57,6 @@
     <spring:url value="/resources/Theme/assets/css/style-responsive.css" var="style_responsive"/>
     <link href="${style_responsive}" rel="stylesheet"/>
 
-    <%--<spring:url value="/resources/Theme/assets/css/zabuto_calendar.css" var="zabuto"/>--%>
-    <%--<link href="${zabuto}" rel="stylesheet" type="text/css"/>--%>
-
-    <%--<spring:url value="/resources/Theme/assets/js/gritter/css/jquery.gritter.css" var="gritter"/>--%>
-    <%--<link href="${gritter}" rel="stylesheet" type="text/css"/>--%>
-
-    <%--<spring:url value="/resources/Theme/assets/lineicons/style.css" var="style"/>--%>
-    <%--<link href="${style}" rel="stylesheet" type="text/css"/>--%>
-
-    <%--<spring:url value="/resources/MDB Free/css/mdb.min.css" var="mdb_min" />--%>
-    <%--<link href="${mdb_min}" rel="stylesheet" />--%>
-
-    <%--<spring:url value="/resources/Theme/assets/css/to-do.css" var="to_do"/>--%>
-    <%--<link href="${to_do}" rel="stylesheet"/>--%>
-
- <%--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>--%>
-  <%--<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>--%>
 </head>
 
 <body>
@@ -280,7 +263,7 @@
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
 <spring:url value="/resources/Theme/assets/js/tasks.js" var="task_js"/>
-<script src="${task_js}" type="text/javascript"></script>
+<script src="${task_js}" type="text/javascript"/>
 
 <!-- js placed at the end of the document so the pages load faster -->
 <spring:url value="/resources/Theme/assets/js/jquery.js" var="jquery"/>
@@ -302,39 +285,6 @@
 <spring:url value="/resources/Theme/assets/js/common-scripts.js" var="common_scripts"/>
 <script src="${common_scripts}"></script>
 
-
-<%--<spring:url value="/resources/Theme/assets/js/jquery.nicescroll.js" var="nicescroll"/>--%>
-<%--<script src="${nicescroll}" type="text/javascript"></script>--%>
-
-<%--<spring:url value="/resources/Theme/assets/js/jquery-1.8.3.min.js" var="jquery_min_js" />--%>
-<%--<script src="${jquery_min_js}"></script>--%>
-
-
-<%--<spring:url value="/resources/Theme/assets/js/gritter/js/jquery.gritter.js" var="jquery_gritter"/>--%>
-<%--<script src="${jquery_gritter}" type="text/javascript"></script>--%>
-
-<%--<spring:url value="/resources/Theme/assets/js/gritter-conf.js" var="gritter_conf"/>--%>
-<%--<script src="${gritter_conf}" type="text/javascript"></script>--%>
-
-
-
-<%--<script type="application/javascript">--%>
-
-    <%--$(["type=button"]).each(function(){--%>
-        <%--var button = $(this);--%>
-
-        <%--button.on('click', function() {--%>
-            <%--var form = $('#form1');--%>
-
-            <%--if (form.valid()) {--%>
-                <%--setTimeout(function() {--%>
-                    <%--button.attr('disabled', '');--%>
-                <%--});--%>
-            <%--}--%>
-        <%--});--%>
-    <%--});--%>
-
-<%--</script>--%>
 
 
 </body>

@@ -11,18 +11,8 @@
 <head>
     <title>Dashboard</title>
 
-    <%--<meta property="og:url"           content="http://budujswojenawyki.pl" />--%>
-    <%--<meta property="og:type"          content="website" />--%>
-    <%--<meta property="og:title"         content="Your Website Title" />--%>
-    <%--<meta property="og:description"   content="Your description" />--%>
-    <%--<meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />--%>
-
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
-    <%--<meta name="description" content="">--%>
-    <%--<meta name="author" content="Dashboard">--%>
-    <%--<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">--%>
 
     <!-- Bootstrap core CSS -->
     <spring:url value="/resources/Theme/assets/css/bootstrap.css" var="bootstrap_core"/>
@@ -32,15 +22,6 @@
     <spring:url value="/resources/Theme/assets/font-awesome/css/font-awesome.css" var="font_awesome"/>
     <link href="${font_awesome}" rel="stylesheet"/>
 
-    <%--<spring:url value="/resources/Theme/assets/css/zabuto_calendar.css" var="zabuto"/>--%>
-    <%--<link href="${zabuto}" rel="stylesheet" type="text/css"/>--%>
-
-    <%--<spring:url value="/resources/Theme/assets/js/gritter/css/jquery.gritter.css" var="gritter"/>--%>
-    <%--<link href="${gritter}" rel="stylesheet" type="text/css"/>--%>
-
-    <%--<spring:url value="/resources/Theme/assets/lineicons/style.css" var="style"/>--%>
-    <%--<link href="${style}" rel="stylesheet" type="text/css"/>--%>
-
     <!-- Custom styles for this template -->
     <spring:url value="/resources/Theme/assets/css/style.css" var="style_css"/>
     <link href="${style_css}" rel="stylesheet"/>
@@ -48,16 +29,8 @@
     <spring:url value="/resources/Theme/assets/css/style-responsive.css" var="style_responsive"/>
     <link href="${style_responsive}" rel="stylesheet"/>
 
-    <%--<spring:url value="/resources/MDB Free/css/mdb.min.css" var="mdb_min"/>--%>
-    <%--<link href="${mdb_min}" rel="stylesheet"/>--%>
-
     <spring:url value="/resources/Theme/assets/css/to-do.css" var="to_do"/>
     <link href="${to_do}" rel="stylesheet"/>
-
-    <%--<spring:url value="/resources/assets/bootstrap/css/bootstrap.min.css" var="min_css" />--%>
-    <%--<link href="${min_css}" rel="stylesheet" />--%>
-
-
 
     <style>
         .btn-file input[type=file] {
@@ -92,11 +65,6 @@
         }
 
     </style>
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>-->
-    <!--<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
 </head>
 
 <body>
@@ -650,9 +618,6 @@
 <spring:url value="/resources/Theme/assets/js/jquery.js" var="jquery"/>
 <script src="${jquery}"></script>
 
-<%--<spring:url value="/resources/Theme/assets/js/jquery-1.8.3.min.js" var="jquery_min_js"/>--%>
-<%--<script src="${jquery_min_js}"></script>--%>
-
 <spring:url value="/resources/Theme/assets/js/bootstrap.min.js" var="bootstrap_min_js"/>
 <script src="${bootstrap_min_js}"></script>
 
@@ -662,9 +627,6 @@
 <spring:url value="/resources/Theme/assets/js/jquery.scrollTo.min.js" var="scrollTo_min_js"/>
 <script src="${scrollTo_min_js}"></script>
 
-<%--<spring:url value="/resources/Theme/assets/js/jquery.nicescroll.js" var="nicescroll"/>--%>
-<%--<script src="${nicescroll}" type="text/javascript"></script>--%>
-
 <spring:url value="/resources/Theme/assets/js/jquery.sparkline.js" var="sparkline"/>
 <script src="${sparkline}"></script>
 
@@ -672,24 +634,6 @@
 <spring:url value="/resources/Theme/assets/js/common-scripts.js" var="common_scripts"/>
 <script src="${common_scripts}"></script>
 
-<%--<spring:url value="/resources/Theme/assets/js/gritter/js/jquery.gritter.js" var="jquery_gritter"/>--%>
-<%--<script src="${jquery_gritter}" type="text/javascript"></script>--%>
-
-<%--<spring:url value="/resources/Theme/assets/js/gritter-conf.js" var="gritter_conf"/>--%>
-<%--<script src="${gritter_conf}" type="text/javascript"></script>--%>
-
-<!--script for this page-->
-<%--<spring:url value="/resources/Theme/assets/js/sparkline-chart.js" var="sparkline_js"/>--%>
-<%--<script src="${sparkline_js}"></script>--%>
-
-<%--<spring:url value="/resources/Theme/assets/js/zabuto_calendar.js" var="zabuto_js"/>--%>
-<%--<script src="${zabuto_js}" type="text/javascript"></script>--%>
-
-<%--<spring:url value="/resources/Theme/assets/js/chart-master/Chart.js" var="chart"/>--%>
-<%--<script src="${chart}"></script>--%>
-
-<%--FACEBOOK--%>
-<%--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>--%>
 <div id="fb-root"></div>
 <script>
     (function(d, s, id) {
@@ -707,61 +651,10 @@
         modal.modal();
     });
 
-//    $(["type=button"]).each(function(){
-//        var button = $(this);
-//
-//        button.on('click', function() {
-//            setTimeout(function() {
-//                button.attr('disabled', '');
-//            });
-//        });
-//    });
 
 </script>
 
-<%--FACEBOOK END--%>
 
-
-
-<%--<script type="application/javascript">--%>
-    <%--$(document).ready(function () {--%>
-        <%--$("#date-popover").popover({html: true, trigger: "manual"});--%>
-        <%--$("#date-popover").hide();--%>
-        <%--$("#date-popover").click(function (e) {--%>
-            <%--$(this).hide();--%>
-        <%--});--%>
-
-        <%--$("#my-calendar").zabuto_calendar({--%>
-            <%--action: function () {--%>
-                <%--return myDateFunction(this.id, false);--%>
-            <%--},--%>
-            <%--action_nav: function () {--%>
-                <%--return myNavFunction(this.id);--%>
-            <%--},--%>
-            <%--ajax: {--%>
-                <%--url: "show_data.php?action=1",--%>
-                <%--modal: true--%>
-            <%--},--%>
-            <%--legend: [--%>
-                <%--{type: "text", label: "Special event", badge: "00"},--%>
-                <%--{type: "block", label: "Regular event",}--%>
-            <%--]--%>
-        <%--});--%>
-    <%--});--%>
-
-
-    <%--function myNavFunction(id) {--%>
-        <%--$("#date-popover").hide();--%>
-        <%--var nav = $("#" + id).data("navigation");--%>
-        <%--var to = $("#" + id).data("to");--%>
-        <%--console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);--%>
-    <%--}--%>
-<%--</script>--%>
-
-<%--<script type="text/javascript">--%>
-
-
-<%--</script>--%>
 
 
 </body>

@@ -60,6 +60,7 @@ public class User {
 
 
     @Column(name = "image")
+    @Basic(fetch = FetchType.LAZY)
     private byte[] image;
 
     @Column(name = "registration_date")

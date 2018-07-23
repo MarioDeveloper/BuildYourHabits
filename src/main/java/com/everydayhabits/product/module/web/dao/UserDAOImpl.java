@@ -796,30 +796,42 @@ public class UserDAOImpl implements UserDAO {
 
         if (ote != null) {
 
-            if (ote.getDifficultyLevel().equals("Łatwy")) {
-                tempExperience = 5;
-            } else if (ote.getDifficultyLevel().equals("Średni")) {
-                tempExperience = 10;
-            } else {
-                tempExperience = 15;
+            switch (ote.getDifficultyLevel()) {
+                case "Łatwy":
+                    tempExperience = 5;
+                    break;
+                case "Średni":
+                    tempExperience = 10;
+                    break;
+                default:
+                    tempExperience = 15;
+                    break;
             }
         } else if(re != null ){
-            if (re.getDifficultyLevel().equals("Łatwy")) {
-                System.out.println();
-                tempExperience = 5;
-            } else if (ote.getDifficultyLevel().equals("Średni")) {
-                tempExperience = 10;
-            } else {
-                tempExperience = 15;
+            switch (re.getDifficultyLevel()) {
+                case "Łatwy":
+                    System.out.println();
+                    tempExperience = 5;
+                    break;
+                case "Średni":
+                    tempExperience = 10;
+                    break;
+                default:
+                    tempExperience = 15;
+                    break;
             }
         } else {
-            if (ce.getDifficultyLevel().equals("Łatwy")) {
-                System.out.println("");
-                tempExperience = 5;
-            } else if (ce.getDifficultyLevel().equals("Średni")) {
-                tempExperience = 10;
-            } else {
-                tempExperience = 15;
+            switch (ce.getDifficultyLevel()) {
+                case "Łatwy":
+                    System.out.println("");
+                    tempExperience = 5;
+                    break;
+                case "Średni":
+                    tempExperience = 10;
+                    break;
+                default:
+                    tempExperience = 15;
+                    break;
             }
 
         }
@@ -834,30 +846,42 @@ public class UserDAOImpl implements UserDAO {
 
         if (ote != null) {
 
-            if (ote.getDifficultyLevel().equals("Łatwy")) {
-                tempLife = -10;
-            } else if (ote.getDifficultyLevel().equals("Średni")) {
-                tempLife = -10;
-            } else {
-                tempLife = -10;
+            switch (ote.getDifficultyLevel()) {
+                case "Łatwy":
+                    tempLife = -10;
+                    break;
+                case "Średni":
+                    tempLife = -10;
+                    break;
+                default:
+                    tempLife = -10;
+                    break;
             }
         } else if(re != null) {
-            if (re.getDifficultyLevel().equals("Łatwy")) {
-                System.out.println();
-                tempLife = -10;
-            } else if (ote.getDifficultyLevel().equals("Średni")) {
-                tempLife = -10;
-            } else {
-                tempLife = -10;
+            switch (re.getDifficultyLevel()) {
+                case "Łatwy":
+                    System.out.println();
+                    tempLife = -10;
+                    break;
+                case "Średni":
+                    tempLife = -10;
+                    break;
+                default:
+                    tempLife = -10;
+                    break;
             }
         } else {
-            if (ce.getDifficultyLevel().equals("Łatwy")) {
-                System.out.println("");
-                tempLife = -10;
-            } else if (ce.getDifficultyLevel().equals("Średni")) {
-                tempLife = -10;
-            } else {
-                tempLife = -10;
+            switch (ce.getDifficultyLevel()) {
+                case "Łatwy":
+                    System.out.println("");
+                    tempLife = -10;
+                    break;
+                case "Średni":
+                    tempLife = -10;
+                    break;
+                default:
+                    tempLife = -10;
+                    break;
             }
         }
 
