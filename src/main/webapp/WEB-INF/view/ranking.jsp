@@ -182,13 +182,13 @@
                                     </div>
 
                                     <c:choose>
-                                        <c:when test="${images[0] == null}">
-                                            <p class="img-circle badge bg-info" width="80">Dodaj zdjęcie</p>
+                                        <c:when test="${images[0] == null or images[0] == '-'}">
+                                            <p class="img-circle badge bg-info" width="80" >Dodaj zdjęcie</p>
                                         </c:when>
                                         <c:otherwise>
                                             <div>
                                                 <p><img src="data:image/jpeg;base64,${images[0]}" class="img-circle"
-                                                        width="95"></p>
+                                                        width="95" style="max-height: 95px"></p>
                                             </div>
                                         </c:otherwise>
                                     </c:choose>
@@ -229,7 +229,7 @@
                                     <td>${loop.index + 1}</td>
                                     <td>
                                         <c:choose>
-                                            <c:when test="${images[loop.index] == null }">
+                                            <c:when test="${images[loop.index] == null or images[loop.index] == '-'}">
                                                 <p class="img-circle badge bg-info" width="80">Brak zdjęcia</p>
                                             </c:when>
                                             <c:otherwise>

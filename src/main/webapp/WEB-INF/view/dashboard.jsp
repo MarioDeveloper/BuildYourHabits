@@ -77,7 +77,7 @@
     <!--header start-->
     <header class="header black-bg">
         <div class="sidebar-toggle-box">
-            <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+            <div class="fa fa-bars tooltips" data-placement="right"></div>
         </div>
         <!--logo start-->
         <c:url value="/" var="dashboard"/>
@@ -178,7 +178,7 @@
                                     </form>
                                 </c:when>
                                 <c:otherwise>
-                                    <img src="data:image/jpeg;base64,${userImage}" style="width: 100%; height: auto">
+                                    <img src="data:image/jpeg;base64,${userImage}" style="width: 100%; height: auto; max-height: 300px">
                                 </c:otherwise>
                             </c:choose>
                         </div><!-- /col-md-4-->
@@ -274,12 +274,12 @@
                                             <td>${tempOneTimeEventList.difficultyLevel}</td>
                                             <td>
 
-                                                <a href="${performOneTimeEvent}" class="btn btn-success btn-xs" type="button"><i
+                                                <a href="${performOneTimeEvent}" class="btn btn-success btn-xs" type="button" title="Zadanie wykonane!"><i
                                                         class="fa fa-check"></i></a>
-                                                <a href="${updateOneTimeEvent}" class="btn btn-primary btn-xs" type="button"><i
+                                                <a href="${updateOneTimeEvent}" class="btn btn-primary btn-xs" type="button" title="Edycja!"><i
                                                         class="fa fa-pencil"></i></a>
 
-                                                <a href="" class="btn btn-danger btn-xs triggerRemove" type="button"><i
+                                                <a href="" class="btn btn-danger btn-xs triggerRemove" type="button" title="Zadanie niewykonane"><i
                                                         class="fa fa-trash-o "></i></a>
 
                                                 <div class="modal fade" tabindex="-1" role="dialog"
@@ -391,13 +391,13 @@
                                             <td>${tempRealizationRecurringEvent.recurringEvent.difficultyLevel}</td>
                                             <td>
 
-                                                <a href="${performRecurringEvent}" class="btn btn-success btn-xs" type="button"><i
+                                                <a href="${performRecurringEvent}" class="btn btn-success btn-xs" type="button" title="Zadanie wykonane!"><i
                                                         class="fa fa-check"></i></a>
 
-                                                <a href="${updateRecurringEvent}" class="btn btn-primary btn-xs" type="button"><i
+                                                <a href="${updateRecurringEvent}" class="btn btn-primary btn-xs" type="button" title="Edycja"><i
                                                         class="fa fa-pencil"></i></a>
 
-                                                <a href="" class="btn btn-danger btn-xs triggerRemove" type="button"><i
+                                                <a href="" class="btn btn-danger btn-xs triggerRemove" type="button" title="Kliknij! Pojawi się Popup"><i
                                                         class="fa fa-trash-o "></i></a>
 
                                                 <div class="modal fade" tabindex="-1" role="dialog"
@@ -421,10 +421,6 @@
                                                                 <a href="${cancelOtherRecurringEvents}"
                                                                    class="btn btn-primary" type="button">Anuluj pozostałe
                                                                     wydarzenia</a>
-
-                                                                <button type="button" class="btn btn-default"
-                                                                        data-dismiss="modal">Wyjdź
-                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -498,9 +494,9 @@
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${tempChallengeEvent.confirmed == true}">
-                                                        <a href="${performChallengeEvent}" class="btn btn-success btn-xs" type="button"><i
+                                                        <a href="${performChallengeEvent}" class="btn btn-success btn-xs" type="button" title="Wyzwanie zaliczone!"><i
                                                                 class="fa fa-check"></i></a>
-                                                        <a href="${failChallengeEvent}" class="btn btn-danger btn-xs" type="button"><i
+                                                        <a href="${failChallengeEvent}" class="btn btn-danger btn-xs" type="button" title="Wyzwanie niezaliczone"><i
                                                                 class="fa fa-trash-o "></i></a>
                                                     </c:when>
                                                     <c:when test="${tempChallengeEvent.confirmed == null && tempChallengeEvent.userInitiatorId == loggedUser.id}">
@@ -511,7 +507,7 @@
                                                             <a href="${acceptChallengeEvent}" class="btn btn-success" type="button">Akceptuje</a>
                                                         </div>
                                                         <div class="btn-group">
-                                                            <a href="${rejectChallengeEvent}" class="btn btn-danger" type="button"'>Odrzucam</a>
+                                                            <a href="${rejectChallengeEvent}" class="btn btn-danger" type="button">Odrzucam</a>
                                                         </div>
                                                     </c:otherwise>
                                                 </c:choose>
