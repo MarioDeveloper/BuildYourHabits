@@ -77,10 +77,8 @@ public class UserServiceImpl implements UserService {
         User user = getUserByUsername(email);
 
         if (isCreated && !user.getUsername().equals(email)) {
-            System.out.println("UserSrviceIMpl jestem w if");
             return null;
         }
-        System.out.println("Zwracam usera");
         return new User();
     }
 

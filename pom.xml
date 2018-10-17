@@ -9,58 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-
-
-    <!--<build>-->
-    <!--<finalName>SampleSpringMaven</finalName>-->
-    <!--<plugins>-->
-    <!--<plugin>-->
-    <!--<artifactId>maven-war-plugin</artifactId>-->
-    <!--<version>2.6</version>-->
-    <!--<configuration>-->
-    <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
-    <!--<resourceEncoding>${project.build.sourceEncoding}</resourceEncoding>-->
-    <!--</configuration>-->
-    <!--</plugin>-->
-    <!--<plugin>-->
-    <!--<groupId>org.apache.maven.plugins</groupId>-->
-    <!--<artifactId>maven-compiler-plugin</artifactId>-->
-    <!--<configuration>-->
-    <!--<source>1.8</source>-->
-    <!--<target>1.8</target>-->
-    <!--<encoding>${project.build.sourceEncoding}</encoding>-->
-    <!--</configuration>-->
-    <!--</plugin>-->
-    <!--</plugins>-->
-    <!--</build>-->
-
-
-    <!--<build>-->
-        <!--<pluginManagement>-->
-            <!--<plugins>-->
-                <!--<plugin>-->
-                    <!--<groupId>org.apache.maven.plugins</groupId>-->
-                    <!--<artifactId>maven-compiler-plugin</artifactId>-->
-                    <!--<version>2.3.2</version>-->
-                    <!--<configuration>-->
-                        <!--<source>1.8</source>-->
-                        <!--<target>1.8</target>-->
-                        <!--<encoding>${project.build.sourceEncoding}</encoding>-->
-                    <!--</configuration>-->
-                <!--</plugin>-->
-                <!--<plugin>-->
-                    <!--<groupId>org.apache.maven.plugins</groupId>-->
-                    <!--<artifactId>maven-war-plugin</artifactId>-->
-                    <!--<version>2.4</version>-->
-                    <!--<configuration>-->
-                        <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
-                        <!--<resourceEncoding>${project.build.sourceEncoding}</resourceEncoding>-->
-                    <!--</configuration>-->
-                <!--</plugin>-->
-            <!--</plugins>-->
-        <!--</pluginManagement>-->
-    <!--</build>-->
-
     <build>
 
         <pluginManagement>
@@ -98,7 +46,7 @@
         <org.hibernate>5.2.15.Final</org.hibernate>
         <springframework.orm>4.3.1.RELEASE</springframework.orm>
         <hibernate.validator>6.0.7.Final</hibernate.validator>
-        <springframework.security>5.0.0.RELEASE</springframework.security>
+        <springframework.security>5.0.5.RELEASE</springframework.security>
         <c3p0>0.9.1.2</c3p0>
         <logback>1.1.2</logback>
         <commons-codec>1.10</commons-codec>
