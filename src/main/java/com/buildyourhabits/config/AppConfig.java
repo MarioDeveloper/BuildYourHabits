@@ -41,10 +41,10 @@ public class AppConfig implements WebMvcConfigurer {
 		dataSource.setJdbcUrl(env.getRequiredProperty("jdbc.url"));
 		dataSource.setUser(env.getRequiredProperty("jdbc.user"));
 		dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
-        dataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
-        dataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
-        dataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
-        dataSource.setMaxStatements(getIntProperty("connection.pool.maxStatements"));
+       		dataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
+        	dataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
+        	dataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
+        	dataSource.setMaxStatements(getIntProperty("connection.pool.maxStatements"));
 		dataSource.setAcquireIncrement(getIntProperty("connection.pool.setAcquireIncrement"));
 		dataSource.setIdleConnectionTestPeriod(getIntProperty("connection.pool.setIdleConnectionTestPeriod"));
 		return dataSource;
